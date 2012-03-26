@@ -20,7 +20,7 @@ public class Beam extends Thread
 	private Beam beam = this;
 	private Timer timer;
 	
-	public Beam(int StartX,	int StartY, Game g, Stats s, int t)
+	public Beam(int StartX,	int StartY, Game g, GameState s, int t)
 	{
 		Type = t;
 		gamePanel = g;

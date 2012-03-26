@@ -7,10 +7,10 @@ public class Ship extends Thread
 	private boolean ShipStarted =	true;
 	private BufferedImage img;
 	private Game gamePanel;
-	private Stats stat;
+	private GameState stat;
 	@SuppressWarnings("unused")
 	
-	public Ship(Game g, int ship, boolean hull, Stats s)
+	public Ship(Game g, int ship, boolean hull, GameState s)
 	{
 		gamePanel = g;
 		stat = s;
@@ -19,35 +19,36 @@ public class Ship extends Thread
 		{
 			if(hull)
 			{
-				img = Resource.getSmallGreenArmor();
+				img = Resource.smallGreenArmor;
 			}
 			else
 			{
-				img = Resource.getSmallGreen();
+				img = Resource.smallGreen;
 			}
 		}
 		else if(ship == 2)
 		{
 			if(hull)
 			{
-				img = Resource.getMedGreenArmor();
+				img = Resource.medGreenArmor;
 			}
 			else
 			{
-				img = Resource.getMedGreen();
+				img = Resource.medGreen;
 			}
 		}
 		else
 		{
 			if(hull)
 			{
-				img = Resource.getLargeGreenArmor();
+				img = Resource.largeGreenArmor;
 			}
 			else
 			{
-				img = Resource.getLargeGreen();
+				img = Resource.largeGreen;
 			}
 		}
+		
 	}
 
 	public void	draw(Graphics2D g2d)

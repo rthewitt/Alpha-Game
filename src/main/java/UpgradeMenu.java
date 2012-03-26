@@ -18,7 +18,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	private Star star;
 	private Resource res;
 	private int Width = 0, Height = 0; 
-	private Stats stat;
+	private GameState stat;
 	private LandF LF = new LandF();
 	private GridLayout layout = new GridLayout(0,1);
 	
@@ -33,7 +33,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	JButton hull = new JButton("HULL UP");
 	JButton shipUp = new JButton("UPGRADE SHIP");
 	
-	UpgradeMenu(int x, int y, Control con, Stats s)
+	UpgradeMenu(int x, int y, Control con, GameState s)
 	{
 		stat = s;
 		control = con;

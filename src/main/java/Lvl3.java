@@ -9,12 +9,12 @@ public class Lvl3
 	private int S = 17;
 	private int Width, Height;
 	private Game game;
-	private Stats stat;
+	private GameState stat;
 	private int Mod1 = 190;
 	private int Mod2 = 280;
 	private int Type = 1;
 	
-	Lvl3(int x, int y, Game g, Stats s)
+	Lvl3(int x, int y, Game g, GameState s)
 	{
 		Width = x;
 		Height = y;

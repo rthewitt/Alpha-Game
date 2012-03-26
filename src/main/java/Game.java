@@ -30,7 +30,7 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	Star star;
 	
 	Panel draw;
-	private Stats stat;
+	private GameState stat;
 	@SuppressWarnings("unused")
 	private Lvl1 lvl;
 	@SuppressWarnings("unused")
@@ -40,7 +40,7 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	
 	private Go go = new Go(this);
 	
-	public Game(int pwid, int pht, Control con, Stats s)
+	public Game(int pwid, int pht, Control con, GameState s)
    {
 		stat = s;
 		stat.addMe(this);

@@ -1,5 +1,5 @@
 
-public class Stats
+public class GameState
 {
 	private int Level;
 	private int ShipUp;
@@ -16,7 +16,7 @@ public class Stats
 	private Game game;
 	
 	
-	Stats()
+	GameState()
 	{
 	}
 	

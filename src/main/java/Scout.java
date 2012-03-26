@@ -11,7 +11,7 @@ public class Scout extends Thread
 	boolean taken = false;
 	
 	private BufferedImage using;
-	Stats stat;
+	GameState stat;
 	private Timer timer;
 	@SuppressWarnings("unused")
 	private Game game;
@@ -23,7 +23,7 @@ public class Scout extends Thread
 	private int Health = 10;
 	private int Type;
 	
-	Scout(int x, int y, Game g, Stats st, int t)
+	Scout(int x, int y, Game g, GameState st, int t)
 	{
 		stat = st;
 		game = g;
@@ -33,13 +33,13 @@ public class Scout extends Thread
 		
 		switch(Type)
 		{
-			case 1: using = Resource.getRedFighter(); setHealth(10); break;
+			case 1: using = Resource.RED_FIGHTER; setHealth(10); break;
 			
-			//case 2: using = Resource.getRedHeavy(); setHealth(30); break;
+			case 2: using = Resource.redHeavy; setHealth(30); break;
 			
-			case 3: using = Resource.getBlueFighter(); setHealth(15); break;
+			case 3: using = Resource.blueFighter; setHealth(15); break;
 			
-			case 4: using = Resource.getBlueHeavy(); setHealth(45); break;
+			case 4: using = Resource.blueHeavy; setHealth(45); break;
 		}
 		
 		StartX = (int)(Math.random() * Width - 30);
@@ -84,7 +84,7 @@ public class Scout extends Thread
 		}
 	}
 	
-	public void send(int x, int y, Stats s, Beam b, Game g)
+	public void send(int x, int y, GameState s, Beam b, Game g)
 	{
 		if(taken == false)
 		{

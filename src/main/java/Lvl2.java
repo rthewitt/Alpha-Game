@@ -8,9 +8,9 @@ public class Lvl2
 	private int Sprites = 10;
 	private int Width, Height;
 	private Game game;
-	private Stats stat;
+	private GameState stat;
 	
-	Lvl2(int x, int y, Game g, Stats s)
+	Lvl2(int x, int y, Game g, GameState s)
 	{
 		Width = x;
 		Height = y;

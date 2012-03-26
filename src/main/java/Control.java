@@ -9,13 +9,13 @@ public class Control extends JFrame
 	private Game game;
 	private UpgradeMenu Up;
 	private int Width = 500, Height = 800;
-	private Stats stat;
+	private GameState stat;
 	
-	Control(Stats s)
+	Control(GameState s)
 	{
 		stat = s;
 		
-		this.setIconImage(Resource.getIcon());
+		this.setIconImage(Resource.ICON);
 		
 		setSize(Width, Height);
 		setVisible(true);
