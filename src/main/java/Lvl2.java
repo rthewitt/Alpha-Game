@@ -8,15 +8,15 @@ public class Lvl2
 	private int Sprites = 10;
 	private int Width, Height;
 	private Game game;
-	private GameState stat;
+	private GameState state;
 	
 	Lvl2(int x, int y, Game g, GameState s)
 	{
 		Width = x;
 		Height = y;
 		game = g;
-		stat = s;
-		stat.setEnemies(Sprites);
+		state = s;
+		state.setEnemies(Sprites);
 		timer = new Timer();
 		timer.schedule(new Task(), 3000, 1000);
 	}
@@ -27,7 +27,7 @@ public class Lvl2
 		{
 			if(Sprites > 0)
 			{
-				Scout s = new Scout(Width, Height, game, stat, 2);
+				Scout s = new Scout(Width, Height, game, state, 2);
 				game.Scouts.addElement(s);
 				s.start();
 				Sprites --;

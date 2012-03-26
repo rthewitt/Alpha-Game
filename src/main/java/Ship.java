@@ -7,13 +7,12 @@ public class Ship extends Thread
 	private boolean ShipStarted =	true;
 	private BufferedImage img;
 	private Game gamePanel;
-	private GameState stat;
 	@SuppressWarnings("unused")
+	private Resource res;
 	
-	public Ship(Game g, int ship, boolean hull, GameState s)
+	public Ship(Game g, int ship, boolean hull)
 	{
 		gamePanel = g;
-		stat = s;
 		
 		if(ship == 1)
 		{
@@ -34,7 +33,7 @@ public class Ship extends Thread
 			}
 			else
 			{
-				img = Resource.medGreen;
+				img = Resource.medGreenArmor;
 			}
 		}
 		else
@@ -48,7 +47,6 @@ public class Ship extends Thread
 				img = Resource.largeGreen;
 			}
 		}
-		
 	}
 
 	public void	draw(Graphics2D g2d)

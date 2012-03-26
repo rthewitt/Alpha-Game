@@ -9,7 +9,7 @@ public class Lvl3
 	private int S = 17;
 	private int Width, Height;
 	private Game game;
-	private GameState stat;
+	private GameState state;
 	private int Mod1 = 190;
 	private int Mod2 = 280;
 	private int Type = 1;
@@ -19,8 +19,8 @@ public class Lvl3
 		Width = x;
 		Height = y;
 		game = g;
-		stat = s;
-		stat.setEnemies(Sprites);
+		state = s;
+		state.setEnemies(Sprites);
 		timer = new Timer();
 		timer.schedule(new Task(), 1000, 1000);
 	}
@@ -42,12 +42,12 @@ public class Lvl3
 			
 			if(Sprites > S)
 			{
-				Scout s = new Scout(Width, Height, game, stat, Type);
+				Scout s = new Scout(Width, Height, game, state, Type);
 				s.setPosition(Mod1);
 				game.Scouts.addElement(s);
 				s.start();
 				
-				Scout s2 = new Scout(Width, Height, game, stat, Type);
+				Scout s2 = new Scout(Width, Height, game, state, Type);
 				s2.setPosition(Mod2);
 				game.Scouts.addElement(s2);
 				s2.start();

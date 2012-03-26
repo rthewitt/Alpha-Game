@@ -30,7 +30,7 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	Star star;
 	
 	Panel draw;
-	private GameState stat;
+	private GameState state;
 	@SuppressWarnings("unused")
 	private Lvl1 lvl;
 	@SuppressWarnings("unused")
@@ -42,9 +42,9 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	
 	public Game(int pwid, int pht, Control con, GameState s)
    {
-		stat = s;
-		stat.addMe(this);
-		stat.getSpeed();
+		state = s;
+		state.addMe(this);
+		state.getSpeed();
 		Width = pwid;
 		Height = pht;
 		setSize(Width, Height);
@@ -54,7 +54,7 @@ public class Game extends JPanel implements KeyListener, MouseListener
 		
 		setBackground(Color.BLACK);
 		
-		Ship newShip = new Ship(this, stat.getShipUp(), stat.getHull(), stat);
+		Ship newShip = new Ship(this, state.getShipUp(), state.getHull());
 		Ships.addElement(newShip);
 		newShip.start();
 		
@@ -92,15 +92,9 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	{
 		if(Clicks < 6)
 		{
-			Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, stat, 1);
+			Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state, 1);
 			Beams.addElement(newBeam);
 			newBeam.start();
-			
-			for (int i = 0; i < Scouts.size(); i++) 
-     		{
-        		Scouts.elementAt(i).send(getLocX() - 3, getLocY(), stat, newBeam, this);
-     		}
-			
 		}
 		else
 		{
@@ -153,11 +147,11 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	public void mousePressed(MouseEvent me)
 	{
 		pressed = true;
-		if(stat.getMachGun())
+		if(state.getMachGun())
 		{
 			while(pressed)
 			{
-				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, stat, 1);
+				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state, 1);
 				Beams.addElement(newBeam);
 				newBeam.start();
 			}
@@ -196,13 +190,13 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	
 	public void ChooseLevel()
 	{
-		switch(stat.getLevel())
+		switch(state.getLevel())
 		{
-			case 1: lvl = new Lvl1(Width, Height, this, stat); break;
+			case 1: lvl = new Lvl1(Width, Height, this, state); break;
 			
-			case 2: lvl2 = new Lvl2(Width, Height, this, stat); break;
+			case 2: lvl2 = new Lvl2(Width, Height, this, state); break;
 			
-			case 3: lvl3 = new Lvl3(Width, Height, this, stat); break;
+			case 3: lvl3 = new Lvl3(Width, Height, this, state); break;
 		}
 	}
 	
@@ -215,7 +209,6 @@ public class Game extends JPanel implements KeyListener, MouseListener
      	{
         	Beams.elementAt(i).draw(g2d);
      	}
-		
 		
 		for (int i = 0; i < Scouts.size(); i++) 
      	{

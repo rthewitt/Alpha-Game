@@ -1,4 +1,3 @@
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -8,16 +7,16 @@ public class Lvl1
 	private int Sprites = 10;
 	private int Width, Height;
 	private Game game;
-	private GameState stat;
+	private GameState state;
 	
 	Lvl1(int x, int y, Game g, GameState s)
 	{
 		Width = x;
 		Height = y;
 		game = g;
-		stat = s;
-		stat.setEnemies(Sprites);
-   	timer = new Timer();
+		state = s;
+		state.setEnemies(Sprites);
+		timer = new Timer();
 		timer.schedule(new Task(), 3000, 1000);
 	}
 	
@@ -27,7 +26,7 @@ public class Lvl1
 		{
 			if(Sprites > 0)
 			{
-				Scout s = new Scout(Width, Height, game, stat, 1);
+				Scout s = new Scout(Width, Height, game, state, 1);
 				game.Scouts.addElement(s);
 				s.start();
 				Sprites --;

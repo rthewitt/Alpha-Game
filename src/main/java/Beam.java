@@ -1,8 +1,7 @@
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Beam extends Thread
 {
@@ -10,18 +9,22 @@ public class Beam extends Thread
 	private boolean draw = true;
 	private Ellipse2D.Double thisBeam;
 	
-	private int	speed	= 1;
+	private int	speed = 3;
 	private int	diry = 1, dirx;
 	private int	size = 7;
 	private int Type = 0;
 	int x, y;
+	private int Counter = 0;
 	
 	private Game gamePanel;
 	private Beam beam = this;
-	private Timer timer;
+	private GameState state;
+	private Collision col;
 	
 	public Beam(int StartX,	int StartY, Game g, GameState s, int t)
 	{
+		state = s;
+		col = state.getCollision();
 		Type = t;
 		gamePanel = g;
 		dirx = StartX;
@@ -47,16 +50,7 @@ public class Beam extends Thread
 	
 	public void destroy(int y, int time)
 	{
-		timer = new Timer();
-		timer.schedule(new Task(), time);
-	}
-	
-	private class Task extends TimerTask
-	{
-		public void run()
-		{
-			draw = false;
-		}
+		draw = false;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -64,6 +58,15 @@ public class Beam extends Thread
 	{
 		while(BeamStarted)
 		{
+			if(Counter > 2)
+			{
+				col.TestBeam(this);
+			}
+			else
+			{
+				Counter ++;
+			}
+			
 			try
 			{
 				Thread.sleep(speed);
@@ -107,5 +110,19 @@ public class Beam extends Thread
 			
 			gamePanel.repaint();
 		}
+	}
+
+	public int getX()
+	{
+		return (int) thisBeam.getX();
+	}
+	public int getY()
+	{
+		return (int) thisBeam.getY();
+	}
+
+	public int getDir()
+	{
+		return dirx;
 	}
 }

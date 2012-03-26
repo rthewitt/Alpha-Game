@@ -1,8 +1,5 @@
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Scout extends Thread
 {
@@ -11,8 +8,8 @@ public class Scout extends Thread
 	boolean taken = false;
 	
 	private BufferedImage using;
-	GameState stat;
-	private Timer timer;
+	private GameState state;
+	private Collision col;
 	@SuppressWarnings("unused")
 	private Game game;
 	Scout s = this;
@@ -20,12 +17,14 @@ public class Scout extends Thread
 	int StartX, StartY;
 	private int speed;
 	private int Width, Height;
+	@SuppressWarnings("unused")
 	private int Health = 10;
 	private int Type;
 	
 	Scout(int x, int y, Game g, GameState st, int t)
 	{
-		stat = st;
+		state = st;
+		col = state.getCollision();
 		game = g;
 		Width = x;
 		Height = y;
@@ -33,22 +32,20 @@ public class Scout extends Thread
 		
 		switch(Type)
 		{
-			case 1: using = Resource.RED_FIGHTER; setHealth(10); break;
+			case 1: using = Resource.redFighter; setHealth(10); break;
 			
-			case 2: using = Resource.redHeavy; setHealth(30); break;
+//			case 2: using = res.getRedHeavy(); setHealth(30); break;
 			
 			case 3: using = Resource.blueFighter; setHealth(15); break;
 			
 			case 4: using = Resource.blueHeavy; setHealth(45); break;
 		}
 		
-		StartX = (int)(Math.random() * Width - 30);
+		StartX = (int)(10 + Math.random() * (Width - 30));
 		StartY = 0;
 		speed = 30;
 		ScoutStarted = true;
-		
-//		timer = new Timer();
-//		timer.schedule(new BeamTask(), 5000, 5000);
+		col.addShip(this);
 	}
 	
 	public void setPosition(int x)
@@ -70,7 +67,7 @@ public class Scout extends Thread
 //	{
 //		public void run()
 //		{
-//			Beam newBeam = new Beam(StartX, StartY, game, stat, 2);
+//			Beam newBeam = new Beam(StartX, StartY, game, state, 2);
 //			game.Beams.addElement(newBeam);
 //			newBeam.start();
 //		}
@@ -80,47 +77,16 @@ public class Scout extends Thread
 	{
 		if(ScoutStarted && draw)
 		{
-			g2d.drawImage(using, StartX, StartY, null); // why is this not using the scout's location?
+			g2d.drawImage(using, StartX, StartY, null);
 		}
 	}
 	
-	public void send(int x, int y, GameState s, Beam b, Game g)
+	@SuppressWarnings("deprecation")
+	public void kill()
 	{
-		if(taken == false)
-		{
-			stat = s;
-			if(StartX <= x && StartX + 30 >= x)
-			{
-				int time = (y - StartY) - (StartY/30);
-				if(time > 0)
-				{
-					Health -= 5;
-					taken = true;
-					b.destroy(StartY, time);
-					if(Health <= 0)
-					{
-						timer = new Timer();
-						timer.schedule(new Task(), time);
-					}
-					else
-					{
-						taken = false;
-					}
-				}
-			}
-		}
-	}
-	
-	private class Task extends TimerTask
-	{
-		@SuppressWarnings("deprecation")
-		public void run()
-		{
-			draw = false;
-			s.stop();
-			stat.DecrementEnemies();
-			timer.cancel();
-		}
+		state.DecrementEnemies();
+		draw = false;
+		this.stop();
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -142,16 +108,19 @@ public class Scout extends Thread
 			if(StartY > Height)
 			{
 				ScoutStarted = false;
-				stat.DecrementEnemies();
-				try
-				{
-					timer.cancel();
-				}
-				catch(NullPointerException e)
-				{
-				}
+				state.DecrementEnemies();
 				s.stop();
 			}
 		}
+	}
+
+	public int getX()
+	{
+		return StartX;
+	}
+
+	public int getY()
+	{
+		return StartY;
 	}
 }

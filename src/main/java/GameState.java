@@ -14,6 +14,8 @@ public class GameState
 	
 	private Control con;
 	private Game game;
+	private Resource res;
+	private Collision col;
 	
 	
 	GameState()
@@ -49,6 +51,26 @@ public class GameState
 	public void addMe(Control c)
 	{
 		con = c;
+	}
+	
+	public void addMe(Resource r)
+	{
+		res = r;
+	}
+	
+	public void addMe(Collision c)
+	{
+		col = c;
+	}
+	
+	public Collision getCollision()
+	{
+		return col;
+	}
+	
+	public Resource getResource()
+	{
+		return res;
 	}
 	
 	public int getLevel()

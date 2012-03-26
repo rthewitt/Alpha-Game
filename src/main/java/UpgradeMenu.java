@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -6,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -16,9 +16,8 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	private static final long serialVersionUID = 1L;
 	private Control control;
 	private Star star;
-	private Resource res;
 	private int Width = 0, Height = 0; 
-	private GameState stat;
+	private GameState state;
 	private LandF LF = new LandF();
 	private GridLayout layout = new GridLayout(0,1);
 	
@@ -35,7 +34,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	
 	UpgradeMenu(int x, int y, Control con, GameState s)
 	{
-		stat = s;
+		state = s;
 		control = con;
 		Width = x - 8;
 		Height = y - 31;
@@ -46,8 +45,6 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		star = new Star(Width, Height, this);
 		star.setNumber(50);
 		star.start();
-		// Reference the class, should not be an object
-//		res = stat.getResource();
 		
 		LF.TabbedPane(Bar);
 		
@@ -79,17 +76,11 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		JScrollPane scroll3 = new JScrollPane(np3);
 		Bar.addTab("SPECIAL", scroll3);
 		
-		JLabel label = new JLabel();
-		// NOOOOOOOOOOOOO!!!!!!! 
-		//label.setIcon(res.getCurrentShip());
-		label.setBounds(0, 0, 70, 70);
-		
-		add(label);
 		add(Bar);
 		add(done);
 		
 		setBounds(0, 0, Width, Height);
-		Bar.setBounds(0, Height/2, 495, 200);
+		Bar.setSize(495, 200);
 		done.setBounds(0, Height - 30, Width, Height);
 		done.setSize(Width, 30);
 	}
@@ -125,7 +116,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		hull.setPreferredSize(new Dimension(Width - 20, 50));
 		hull.setMinimumSize(hull.getPreferredSize());
 		LF.Button(hull);
-		if(stat.getHull())
+		if(state.getHull())
 		{
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
@@ -148,37 +139,26 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	
 	public void actionPerformed(ActionEvent ae)
 	{
-		if("Next Level".equalsIgnoreCase(ae.getActionCommand())){
+		switch(ae.getActionCommand())
+		{
+			case "Next Level": star = null; done.setVisible(false); done = null; control.RunGame(3); break;
 			
-			star = null; done.setVisible(false);
-			done = null;
-			control.RunGame(3);
+			case "Dual Lasers": state.Dual(); break;
 			
-		} else if("Dual Lasers".equalsIgnoreCase(ae.getActionCommand()))
-			stat.Dual();
+			case "DAMAGE UPGRADE": state.DamageUp(5); break;
 			
-		else if("DAMAGE UPGRADE".equalsIgnoreCase(ae.getActionCommand()))
-			stat.DamageUp(5);
+			case "ALSER SIGHT": state.addLaser(); break;
 			
-		else if("ALSER SIGHT".equalsIgnoreCase(ae.getActionCommand()))
-			stat.addLaser();
+			case "MACHINE GUN": state.addMachGun(); break;
 			
-		else if("MACHINE GUN".equalsIgnoreCase(ae.getActionCommand()))
-			stat.addMachGun();
+			case "LIFE UP": state.LifeUp(2); break;
 			
-		else if("LIFE UP".equalsIgnoreCase(ae.getActionCommand()))
-			stat.LifeUp(2);
+			case "SPEED UP": state.IncrementSpeed(); break;
 			
-		else if("SPEED UP".equalsIgnoreCase(ae.getActionCommand()))
-			stat.IncrementSpeed();		
-		
-		else if("HULL UP".equalsIgnoreCase(ae.getActionCommand())) {
-			stat.HullUp();
-			hull.setEnabled(false);
-			hull.setBackground(Color.BLACK);
-		
-		} else if("UPGRADE SHIP".equalsIgnoreCase(ae.getActionCommand()))
-			stat.UpgradeShip();
+			case "HULL UP": state.HullUp(); hull.setEnabled(false); hull.setBackground(Color.BLACK); break;
+			
+			case "UPGRADE SHIP": state.UpgradeShip(); break;
+		}
 	}
 	
 	public void	paintComponent(Graphics g)  

@@ -9,13 +9,11 @@ public class Control extends JFrame
 	private Game game;
 	private UpgradeMenu Up;
 	private int Width = 500, Height = 800;
-	private GameState stat;
+	private GameState state;
 	
 	Control(GameState s)
 	{
-		stat = s;
-		
-		this.setIconImage(Resource.ICON);
+		state = s;
 		
 		setSize(Width, Height);
 		setVisible(true);
@@ -23,7 +21,7 @@ public class Control extends JFrame
 		setTitle("Alpha");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		stat.addMe(this);
+		state.addMe(this);
 		
 		RunMenu(0);
 	}
@@ -44,7 +42,7 @@ public class Control extends JFrame
 		{
 			nullIt(con);
 		}
-		game = new Game(Width, Height, this, stat);
+		game = new Game(Width, Height, this, state);
 		add(game, BorderLayout.CENTER);
 	}
 	
@@ -54,7 +52,7 @@ public class Control extends JFrame
 		{
 			nullIt(con);
 		}
-		Up = new UpgradeMenu(Width, Height, this, stat);
+		Up = new UpgradeMenu(Width, Height, this, state);
 		add(Up, BorderLayout.CENTER);
 	}
 	
