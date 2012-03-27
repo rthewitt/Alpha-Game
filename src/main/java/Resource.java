@@ -1,3 +1,4 @@
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +33,11 @@ public class Resource
 	public static BufferedImage blueFighter;
 	public static BufferedImage blueHeavy;
 	
+	public static Image currentShip;
+	
 	public static ImageIcon dualLaser;
+	public static ImageIcon spreadLaser;
+	public static ImageIcon rapidLaser;
 	
 	Resource()
 	{
@@ -66,9 +71,9 @@ public class Resource
 			blueFighter = ImageIO.read(Resource.class.getResource("images" + sep + "blueFighter.png"));
 			blueHeavy = ImageIO.read(Resource.class.getResource("images" + sep + "BlueHeavy.png"));
 			
-//	        dualLaser = new ImageIcon(Resource.class.getResource("images" + sep + "menuDual.png"));
-//	        dualLaser = new ImageIcon(Resource.class.getResource("images" + sep + "menuSpread.png"));
-//	        dualLaser = new ImageIcon(Resource.class.getResource("images" + sep + "menuRapid.png"));
+	        dualLaser = new ImageIcon(Resource.class.getResource("images" + sep + "menuDual.png"));
+	        spreadLaser = new ImageIcon(Resource.class.getResource("images" + sep + "menuSpread.png"));
+	        rapidLaser = new ImageIcon(Resource.class.getResource("images" + sep + "menuRapid.png"));
 		}
 		catch(IOException e)
 		{

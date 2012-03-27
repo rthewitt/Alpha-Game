@@ -1,5 +1,6 @@
 
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 public class Ship extends Thread
@@ -7,8 +8,6 @@ public class Ship extends Thread
 	private boolean ShipStarted =	true;
 	private BufferedImage img;
 	private Game gamePanel;
-	@SuppressWarnings("unused")
-	private Resource res;
 	
 	public Ship(Game g, int ship, boolean hull)
 	{
@@ -47,6 +46,7 @@ public class Ship extends Thread
 				img = Resource.largeGreen;
 			}
 		}
+		 Resource.currentShip = Toolkit.getDefaultToolkit().createImage(img.getSource());
 	}
 
 	public void	draw(Graphics2D g2d)
