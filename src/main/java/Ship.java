@@ -1,7 +1,10 @@
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
 
 public class Ship extends Thread
 {
@@ -13,40 +16,35 @@ public class Ship extends Thread
 	{
 		gamePanel = g;
 		
-		if(ship == 1)
+		if(hull)
 		{
-			if(hull)
+			switch(ship)
 			{
-				img = Resource.smallGreenArmor;
-			}
-			else
-			{
-				img = Resource.smallGreen;
-			}
-		}
-		else if(ship == 2)
-		{
-			if(hull)
-			{
-				img = Resource.medGreenArmor;
-			}
-			else
-			{
-				img = Resource.medGreenArmor;
+				case 1: img = Resource.smallGreenArmor; break;
+				
+				case 2: img = Resource.medGreenArmor; break;
+				
+				case 3: img = Resource.largeGreenArmor; break;
 			}
 		}
 		else
 		{
-			if(hull)
+			switch(ship)
 			{
-				img = Resource.largeGreenArmor;
-			}
-			else
-			{
-				img = Resource.largeGreen;
+				case 1: img = Resource.smallGreen;
+					Resource.hullShip = new ImageIcon(Resource.smallGreenArmor);
+					Resource.nextShip = new ImageIcon(Resource.medGreen); break;
+				
+				case 2: img = Resource.medGreen;
+					Resource.hullShip = new ImageIcon(Resource.medGreenArmor);
+					Resource.nextShip = new ImageIcon((Image) Resource.largeGreen.getSource()); break;
+				
+				case 3: img = Resource.largeGreen;
+					Resource.hullShip = new ImageIcon(Resource.largeGreenArmor); break;
 			}
 		}
-		 Resource.currentShip = Toolkit.getDefaultToolkit().createImage(img.getSource());
+		
+		Resource.currentShip = Toolkit.getDefaultToolkit().createImage(img.getSource());
 	}
 
 	public void	draw(Graphics2D g2d)

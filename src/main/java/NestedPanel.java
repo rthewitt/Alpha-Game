@@ -9,9 +9,6 @@ import javax.swing.border.LineBorder;
 
 public class NestedPanel extends JPanel
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Vector<Star> Stars = new Vector<Star>();
 	private int Width, Height;
@@ -24,15 +21,7 @@ public class NestedPanel extends JPanel
 		setBounds(0, 0, Width, Height);
 		setOpaque(false);
 		setBackground(Color.BLACK);
-		setBackground(Color.GREEN);
 		setBorder(border);
-		
-		for(int j = 0; j < 50; j++)
-		{
-			Star newStar = new Star(Width, Height, this);
-			Stars.addElement(newStar);
-			newStar.start();
-		}
 	}
 	
 	public void paintComponent(Graphics g)

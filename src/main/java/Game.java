@@ -15,9 +15,6 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel implements KeyListener, MouseListener
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int Width, Height;
 	Vector<Beam> Beams = new Vector<Beam>(0, 0);
@@ -92,9 +89,22 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	{
 		if(Clicks < 6)
 		{
-			Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state, 1);
-			Beams.addElement(newBeam);
-			newBeam.start();
+			if(state.getDual())
+			{
+				Beam newBeam = new Beam(getLocX() - 15, getLocY(), this, state, 1);
+				Beams.addElement(newBeam);
+				newBeam.start();
+			
+				Beam newBeam1 = new Beam(getLocX() + 15, getLocY(), this, state, 1);
+				Beams.addElement(newBeam1);
+				newBeam1.start();
+			}
+			else
+			{
+				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state, 1);
+				Beams.addElement(newBeam);
+				newBeam.start();
+			}
 		}
 		else
 		{

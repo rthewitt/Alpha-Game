@@ -42,16 +42,13 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		setVisible(true);
 		
 		setBackground(Color.BLACK);
-		
 		star = new Star(Width, Height, this);
 		star.setNumber(50);
 		star.start();
-		// Reference the class, should not be an object
-//		res = state.getResource();
-		
 		LF.TabbedPane(Bar);
 		
 		this.setLayout(null);
+		layout.setVgap(1);
 		
 		setupButtons();
 		
@@ -63,6 +60,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		np1.add(hull);
 		np1.add(shipUp);
 		JScrollPane scroll = new JScrollPane(np1);
+		scroll.setWheelScrollingEnabled(true);
 		LF.Scroll(scroll);
 		Bar.addTab("SHIP", scroll);
 		
@@ -88,7 +86,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		add(done);
 		
 		setBounds(0, 0, Width, Height);
-		Bar.setBounds(0, Height/2, 495, 200);
+		Bar.setBounds(0, 200, 495, 200);
 		done.setBounds(0, Height - 30, Width, Height);
 		done.setSize(Width, 30);
 	}
@@ -124,6 +122,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		
 		hull.setPreferredSize(new Dimension(Width - 20, 50));
 		hull.setMinimumSize(hull.getPreferredSize());
+		hull.setIcon(Resource.hullShip);
 		LF.Button(hull);
 		if(state.getHull())
 		{
@@ -133,6 +132,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		
 		shipUp.setPreferredSize(new Dimension(Width - 20, 50));
 		shipUp.setMinimumSize(shipUp.getPreferredSize());
+		shipUp.setIcon(Resource.nextShip);
 		LF.Button(shipUp);
 		
 		done.addActionListener(this);
@@ -157,6 +157,8 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		else if("Dual Lasers".equalsIgnoreCase(ae.getActionCommand()))
 		{
 			state.Dual();
+			dual.setEnabled(false);
+			dual.setBackground(Color.BLACK);
 		}
 		else if("DAMAGE UPGRADE".equalsIgnoreCase(ae.getActionCommand()))
 		{
@@ -195,12 +197,6 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
-		try
-		{
-        	star.draw(g2d);
-		}
-		catch(NullPointerException e)
-		{
-		}
+        star.draw(g2d);
 	}
 }

@@ -35,6 +35,8 @@ public class Resource
 	
 	public static Image currentShip;
 	
+	public static ImageIcon hullShip;
+	public static ImageIcon nextShip;
 	public static ImageIcon dualLaser;
 	public static ImageIcon spreadLaser;
 	public static ImageIcon rapidLaser;
