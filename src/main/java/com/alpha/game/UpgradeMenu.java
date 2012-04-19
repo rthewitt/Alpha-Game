@@ -6,6 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.ImageObserver;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,9 +21,10 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	private Control control;
 	private Star star;
 	private int Width = 0, Height = 0; 
-	private GameState stat;
+	private GameState state;
 	private LandF LF = new LandF();
 	private GridLayout layout = new GridLayout(0,1);
+	JLabel label = new JLabel();
 	
 	private JTabbedPane Bar = new JTabbedPane();
 	JButton done = new JButton("Next Level");
@@ -32,26 +36,24 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	JButton speed = new JButton("SPEED UP");
 	JButton hull = new JButton("HULL UP");
 	JButton shipUp = new JButton("UPGRADE SHIP");
+	private ImageObserver observer;
 	
 	UpgradeMenu(int x, int y, Control con, GameState s)
 	{
-		stat = s;
+		state = s;
 		control = con;
 		Width = x - 8;
 		Height = y - 31;
 		setVisible(true);
 		
 		setBackground(Color.BLACK);
-		
 		star = new Star(Width, Height, this);
 		star.setNumber(50);
 		star.start();
-		// Reference the class, should not be an object
-//		res = stat.getResource();
-		
 		LF.TabbedPane(Bar);
 		
 		this.setLayout(null);
+		layout.setVgap(1);
 		
 		setupButtons();
 		
@@ -63,6 +65,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		np1.add(hull);
 		np1.add(shipUp);
 		JScrollPane scroll = new JScrollPane(np1);
+		scroll.setWheelScrollingEnabled(true);
 		LF.Scroll(scroll);
 		Bar.addTab("SHIP", scroll);
 		
@@ -79,27 +82,27 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		JScrollPane scroll3 = new JScrollPane(np3);
 		Bar.addTab("SPECIAL", scroll3);
 		
-		JLabel label = new JLabel();
-		// NOOOOOOOOOOOOO!!!!!!! 
-		//label.setIcon(res.getCurrentShip());
-		label.setBounds(0, 0, 70, 70);
+		label.setIcon(new ImageIcon( state.getCurrentShip() ));
+		label.setBounds(0, 0, state.getCurrentShip().getWidth(observer), state.getCurrentShip().getHeight(observer));
 		
 		add(label);
 		add(Bar);
 		add(done);
 		
 		setBounds(0, 0, Width, Height);
-		Bar.setBounds(0, Height/2, 495, 200);
+		Bar.setBounds(0, 200, 495, 200);
 		done.setBounds(0, Height - 30, Width, Height);
 		done.setSize(Width, 30);
 	}
 
+	// TODO Set the current, next and hull ship at the start of this context
 	public void setupButtons()
 	{
 		LF.Button(done);
 		
 		dual.setPreferredSize(new Dimension(Width - 20, 50));
 		dual.setMinimumSize(dual.getPreferredSize());
+		dual.setIcon(new ImageIcon(Resource.IMG_DUAL_LASER));
 		LF.Button(dual);
 		
 		damage.setPreferredSize(new Dimension(Width - 20, 50));
@@ -116,23 +119,31 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		
 		life.setPreferredSize(new Dimension(Width - 20, 50));
 		life.setMinimumSize(life.getPreferredSize());
+		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
 		LF.Button(life);
 		
 		speed.setPreferredSize(new Dimension(Width - 20, 50));
 		speed.setMinimumSize(speed.getPreferredSize());
+		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
 		LF.Button(speed);
 		
 		hull.setPreferredSize(new Dimension(Width - 20, 50));
 		hull.setMinimumSize(hull.getPreferredSize());
+		hull.setIcon(state.getHullShip());
 		LF.Button(hull);
-		if(stat.getHull())
+		if(state.getHull())
 		{
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
 		}
 		
+		if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9)
+		{
+			shipUp.setEnabled(false);
+		}
 		shipUp.setPreferredSize(new Dimension(Width - 20, 50));
 		shipUp.setMinimumSize(shipUp.getPreferredSize());
+		shipUp.setIcon(state.getNextShip());
 		LF.Button(shipUp);
 		
 		done.addActionListener(this);
@@ -148,37 +159,65 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	
 	public void actionPerformed(ActionEvent ae)
 	{
-		if("Next Level".equalsIgnoreCase(ae.getActionCommand())){
-			
+		if("Next Level".equalsIgnoreCase(ae.getActionCommand()))
+		{	
 			star = null; done.setVisible(false);
 			done = null;
 			control.RunGame(3);
-			
-		} else if("Dual Lasers".equalsIgnoreCase(ae.getActionCommand()))
-			stat.Dual();
-			
+		}
+		else if("Dual Lasers".equalsIgnoreCase(ae.getActionCommand()))
+		{
+			state.Dual();
+			dual.setEnabled(false);
+			dual.setBackground(Color.BLACK);
+		}
 		else if("DAMAGE UPGRADE".equalsIgnoreCase(ae.getActionCommand()))
-			stat.DamageUp(5);
-			
+		{
+			state.DamageUp(5);
+		}	
 		else if("ALSER SIGHT".equalsIgnoreCase(ae.getActionCommand()))
-			stat.addLaser();
-			
+		{
+			state.addLaser();
+		}	
 		else if("MACHINE GUN".equalsIgnoreCase(ae.getActionCommand()))
-			stat.addMachGun();
-			
+		{
+			state.addMachGun();
+		}	
 		else if("LIFE UP".equalsIgnoreCase(ae.getActionCommand()))
-			stat.LifeUp(2);
-			
+		{
+			state.LifeUp(2);
+		}
 		else if("SPEED UP".equalsIgnoreCase(ae.getActionCommand()))
-			stat.IncrementSpeed();		
-		
-		else if("HULL UP".equalsIgnoreCase(ae.getActionCommand())) {
-			stat.HullUp();
+		{
+			state.IncrementSpeed();		
+		}
+		else if("HULL UP".equalsIgnoreCase(ae.getActionCommand()))
+		{
+			state.HullUp();
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
-		
-		} else if("UPGRADE SHIP".equalsIgnoreCase(ae.getActionCommand()))
-			stat.UpgradeShip();
+			state.updateShip();
+			label.setBounds(0, 0, state.getCurrentShip().getWidth(observer), state.getCurrentShip().getHeight(observer));
+			label.setIcon(new ImageIcon(state.getCurrentShip()));
+			hull.setIcon(state.getHullShip());
+			shipUp.setIcon(state.getNextShip());
+		}
+		else if("UPGRADE SHIP".equalsIgnoreCase(ae.getActionCommand()))
+		{
+			state.UpgradeShip();
+			state.updateShip();
+			state.HullDown();
+			hull.setEnabled(true);
+			label.setBounds(0, 0, state.getCurrentShip().getWidth(observer), state.getCurrentShip().getHeight(observer));
+			label.setIcon(new ImageIcon(state.getCurrentShip()));
+			hull.setIcon(state.getHullShip());
+			shipUp.setIcon(state.getNextShip());
+			
+			if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9)
+			{
+				shipUp.setEnabled(false);
+			}
+		}
 	}
 	
 	public void	paintComponent(Graphics g)  
@@ -186,12 +225,6 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
-		try
-		{
-        	star.draw(g2d);
-		}
-		catch(NullPointerException e)
-		{
-		}
+        star.draw(g2d);
 	}
 }

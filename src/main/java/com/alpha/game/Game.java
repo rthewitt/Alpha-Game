@@ -16,14 +16,11 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel implements KeyListener, MouseListener
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private int Width, Height;
+	private int width, height;
 	Vector<Beam> Beams = new Vector<Beam>(0, 0);
 	private Vector<Ship> Ships = new Vector<Ship>();
-	Vector<Scout> Scouts = new Vector<Scout>(0, 0);
+	Vector<Enemy> Scouts = new Vector<Enemy>(0, 0);
 	private int check = 0, Clicks = 0;
 	int locX = 250, locY = 700;
 	
@@ -46,20 +43,20 @@ public class Game extends JPanel implements KeyListener, MouseListener
 		state = s;
 		state.addMe(this);
 		state.getSpeed();
-		Width = pwid;
-		Height = pht;
-		setSize(Width, Height);
+		width = pwid;
+		height = pht;
+		setSize(width, height);
 		
 		setVisible(true);
 		addKeyListener(this);
 		
 		setBackground(Color.BLACK);
-		
-		Ship newShip = new Ship(this, state.getShipUp(), state.getHull());
+		state.updateShip();
+		Ship newShip = new Ship(this, state.getShip(), state.getHull());
 		Ships.addElement(newShip);
 		newShip.start();
 		
-		star = new Star(Width, Height, this);
+		star = new Star(width, height, this);
 		star.setNumber(50);
 		star.start();
 		
@@ -84,7 +81,7 @@ public class Game extends JPanel implements KeyListener, MouseListener
 		return Beams;
 	}
 	
-	public Vector<Scout> getVector2()
+	public Vector<Enemy> getVector2()
 	{
 		return Scouts;
 	}
@@ -93,9 +90,36 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	{
 		if(Clicks < 6)
 		{
-			Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state, 1);
-			Beams.addElement(newBeam);
-			newBeam.start();
+			if(state.getDual())
+			{
+				Beam newBeam = new Beam(getLocX() - 15, getLocY(), this, state);
+				Beams.addElement(newBeam);
+				newBeam.setSpeed(3);
+				
+			
+				Beam newBeam1 = new Beam(getLocX() + 15, getLocY(), this, state);
+				Beams.addElement(newBeam1);
+				newBeam1.setDirX(-1);
+				newBeam1.setDirY(3);
+				newBeam1.setSpeed(9);
+				
+				Beam newBeam2 = new Beam(getLocX() + 15, getLocY(), this, state);
+				Beams.addElement(newBeam2);
+				newBeam2.setDirX(1);
+				newBeam2.setDirY(3);
+				newBeam1.setSpeed(9);
+				
+				newBeam.start();
+				newBeam1.start();
+				newBeam2.start();
+			}
+			else
+			{
+				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state);
+				Beams.addElement(newBeam);
+				newBeam.setSpeed(3);
+				newBeam.start();
+			}
 		}
 		else
 		{
@@ -152,7 +176,7 @@ public class Game extends JPanel implements KeyListener, MouseListener
 		{
 			while(pressed)
 			{
-				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state, 1);
+				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state);
 				Beams.addElement(newBeam);
 				newBeam.start();
 			}
@@ -167,6 +191,16 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	public void setLocY(int y)
 	{
 		locY = y;
+	}
+	
+	public int getScreenWidth()
+	{
+		return width;
+	}
+	
+	public int getScreenHeight()
+	{
+		return height;
 	}
 	
 	public int getLocX()
@@ -185,19 +219,19 @@ public class Game extends JPanel implements KeyListener, MouseListener
 	}
 	
 	public Dimension getPreferredSize()
-   {
-      return new Dimension(Width, Height);
-   }
+	{
+      return new Dimension(width, height);
+	}
 	
 	public void ChooseLevel()
 	{
 		switch(state.getLevel())
 		{
-			case 1: lvl = new Lvl1(Width, Height, this, state); break;
+			case 1: lvl = new Lvl1(width, height, this, state); break;
 			
-			case 2: lvl2 = new Lvl2(Width, Height, this, state); break;
+			case 2: lvl2 = new Lvl2(width, height, this, state); break;
 			
-			case 3: lvl3 = new Lvl3(Width, Height, this, state); break;
+			case 3: lvl3 = new Lvl3(width, height, this, state); break;
 		}
 	}
 	

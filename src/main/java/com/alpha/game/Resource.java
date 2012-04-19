@@ -1,5 +1,6 @@
 package com.alpha.game;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -37,7 +38,18 @@ public class Resource
 //		codePath = Resource.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	}
 	
+/* TODO convert these images to "my" method
+
+	public static BufferedImage bolt;
+	public static BufferedImage exploding;
+	public static BufferedImage laser;
+	public static BufferedImage pen;
+	public static BufferedImage poison;
+	public static BufferedImage wave;
+	public static BufferedImage currentBeam;
 	
+	public static Image currentShip;
+*/
 	
 	// TODO talk to me about a better way to get the your ships' current image
 	public static BufferedImage IMG_SMALL_GREEN;
@@ -62,6 +74,26 @@ public class Resource
 	public static BufferedImage IMG_RED_HEAVY;
 	public static BufferedImage IMG_BLUE_FIGHTER;
 	public static BufferedImage IMG_BLUE_HEAVY;
+	
+	// New additions by Brennan
+	public static BufferedImage IMG_BOLT;
+	public static BufferedImage IMG_EXPLODING;
+	public static BufferedImage IMG_LASER;
+	public static BufferedImage IMG_PEN;
+	public static BufferedImage IMG_POISON;
+	public static BufferedImage IMG_WAVE;
+	public static BufferedImage IMG_CURRENT_BEAM;
+	public static BufferedImage IMG_DUAL_LASER;
+	public static BufferedImage IMG_SPREAD_LASER;
+	public static BufferedImage IMG_RAPID_LASER;
+	public static BufferedImage IMG_HEALTH;
+	public static BufferedImage IMG_SPEED;
+	
+	public static ImageIcon ICON_SMALL_GREEN_ICON;
+	public static ImageIcon ICON_SMALL_RED_ICON;
+	public static ImageIcon ICON_SMALL_BLUE_ICON;
+	
+	
 	
 	public static ImageIcon ICON_DUAL_LASER;
 	/*
@@ -128,6 +160,25 @@ public class Resource
 //			redHeavy = ImageIO.read( getImagePath("RedHeavy.png");
 			IMG_BLUE_FIGHTER = getImage("blueFighter.png");
 			IMG_BLUE_HEAVY = getImage("BlueHeavy.png");
+
+			IMG_BOLT = getImage("dropBolt.png");
+			IMG_EXPLODING = getImage("dropExploding.png");
+			IMG_LASER = getImage("dropLaser.png");
+			IMG_PEN = getImage("dropPen.png");
+			IMG_POISON = getImage("dropPoison.png");
+			IMG_WAVE = getImage("dropWave.png");
+			
+			IMG_DUAL_LASER = getImage("menuDual.png");
+			IMG_SPREAD_LASER = getImage("menuSpread.png");
+			IMG_RAPID_LASER = getImage("menuRapid.png");
+			IMG_HEALTH = getImage("Health.png");
+			IMG_SPEED = getImage("Speed.png");
+
+	        // Making these conform to API call
+	        ICON_SMALL_GREEN_ICON = new ImageIcon( getImage("smallGreen.png") );
+	        ICON_SMALL_RED_ICON = new ImageIcon( getImage("smallRed.png") );
+	        ICON_SMALL_BLUE_ICON = new ImageIcon( getImage("smallBlue.png") );
+
 		}
 		catch(IOException ioe) {
 			alphaLog.error("Problem encountered while loading ship images", ioe);

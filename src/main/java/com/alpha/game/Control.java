@@ -33,7 +33,7 @@ public class Control extends JFrame
 		{
 			nullIt(con);
 		}
-		Menu = new Menu(Width, Height, this);
+		Menu = new Menu(Width, Height, this, state);
 		add(Menu, BorderLayout.CENTER);
 	}
 	
@@ -61,7 +61,7 @@ public class Control extends JFrame
 	{
 		switch(con)
 		{
-			case 1: Menu = null; break;
+			case 1: remove(Menu); Menu = null; break;
 			
 			case 2: remove(game); game = null; break;
 			

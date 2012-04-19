@@ -43,12 +43,12 @@ public class Lvl3
 			
 			if(Sprites > S)
 			{
-				Scout s = new Scout(Width, Height, game, state, Type);
+				Enemy s = new Enemy(Width, Height, game, state, Type);
 				s.setPosition(Mod1);
 				game.Scouts.addElement(s);
 				s.start();
 				
-				Scout s2 = new Scout(Width, Height, game, state, Type);
+				Enemy s2 = new Enemy(Width, Height, game, state, Type);
 				s2.setPosition(Mod2);
 				game.Scouts.addElement(s2);
 				s2.start();
