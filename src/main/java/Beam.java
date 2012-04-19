@@ -1,5 +1,3 @@
-
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
@@ -9,10 +7,9 @@ public class Beam extends Thread
 	private boolean draw = true;
 	private Ellipse2D.Double thisBeam;
 	
-	private int	speed = 3;
-	private int	diry = 1, dirx;
+	private int	speed = 1;
+	private int	diry = 1, dirx = 0;
 	private int	size = 7;
-	private int Type = 0;
 	int x, y;
 	private int Counter = 0;
 	
@@ -21,14 +18,12 @@ public class Beam extends Thread
 	private GameState state;
 	private Collision col;
 	
-	public Beam(int StartX,	int StartY, Game g, GameState s, int t)
+	public Beam(int StartX,	int StartY, Game g, GameState s)
 	{
 		state = s;
 		col = state.getCollision();
-		Type = t;
 		gamePanel = g;
-		dirx = StartX;
-		thisBeam	= new	Ellipse2D.Double(StartX, StartY, size, size);
+		thisBeam = new Ellipse2D.Double(StartX, StartY, size, size);
 		BeamStarted	= true;
 	}
 	
@@ -36,15 +31,7 @@ public class Beam extends Thread
 	{
 		if(thisBeam	!=	null && BeamStarted && draw)
 		{
-			if(Type == 1)
-			{
-				g2d.setColor(Color.GREEN);
-			}
-			else if(Type == 2)
-			{
-				g2d.setColor(Color.RED);
-			}
-			g2d.fill(thisBeam);
+			g2d.drawImage(Resource.bolt, getX(), getY(), null);
 		}
 	}
 	
@@ -53,12 +40,27 @@ public class Beam extends Thread
 		draw = false;
 	}
 	
+	public void setDirX(int dir)
+	{
+		dirx = dir;
+	}
+	
+	public void setDirY(int dir)
+	{
+		diry = dir;
+	}
+	
+	public void setSpeed(int s)
+	{
+		speed = s;
+	}
+	
 	@SuppressWarnings("deprecation")
 	public void	run()
 	{
 		while(BeamStarted)
 		{
-			if(Counter > 2)
+			if(Counter > 9)
 			{
 				col.TestBeam(this);
 			}
@@ -76,37 +78,25 @@ public class Beam extends Thread
 				System.out.println("Woke up prematurely");
 			}
 			
-			int OldY	= (int) thisBeam.getY();
-			int NewY	= OldY;
-			x = (int)thisBeam.getX();
+			int OldY = (int) thisBeam.getY();
+			int NewY = OldY;
+			int OldX = (int) thisBeam.getX();
+			int NewX = OldX;
 			
-			if(Type == 1)
+			NewY -= diry;
+			NewX += dirx;
+			
+			if(NewY < 0 || NewX < 0 || NewX > 500)
 			{
-				NewY -= diry;
-				
-				if(NewY < 0)
-				{
-					gamePanel.IncrementChecks();
-					BeamStarted	= false;
-					beam.stop();
-				}
-			}
-			else if(Type == 2)
-			{
-				NewY += diry;
-				
-				x = (int)thisBeam.getX();
-				
-				if(NewY > 800)
-				{
-					BeamStarted	= false;
-					beam.stop();
-				}
+				gamePanel.IncrementChecks();
+				BeamStarted	= false;
+				beam.stop();
 			}
 			
 			y = NewY;
+			x = NewX;
 			
-			thisBeam.setFrame(dirx,	NewY,	size,	size);
+			thisBeam.setFrame(NewX,	NewY,	size,	size);
 			
 			gamePanel.repaint();
 		}

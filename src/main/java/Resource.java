@@ -33,6 +33,14 @@ public class Resource
 	public static BufferedImage blueFighter;
 	public static BufferedImage blueHeavy;
 	
+	public static BufferedImage bolt;
+	public static BufferedImage exploding;
+	public static BufferedImage laser;
+	public static BufferedImage pen;
+	public static BufferedImage poison;
+	public static BufferedImage wave;
+	public static BufferedImage currentBeam;
+	
 	public static Image currentShip;
 	
 	public static ImageIcon hullShip;
@@ -40,6 +48,11 @@ public class Resource
 	public static ImageIcon dualLaser;
 	public static ImageIcon spreadLaser;
 	public static ImageIcon rapidLaser;
+	public static ImageIcon smallGreenIcon;
+	public static ImageIcon smallRedIcon;
+	public static ImageIcon smallBlueIcon;
+	public static ImageIcon health;
+	public static ImageIcon speed;
 	
 	Resource()
 	{
@@ -73,13 +86,25 @@ public class Resource
 			blueFighter = ImageIO.read(Resource.class.getResource("images" + sep + "blueFighter.png"));
 			blueHeavy = ImageIO.read(Resource.class.getResource("images" + sep + "BlueHeavy.png"));
 			
+			bolt = ImageIO.read(Resource.class.getResource("images" + sep + "dropBolt.png"));
+			exploding = ImageIO.read(Resource.class.getResource("images" + sep + "dropExploding.png"));
+			laser = ImageIO.read(Resource.class.getResource("images" + sep + "dropLaser.png"));
+			pen = ImageIO.read(Resource.class.getResource("images" + sep + "dropPen.png"));
+			poison = ImageIO.read(Resource.class.getResource("images" + sep + "dropPoison.png"));
+			wave = ImageIO.read(Resource.class.getResource("images" + sep + "dropWave.png"));
+			
 	        dualLaser = new ImageIcon(Resource.class.getResource("images" + sep + "menuDual.png"));
 	        spreadLaser = new ImageIcon(Resource.class.getResource("images" + sep + "menuSpread.png"));
 	        rapidLaser = new ImageIcon(Resource.class.getResource("images" + sep + "menuRapid.png"));
+	        smallGreenIcon = new ImageIcon(Resource.class.getResource("images" + sep + "smallGreen.png"));
+	        smallRedIcon = new ImageIcon(Resource.class.getResource("images" + sep + "smallRed.png"));
+	        smallBlueIcon = new ImageIcon(Resource.class.getResource("images" + sep + "smallBlue.png"));
+	        health = new ImageIcon(Resource.class.getResource("images" + sep + "Health.png"));
+	        speed = new ImageIcon(Resource.class.getResource("images" + sep + "Speed.png"));
 		}
 		catch(IOException e)
 		{
-			System.out.println("Cannot find ship");
+			System.out.println("Cannot locate an image");
 		}
 	}
 }

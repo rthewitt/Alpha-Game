@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.ImageObserver;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,6 +23,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	private GameState state;
 	private LandF LF = new LandF();
 	private GridLayout layout = new GridLayout(0,1);
+	JLabel label = new JLabel();
 	
 	private JTabbedPane Bar = new JTabbedPane();
 	JButton done = new JButton("Next Level");
@@ -32,6 +35,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	JButton speed = new JButton("SPEED UP");
 	JButton hull = new JButton("HULL UP");
 	JButton shipUp = new JButton("UPGRADE SHIP");
+	private ImageObserver observer;
 	
 	UpgradeMenu(int x, int y, Control con, GameState s)
 	{
@@ -77,9 +81,8 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		JScrollPane scroll3 = new JScrollPane(np3);
 		Bar.addTab("SPECIAL", scroll3);
 		
-		JLabel label = new JLabel();
 		label.setIcon(new ImageIcon(Resource.currentShip));
-		label.setBounds(0, 0, 70, 70);
+		label.setBounds(0, 0, Resource.currentShip.getWidth(observer), Resource.currentShip.getHeight(observer));
 		
 		add(label);
 		add(Bar);
@@ -114,10 +117,12 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		
 		life.setPreferredSize(new Dimension(Width - 20, 50));
 		life.setMinimumSize(life.getPreferredSize());
+		life.setIcon(Resource.health);
 		LF.Button(life);
 		
 		speed.setPreferredSize(new Dimension(Width - 20, 50));
 		speed.setMinimumSize(speed.getPreferredSize());
+		speed.setIcon(Resource.speed);
 		LF.Button(speed);
 		
 		hull.setPreferredSize(new Dimension(Width - 20, 50));
@@ -130,6 +135,10 @@ public class UpgradeMenu extends JPanel implements ActionListener
 			hull.setBackground(Color.BLACK);
 		}
 		
+		if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9)
+		{
+			shipUp.setEnabled(false);
+		}
 		shipUp.setPreferredSize(new Dimension(Width - 20, 50));
 		shipUp.setMinimumSize(shipUp.getPreferredSize());
 		shipUp.setIcon(Resource.nextShip);
@@ -185,10 +194,27 @@ public class UpgradeMenu extends JPanel implements ActionListener
 			state.HullUp();
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
+			state.updateShip();
+			label.setBounds(0, 0, Resource.currentShip.getWidth(observer), Resource.currentShip.getHeight(observer));
+			label.setIcon(new ImageIcon(Resource.currentShip));
+			hull.setIcon(Resource.hullShip);
+			shipUp.setIcon(Resource.nextShip);
 		}
 		else if("UPGRADE SHIP".equalsIgnoreCase(ae.getActionCommand()))
 		{
 			state.UpgradeShip();
+			state.updateShip();
+			state.HullDown();
+			hull.setEnabled(true);
+			label.setBounds(0, 0, Resource.currentShip.getWidth(observer), Resource.currentShip.getHeight(observer));
+			label.setIcon(new ImageIcon(Resource.currentShip));
+			hull.setIcon(Resource.hullShip);
+			shipUp.setIcon(Resource.nextShip);
+			
+			if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9)
+			{
+				shipUp.setEnabled(false);
+			}
 		}
 	}
 	

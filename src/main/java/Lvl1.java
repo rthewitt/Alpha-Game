@@ -26,7 +26,7 @@ public class Lvl1
 		{
 			if(Sprites > 0)
 			{
-				Scout s = new Scout(Width, Height, game, state, 1);
+				Enemy s = new Enemy(Width, Height, game, state, 1);
 				game.Scouts.addElement(s);
 				s.start();
 				Sprites --;

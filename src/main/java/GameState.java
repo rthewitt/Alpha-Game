@@ -1,8 +1,12 @@
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
+
 
 public class GameState
 {
 	private int Level;
-	private int ShipUp;
+	private int ship = 0;
 	private int Speed;
 	private int Enemies;
 	private int Life;
@@ -20,12 +24,12 @@ public class GameState
 	
 	GameState()
 	{
+		
 	}
 	
 	public void init()
 	{
 		Level = 1;
-		ShipUp = 1;
 		Damage = 5;
 		Life = 20;
 		Speed = 5;
@@ -33,6 +37,74 @@ public class GameState
 		Laser = false;
 		HullUp = false;
 		Dual = false;
+	}
+	
+	public void updateShip()
+	{
+		BufferedImage img = null;
+		if(getHull())
+		{
+			switch(getShip())
+			{
+				case 1: img = Resource.smallGreenArmor; break;
+				
+				case 2: img = Resource.medGreenArmor; break;
+				
+				case 3: img = Resource.largeGreenArmor; break;
+				
+				case 4: img = Resource.smallRedArmor; break;
+				
+				case 5: img = Resource.medRedArmor; break;
+				
+				case 6: img = Resource.largeRedArmor; break;
+				
+				case 7: img = Resource.smallBlueArmor; break;
+				
+				case 8: img = Resource.medBlueArmor; break;
+				
+				case 9: img = Resource.largeBlueArmor; break;
+			}
+		}
+		else
+		{
+			switch(getShip())
+			{
+				case 1: img = Resource.smallGreen;
+					Resource.hullShip = new ImageIcon(Resource.smallGreenArmor);
+					Resource.nextShip = new ImageIcon(Resource.medGreen); break;
+				
+				case 2: img = Resource.medGreen;
+					Resource.hullShip = new ImageIcon(Resource.medGreenArmor);
+					Resource.nextShip = new ImageIcon(Resource.largeGreen); break;
+				
+				case 3: img = Resource.largeGreen;
+					Resource.hullShip = new ImageIcon(Resource.largeGreenArmor); break;
+					
+				case 4: img = Resource.smallRed;
+					Resource.hullShip = new ImageIcon(Resource.smallRedArmor);
+					Resource.nextShip = new ImageIcon(Resource.medRed); break;
+				
+				case 5: img = Resource.medRed;
+					Resource.hullShip = new ImageIcon(Resource.medRedArmor);
+					Resource.nextShip = new ImageIcon(Resource.largeRed); break;
+				
+				case 6: img = Resource.largeRed;
+					Resource.hullShip = new ImageIcon(Resource.largeRedArmor); break;
+				
+				case 7: img = Resource.smallBlue;
+					Resource.hullShip = new ImageIcon(Resource.smallBlueArmor);
+					Resource.nextShip = new ImageIcon(Resource.medBlue); break;
+				
+				case 8: img = Resource.medBlue;
+					Resource.hullShip = new ImageIcon(Resource.medBlueArmor);
+					Resource.nextShip = new ImageIcon(Resource.largeBlue); break;
+				
+				case 9: img = Resource.largeBlue;
+					Resource.hullShip = new ImageIcon(Resource.largeBlueArmor); break;
+			}
+		}
+		
+		Resource.currentShip = Toolkit.getDefaultToolkit().createImage(img.getSource());
 	}
 	
 	public void addMe(Game g)
@@ -88,14 +160,19 @@ public class GameState
 		Level++;
 	}
 	
-	public int getShipUp()
+	public int getShip()
 	{
-		return ShipUp;
+		return ship;
 	}
 	
 	public void UpgradeShip()
 	{
-		ShipUp++;
+		ship++;
+	}
+	
+	public void setShip(int s)
+	{
+		ship = s;
 	}
 	
 	public int getEnemies()
@@ -191,6 +268,11 @@ public class GameState
 	public void HullUp()
 	{
 		HullUp = true;
+	}
+	
+	public void HullDown()
+	{
+		HullUp = false;
 	}
 	
 	public boolean getHull()
