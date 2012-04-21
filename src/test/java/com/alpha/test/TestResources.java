@@ -50,12 +50,14 @@ public class TestResources {
 		assert(true);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test
 	public void testSystemResources() {
 		BufferedImage testImage;
 		// Should result in nullpointer exception
 		try{
 			testImage = Resource.getImageFromSystemPath("only-in-test");
+			@SuppressWarnings("static-access")
 			InputStream testStream = this.getClass().getClassLoader().getSystemResourceAsStream("/images" + System.getProperty("file.separator") + "only-in-test");
 			if(testStream == null) throw new IOException();
 			testImage = ImageIO.read(testStream);

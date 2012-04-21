@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
-public class GameState
+public class GameState extends Thread
 {
 	private int Level;
 	private int ship = 0;
@@ -25,7 +25,7 @@ public class GameState
 	
 	// This should not be kept in Resource
 	// also, cannot as it's not an object
-	private Image currentShip;
+	static Image currentShip; // Changed to static - it can't find an instance of it for some reason
 	private ImageIcon hullShip;
 	private ImageIcon nextShip;
 	
@@ -111,18 +111,21 @@ public class GameState
 			}
 		}
 		
-		this.currentShip = Toolkit.getDefaultToolkit().createImage(img.getSource());
+		GameState.currentShip = Toolkit.getDefaultToolkit().createImage(img.getSource());
 	}
 	
-	public Image getCurrentShip() {
-		return this.currentShip;
+	public Image getCurrentShip()
+	{
+		return currentShip;
 	}
 	
-	public ImageIcon getNextShip() {
-			return this.nextShip;
-		}
+	public ImageIcon getNextShip()
+	{
+		return this.nextShip;
+	}
 
-	public ImageIcon getHullShip() {
+	public ImageIcon getHullShip()
+	{
 		return this.hullShip;
 	}
 	

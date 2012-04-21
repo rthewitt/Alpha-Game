@@ -8,11 +8,11 @@ public class Alpha
 	{
 		try {
 			Resource.init();
-			GameState stat = new GameState();
-			stat.init();
-			Collision col = new Collision(stat);
-			stat.addMe(col);
-			Control con = new Control(stat);
+			GameState state = new GameState();
+			state.init();
+			Collision col = new Collision(state);
+			state.addMe(col);
+			Control con = new Control(state);
 		} catch(Exception e){}
 		/*
 		catch(AlphaResourceException are) {

@@ -1,5 +1,4 @@
 package com.alpha.game;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,8 +15,8 @@ public class Menu extends JPanel implements ActionListener
 	JButton ship1 = new JButton("1");
 	JButton ship2 = new JButton("2");
 	JButton ship3 = new JButton("3");
-	JButton instructions = new JButton("Instructions");
-	JButton credits	= new JButton("Credits");
+	JButton instructions = new JButton("Instructions"); //Does nothing
+	JButton credits	= new JButton("Credits");// Does nothing
 	
 	private int Width, Height;
 	private Control control;

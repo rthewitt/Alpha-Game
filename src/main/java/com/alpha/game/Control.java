@@ -63,7 +63,7 @@ public class Control extends JFrame
 		{
 			case 1: remove(Menu); Menu = null; break;
 			
-			case 2: remove(game); game = null; break;
+			case 2: removeAll(); game = null; break;
 			
 			case 3: remove(Up); Up = null; break;
 		}

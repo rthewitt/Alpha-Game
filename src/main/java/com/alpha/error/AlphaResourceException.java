@@ -4,12 +4,14 @@ import java.io.IOException;
 
 import com.alpha.game.Resource;
 
+@SuppressWarnings("serial")
 public class AlphaResourceException extends IOException {
 	
 	String errorText;
 	
 	private static final String resourceInfo = Resource.getInformation();
 	
+	@SuppressWarnings("unused")
 	private AlphaResourceException() {
 		// We need a message to be useful here...
 	}

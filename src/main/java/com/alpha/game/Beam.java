@@ -1,6 +1,5 @@
 package com.alpha.game;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 

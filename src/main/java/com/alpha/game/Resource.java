@@ -1,6 +1,5 @@
 package com.alpha.game;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -13,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.alpha.error.AlphaResourceException;
 
-public class Resource
+public class Resource extends Thread
 {
 	public static final Logger alphaLog = Logger.getLogger(Resource.class);
 	
@@ -183,7 +182,9 @@ public class Resource
 		catch(IOException ioe) {
 			alphaLog.error("Problem encountered while loading ship images", ioe);
 			throw new AlphaResourceException(ioe);
-		} catch(Exception e) {
+		}
+		catch(Exception e)
+		{
 			throw new AlphaResourceException(e); // will add valuable information
 		}
 	}
@@ -211,6 +212,7 @@ public class Resource
 //		return (BufferedImage) (ImageIO.read(Resource.class.getResource(codePath + "images" + SEPARATOR + name)));
 	}
 	
+	@SuppressWarnings("unused")
 	private static URL getImageURL(String name) throws MalformedURLException {
 		return null;
 //		return new URL("file://" + imagesPath + name);
@@ -224,6 +226,7 @@ public class Resource
 	}
 	
 	// used for testing different classloaders during different build phases
+	@SuppressWarnings("static-access")
 	public static BufferedImage getImageFromSystemPath(String imgName) throws IOException {
 		return (BufferedImage)( ImageIO.read(
 				classLoader.getSystemResourceAsStream("images" + SEPARATOR + imgName)) );

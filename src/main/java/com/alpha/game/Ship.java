@@ -1,7 +1,6 @@
 package com.alpha.game;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 
 public class Ship extends Thread
 {
@@ -9,7 +8,6 @@ public class Ship extends Thread
 	// Changing to GameState.  You can get image from there...
 	// getting the changing static image from Resource is wrong
 	// logically speaking.  Let me know if this is a problem.
-	private GameState gameState; // TODO wire this sucker in
 	private Game gamePanel;
 	
 	public Ship(Game g, int ship, boolean hull)
@@ -21,7 +19,7 @@ public class Ship extends Thread
 	{
 		if(ShipStarted)
 		{
-			g2d.drawImage(gameState.getCurrentShip(), gamePanel.getLocX() - 15, gamePanel.getLocY(), null);
+			g2d.drawImage(GameState.currentShip, gamePanel.getLocX() - 15, gamePanel.getLocY(), null);
 		}
 	}
 }

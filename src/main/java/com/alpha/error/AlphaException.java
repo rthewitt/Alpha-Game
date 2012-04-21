@@ -1,8 +1,10 @@
 package com.alpha.error;
 
+@SuppressWarnings("serial")
 public class AlphaException extends Exception {
 	String errorText;
 	
+	@SuppressWarnings("unused")
 	private AlphaException() {
 		// no.
 	}
