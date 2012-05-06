@@ -1,4 +1,5 @@
 package com.alpha.game;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,39 +8,48 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Menu extends JPanel implements ActionListener
 {
-	private static final long serialVersionUID = 1L;
-	
 	JButton go = new JButton("Start a New Game");
 	JButton ship1 = new JButton("1");
 	JButton ship2 = new JButton("2");
 	JButton ship3 = new JButton("3");
-	JButton instructions = new JButton("Instructions"); //Does nothing
-	JButton credits	= new JButton("Credits");// Does nothing
+	JButton instruct = new JButton("Instructions");
+	JButton credit	= new JButton("Credits");
+	JButton done = new JButton("Done");
 	
-	private int Width, Height;
+	JPanel instructions = new JPanel();
+	JPanel credits = new JPanel();
+	
+	private int width, height;
 	private Control control;
 	private LandF LF = new LandF();
 	
-	String ship1Tip = "<html>Green<br>Speed = 2<br>Power = 2<br>Defense = 2</html>";
-	String ship2Tip = "<html>Red<br>Speed = 1<br>Power = 3<br>Defense = 2</html>";
-	String ship3Tip = "<html>Blue<br>Speed = 3<br>Power = 2<br>Defense = 1</html>";
+	String ship1Tip = "<html>Green\nSpeed = 2\nPower = 2\nDefense = 2</html>";
+	String ship2Tip = "<html>Red\nSpeed = 1\nPower = 3\nDefense = 2</html>";
+	String ship3Tip = "<html>Blue\nSpeed = 3\nPower = 2\nDefense = 1</html>";
+	
+	String stringIntstruct = "This will be instructions";
+	String stringCredits = " Producer: Brennan Zuber\n Programmer: Brennan Zuber\n Structural design: Ryan Hewitt\n Graphics: Elyse Zuber\n Music: David Torres\n\n" +
+			"Testers: Greg Wright - Willaim Wright - Dean Mellas - Trevor Davenport\n Various students, staff and teachers of Cerritos College";
 	
 	Star star;
 	GameState state;
+
+	private boolean drawInstructions = false;
+	private boolean drawCredits = false;
 	
 	public Menu(int w, int h, Control con, GameState s)
 	{
 		state = s;
 		control = con;
-		Width = w;
-		Height = h;
-		setSize(Width, Height);
+		width = w;
+		height = h;
+		setSize(width, height);
 		
-		star = new Star(Width, Height, this);
-		star.setNumber(50);
-		star.start();
+		star = state.getStar();
+		star.setDraw(this);
 			
 		this.setLayout(null);
 		
@@ -58,21 +68,35 @@ public class Menu extends JPanel implements ActionListener
 		setBackground(Color.BLACK);
 	}
 	
+	private void drawString(Graphics2D g2d, String text, int x, int y)
+	{
+        for (String line : text.split("\n"))
+            g2d.drawString(line, x, y += 50);
+    }
+	
 	private void buttonSetup()
 	{
 		ship1.setBounds(90, 255, 100, 50);
 		ship2.setBounds(193, 255, 100, 50);
 		ship3.setBounds(296, 255, 100, 50);
 		go.setBounds(70,150,350,100);
-		instructions.setBounds(70, 400, 350, 100);
-		credits.setBounds(70, 600, 350, 100);
+		instruct.setBounds(70, 400, 350, 100);
+		credit.setBounds(70, 600, 350, 100);
+		done.setBounds(width - 100, height - 80, 80, 30);
+		
+		instructions.setBounds(0, 0, width, height);
+		credits.setBounds(0, 0, width, height);
 		
 		LF.Button(ship1);
 		LF.Button(ship2);
 		LF.Button(ship3);
 		LF.Button(go);
-		LF.Button(instructions);
-		LF.Button(credits);
+		LF.Button(instruct);
+		LF.Button(credit);
+		LF.Button(done);
+		
+		LF.Panel(instructions);
+		LF.Panel(credits);
 		
 		ship1.setIcon(Resource.ICON_SMALL_GREEN_ICON);
 		ship2.setIcon(Resource.ICON_SMALL_RED_ICON);
@@ -83,12 +107,15 @@ public class Menu extends JPanel implements ActionListener
 		ship3.setToolTipText(ship3Tip);
 		
 		add(go);
-		add(instructions);
-		add(credits);
+		add(instruct);
+		add(credit);
 		
 		ship1.addActionListener(this);
 		ship2.addActionListener(this);
 		ship3.addActionListener(this);
+		instruct.addActionListener(this);
+		credit.addActionListener(this);
+		done.addActionListener(this);
 	}
 	
 	public void	paintComponent(Graphics g)  
@@ -96,38 +123,98 @@ public class Menu extends JPanel implements ActionListener
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
-		try
-		{
-        	star.draw(g2d);
-		}
-		catch(NullPointerException e)
-		{
-		}
+        star.draw(g2d);
+        
+        if(drawInstructions)
+        {
+        	g2d.setColor(Color.GREEN);
+        	drawString(g2d, stringIntstruct, 10, 10);
+        }
+        
+        if(drawCredits)
+        {
+        	g2d.setColor(Color.GREEN);
+        	drawString(g2d, stringCredits, 10, 10);
+        }
+        
+        repaint();
 	}
-
-	@SuppressWarnings("deprecation")
-	public void actionPerformed(ActionEvent ae)
+	
+	private void runNull()
 	{
-		if("1".equalsIgnoreCase(ae.getActionCommand()))
-		{
-			state.setShip(1);
-		}
-		else if("2".equalsIgnoreCase(ae.getActionCommand()))
-		{
-			state.setShip(4);
-		}
-		else if("3".equalsIgnoreCase(ae.getActionCommand()))
-		{
-			state.setShip(7);
-		}
-		
-		star.stop();
-		star = null;
 		go.setVisible(false);
 		go = null;
 		ship1 = null;
 		ship2 = null;
 		ship3 = null;
 		control.RunGame(1);
+	}
+	
+	public void enable(boolean b)
+	{
+		boolean o = false;
+		if(b)
+			o = false;
+		else
+			o = true;
+		
+		ship1.setVisible(b);
+		ship2.setVisible(b);
+		ship3.setVisible(b);
+		instruct.setVisible(b);
+		credit.setVisible(b);
+		go.setVisible(b);
+		done.setVisible(o);
+		
+		ship1.setEnabled(b);
+		ship2.setEnabled(b);
+		ship3.setEnabled(b);
+		instruct.setEnabled(b);
+		credit.setEnabled(b);
+		go.setEnabled(b);
+		done.setEnabled(o);
+	}
+
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource() == ship1)
+		{
+			state.setShip(1);
+			state.setSpeed(2);
+			runNull();
+		}
+		else if(ae.getSource() == ship2)
+		{
+			state.setShip(4);
+			state.setSpeed(1);
+			runNull();
+		}
+		else if(ae.getSource() == ship3)
+		{
+			state.setShip(7);
+			state.setSpeed(3);
+			runNull();
+		}
+		
+		if(ae.getSource() == instruct)
+		{
+			enable(false);
+			drawInstructions = true;
+			add(done);
+		}
+		
+		if(ae.getSource() == credit)
+		{
+			enable(false);
+			drawCredits = true;
+			add(done);
+		}
+		
+		if(ae.getSource() == done)
+		{
+			drawInstructions = false;
+			drawCredits = false;
+			enable(true);
+		}
 	}
 }

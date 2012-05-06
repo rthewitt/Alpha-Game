@@ -3,28 +3,38 @@ package com.alpha.game;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class Control extends JFrame
 {
-	private static final long serialVersionUID = 1L;
 	private Menu Menu;
 	private Game game;
 	private UpgradeMenu Up;
-	private int Width = 500, Height = 800;
 	private GameState state;
+	private int width = 500, height = 800;
+	Star star;
 	
 	Control(GameState s)
 	{
 		state = s;
 		
-		setSize(Width, Height);
+		setSize(width, height);
 		setVisible(true);
 		setResizable(false);
 		setTitle("Alpha");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		state.addMe(this);
+		startStars();
 		
 		RunMenu(0);
+	}
+	
+	void startStars()
+	{
+		star = new Star(width, height);
+		state.addStar(star);
+		star.setNumber(50);
+		star.start();
 	}
 	
 	void RunMenu(int con)
@@ -33,7 +43,7 @@ public class Control extends JFrame
 		{
 			nullIt(con);
 		}
-		Menu = new Menu(Width, Height, this, state);
+		Menu = new Menu(width, height, this, state);
 		add(Menu, BorderLayout.CENTER);
 	}
 	
@@ -43,7 +53,7 @@ public class Control extends JFrame
 		{
 			nullIt(con);
 		}
-		game = new Game(Width, Height, this, state);
+		game = new Game(width, height, this, state);
 		add(game, BorderLayout.CENTER);
 	}
 	
@@ -53,7 +63,7 @@ public class Control extends JFrame
 		{
 			nullIt(con);
 		}
-		Up = new UpgradeMenu(Width, Height, this, state);
+		Up = new UpgradeMenu(width, height, this, state);
 		add(Up, BorderLayout.CENTER);
 	}
 	
@@ -63,7 +73,7 @@ public class Control extends JFrame
 		{
 			case 1: remove(Menu); Menu = null; break;
 			
-			case 2: removeAll(); game = null; break;
+			case 2: remove(game); game = null; break;
 			
 			case 3: remove(Up); Up = null; break;
 		}

@@ -25,7 +25,8 @@ public class Resource extends Thread
 //	public static final String fullImagesPath;
 //	public static final String codePath;
 	
-	static {
+	static
+	{
 		SEPARATOR = System.getProperty("file.separator");
 		classLoader = Resource.class.getClassLoader();
 		resourceURL = Resource.class.getResource(".");
@@ -130,7 +131,8 @@ public class Resource extends Thread
 	} */
 	
 	// TODO boolean values will allow you to handle things gracefully
-	public static void init() throws AlphaResourceException {
+	public static void init() throws AlphaResourceException
+	{
 		initializeShips();
 	}
 	

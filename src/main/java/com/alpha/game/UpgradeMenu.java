@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,9 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
+@SuppressWarnings("serial")
 public class UpgradeMenu extends JPanel implements ActionListener
 {
-	private static final long serialVersionUID = 1L;
 	private Control control;
 	private Star star;
 	private int Width = 0, Height = 0; 
@@ -38,6 +37,12 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	JButton shipUp = new JButton("UPGRADE SHIP");
 	private ImageObserver observer;
 	
+	//Will be implemented later
+//	JButton replay = new JButton();
+//	JButton minus = new JButton();
+//	JButton plus = new JButton();
+//	JTextField number = new JTextField();
+	
 	UpgradeMenu(int x, int y, Control con, GameState s)
 	{
 		state = s;
@@ -47,13 +52,18 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		setVisible(true);
 		
 		setBackground(Color.BLACK);
-		star = new Star(Width, Height, this);
-		star.setNumber(50);
-		star.start();
+		star = state.getStar();
+		star.setDraw(this);
 		LF.TabbedPane(Bar);
 		
 		this.setLayout(null);
 		layout.setVgap(1);
+		
+//		number.setText("Yes");
+//		add(replay);
+//		add(minus);
+//		add(number);
+//		add(plus);
 		
 		setupButtons();
 		
@@ -98,6 +108,15 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	// TODO Set the current, next and hull ship at the start of this context
 	public void setupButtons()
 	{
+//		minus.setBounds(230, 10, 60, 50);
+//		number.setBounds(290, 10, 50, 50);
+//		plus.setBounds(340, 10, 60, 50);
+//		replay.setBounds(100, 10, 300, 50);
+		
+//		LF.Button(replay);
+//		LF.Button(plus);
+//		LF.Button(minus);
+		
 		LF.Button(done);
 		
 		dual.setPreferredSize(new Dimension(Width - 20, 50));
@@ -159,39 +178,39 @@ public class UpgradeMenu extends JPanel implements ActionListener
 	
 	public void actionPerformed(ActionEvent ae)
 	{
-		if("Next Level".equalsIgnoreCase(ae.getActionCommand()))
-		{	
+		if(ae.getSource() == done)
+		{
 			star = null; done.setVisible(false);
 			done = null;
 			control.RunGame(3);
 		}
-		else if("Dual Lasers".equalsIgnoreCase(ae.getActionCommand()))
+		else if(ae.getSource() == dual)
 		{
 			state.Dual();
 			dual.setEnabled(false);
 			dual.setBackground(Color.BLACK);
 		}
-		else if("DAMAGE UPGRADE".equalsIgnoreCase(ae.getActionCommand()))
+		else if(ae.getSource() == damage)
 		{
 			state.DamageUp(5);
 		}	
-		else if("ALSER SIGHT".equalsIgnoreCase(ae.getActionCommand()))
+		else if(ae.getSource() == laser)
 		{
 			state.addLaser();
 		}	
-		else if("MACHINE GUN".equalsIgnoreCase(ae.getActionCommand()))
+		else if(ae.getSource() == machgun)
 		{
 			state.addMachGun();
 		}	
-		else if("LIFE UP".equalsIgnoreCase(ae.getActionCommand()))
+		else if(ae.getSource() == life)
 		{
 			state.LifeUp(2);
 		}
-		else if("SPEED UP".equalsIgnoreCase(ae.getActionCommand()))
+		else if(ae.getSource() == speed)
 		{
 			state.IncrementSpeed();		
 		}
-		else if("HULL UP".equalsIgnoreCase(ae.getActionCommand()))
+		else if(ae.getSource() == hull)
 		{
 			state.HullUp();
 			hull.setEnabled(false);
@@ -202,7 +221,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 			hull.setIcon(state.getHullShip());
 			shipUp.setIcon(state.getNextShip());
 		}
-		else if("UPGRADE SHIP".equalsIgnoreCase(ae.getActionCommand()))
+		else if(ae.getSource() == shipUp)
 		{
 			state.UpgradeShip();
 			state.updateShip();

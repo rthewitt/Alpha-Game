@@ -1,23 +1,23 @@
 package com.alpha.game;
 
+import com.alpha.error.AlphaException;
+import com.alpha.error.AlphaResourceException;
 
 public class Alpha
 {
-	@SuppressWarnings("unused")
-	public static void main (String args[]) 
+	public static void main (String args[]) throws AlphaException
 	{
-		try {
+		try
+		{
 			Resource.init();
 			GameState state = new GameState();
-			state.init();
-			Collision col = new Collision(state);
+			Collision col = new Collision();
 			state.addMe(col);
-			Control con = new Control(state);
-		} catch(Exception e){}
-		/*
-		catch(AlphaResourceException are) {
-			// Handle gracefully?  Try to recover?  Your call.
+			new Control(state);
+		}
+		catch(AlphaResourceException are)
+		{
 			throw new AlphaException(are);
-		} */
+		}
 	}
 }

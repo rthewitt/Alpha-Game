@@ -5,54 +5,51 @@ import java.awt.image.BufferedImage;
 
 public class Enemy extends Thread
 {
-	private boolean ScoutStarted;
+	private boolean scoutStarted;
 	private boolean draw = true;
 	boolean taken = false;
 	
 	private BufferedImage using;
 	private GameState state;
 	private Collision col;
-	@SuppressWarnings("unused")
 	private Game game;
-	Enemy s = this;
 	
-	int StartX, StartY;
+	int startX, startY;
 	private int speed;
-	private int Width, Height;
-	@SuppressWarnings("unused")
-	private int Health = 10;
+	private int width, height;
+	private int health = 10;
 	private int Type;
 	
-	Enemy(int x, int y, Game g, GameState st, int t)
+	Enemy(GameState st, int t)
 	{
 		state = st;
 		col = state.getCollision();
-		game = g;
-		Width = x;
-		Height = y;
+		game = state.getGame();
+		width = game.getScreenWidth();
+		height = game.getScreenHeight();
 		Type = t;
 		
 		switch(Type)
 		{
-			case 1: using = Resource.IMG_RED_FIGHTER; setHealth(10); break;
+			case 1: using = Resource.IMG_RED_FIGHTER; setHealth(5); break;
 			
 //			case 2: using = res.getRedHeavy(); setHealth(30); break;
 			
-			case 3: using = Resource.IMG_BLUE_FIGHTER; setHealth(15); break;
+			case 3: using = Resource.IMG_BLUE_FIGHTER; setHealth(10); break;
 			
-			case 4: using = Resource.IMG_BLUE_HEAVY; setHealth(45); break;
+			case 4: using = Resource.IMG_BLUE_HEAVY; setHealth(30); break;
 		}
 		
-		StartX = (int)(10 + Math.random() * (Width - 30));
-		StartY = 0;
+		startX = (int)(10 + Math.random() * (width - 30));
+		startY = -30;
 		speed = 30;
-		ScoutStarted = true;
+		scoutStarted = true;
 		col.addShip(this);
 	}
 	
 	public void setPosition(int x)
 	{
-		StartX = x;
+		startX = x;
 	}
 	
 	public void setSpeed(int s)
@@ -62,7 +59,7 @@ public class Enemy extends Thread
 	
 	public void setHealth(int h)
 	{
-		Health = h;
+		health = h;
 	}
 	
 //	private class BeamTask extends TimerTask
@@ -77,52 +74,59 @@ public class Enemy extends Thread
 	
 	public void	draw(Graphics2D g2d)
 	{
-		if(ScoutStarted && draw)
+		if(scoutStarted && draw)
 		{
-			g2d.drawImage(using, StartX, StartY, null);
+			g2d.drawImage(using, startX, startY, null);
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void kill()
+	public boolean kill()
 	{
-		state.DecrementEnemies();
-		draw = false;
-		this.stop();
+		health -= 5;
+		if(health <1)
+		{
+			state.DecrementEnemies();
+			draw = false;
+			scoutStarted = false;
+			this.stop();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void run()
-   {
-      while(ScoutStarted)
-      {
-    	  try
-    	  {
-            Thread.sleep(speed);
-    	  }
-    	  catch (InterruptedException e)
-    	  {
-    		  System.out.println("Woke up prematurely");
-    	  }
-			
-			StartY += 2;
-			
-			if(StartY > Height)
+    {
+		while(scoutStarted)
+		{
+			try
 			{
-				ScoutStarted = false;
-				state.DecrementEnemies();
-				s.stop();
+				Thread.sleep(speed);
+			}
+			catch (InterruptedException e)
+			{
+				System.out.println("Woke up prematurely");
+			}
+			
+			startY += 2;
+			
+			if(startY > height)
+			{
+				kill();
 			}
 		}
 	}
 
 	public int getX()
 	{
-		return StartX;
+		return startX;
 	}
 
 	public int getY()
 	{
-		return StartY;
+		return startY;
 	}
 }

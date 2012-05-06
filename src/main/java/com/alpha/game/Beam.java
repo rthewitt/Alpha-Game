@@ -5,7 +5,7 @@ import java.awt.geom.Ellipse2D;
 
 public class Beam extends Thread
 {
-	private boolean BeamStarted;
+	private boolean beamStarted;
 	private boolean draw = true;
 	private Ellipse2D.Double thisBeam;
 	
@@ -13,10 +13,9 @@ public class Beam extends Thread
 	private int	diry = 1, dirx = 0;
 	private int	size = 7;
 	int x, y;
-	private int Counter = 0;
+	private int counter = 0;
 	
-	private Game gamePanel;
-	private Beam beam = this;
+	private Game game;
 	private GameState state;
 	private Collision col;
 	
@@ -24,22 +23,26 @@ public class Beam extends Thread
 	{
 		state = s;
 		col = state.getCollision();
-		gamePanel = g;
+		game = g;
 		thisBeam = new Ellipse2D.Double(StartX, StartY, size, size);
-		BeamStarted	= true;
+		beamStarted	= true;
 	}
 	
 	public void	draw(Graphics2D g2d)
 	{
-		if(thisBeam	!=	null && BeamStarted && draw)
+		if(thisBeam	!= null && beamStarted && draw)
 		{
 			g2d.drawImage(Resource.IMG_BOLT, getX(), getY(), null);
 		}
 	}
 	
-	public void destroy(int y, int time)
+	@SuppressWarnings("deprecation")
+	public void kill()
 	{
+		game.IncrementChecks();
 		draw = false;
+		beamStarted = false;
+		this.stop();
 	}
 	
 	public void setDirX(int dir)
@@ -57,28 +60,24 @@ public class Beam extends Thread
 		speed = s;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void	run()
 	{
-		while(BeamStarted)
+		while(beamStarted)
 		{
-			if(Counter > 9)
+			if(counter > 9)
 			{
 				col.TestBeam(this);
 			}
 			else
 			{
-				Counter ++;
+				counter ++;
 			}
 			
 			try
 			{
 				Thread.sleep(speed);
 			}
-			catch	(InterruptedException e)
-			{
-				System.out.println("Woke up prematurely");
-			}
+			catch(InterruptedException e){}
 			
 			int OldY = (int) thisBeam.getY();
 			int NewY = OldY;
@@ -90,9 +89,7 @@ public class Beam extends Thread
 			
 			if(NewY < 0 || NewX < 0 || NewX > 500)
 			{
-				gamePanel.IncrementChecks();
-				BeamStarted	= false;
-				beam.stop();
+				kill();
 			}
 			
 			y = NewY;
@@ -100,7 +97,7 @@ public class Beam extends Thread
 			
 			thisBeam.setFrame(NewX,	NewY,	size,	size);
 			
-			gamePanel.repaint();
+			game.repaint();
 		}
 	}
 

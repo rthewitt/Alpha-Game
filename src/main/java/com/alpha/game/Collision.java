@@ -1,4 +1,5 @@
 package com.alpha.game;
+
 import java.util.Vector;
 
 public class Collision extends Thread
@@ -7,14 +8,11 @@ public class Collision extends Thread
 	
 	private int X = 0;
 	private int Y = 0;
-	@SuppressWarnings("unused")
-	private GameState state;
-	@SuppressWarnings("unused")
 	private Beam beam;
 	
-	Collision(GameState s)
+	Collision()
 	{
-		state = s;
+		
 	}
 	
 	public void addShip(Enemy s)
@@ -40,9 +38,7 @@ public class Collision extends Thread
 			int ShipY = ships.elementAt(i).getY();
 			
 			if(Y >= (ShipY - 30) && Y <= ShipY)
-			{
-				
-			}
+			{}
 			else
 			{
 				continue;
@@ -50,8 +46,11 @@ public class Collision extends Thread
 			
 			if(X >= ShipX && X <= (ShipX + 30))
 			{
-				ships.elementAt(i).kill();
-				ships.remove(i);
+				if(ships.elementAt(i).kill())
+				{
+					ships.remove(i);
+				}
+				beam.kill();
 				found = true;
 			}
 		}

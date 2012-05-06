@@ -10,7 +10,7 @@ public class GameState extends Thread
 {
 	private int Level;
 	private int ship = 0;
-	private int Speed;
+	private int speed;
 	private int Enemies;
 	private int Life;
 	private int Damage;
@@ -22,6 +22,7 @@ public class GameState extends Thread
 	private Control con;
 	private Game game;
 	private Collision col;
+	private Star star;
 	
 	// This should not be kept in Resource
 	// also, cannot as it's not an object
@@ -32,6 +33,7 @@ public class GameState extends Thread
 	
 	GameState()
 	{
+		init();
 	}
 	
 	public void init()
@@ -39,7 +41,7 @@ public class GameState extends Thread
 		Level = 1;
 		Damage = 5;
 		Life = 20;
-		Speed = 5;
+		speed = 5;
 		MachGun = false;
 		Laser = false;
 		HullUp = false;
@@ -213,6 +215,7 @@ public class GameState extends Thread
 		if(Enemies <= 0)
 		{
 			LevelUp();
+			game.Scouts.clear();
 			con.RunUpgrade(2);
 		}
 	}
@@ -259,12 +262,17 @@ public class GameState extends Thread
 	
 	public void IncrementSpeed()
 	{
-		Speed += 3;
+		speed += 3;
+	}
+	
+	public void setSpeed(int s)
+	{
+		speed = s;
 	}
 	
 	public int getSpeed()
 	{
-		return Speed;
+		return speed;
 	}
 	
 	public void LifeUp(int up)
@@ -290,5 +298,15 @@ public class GameState extends Thread
 	public boolean getHull()
 	{
 		return HullUp;
+	}
+
+	public void addStar(Star s)
+	{
+		star = s;
+	}
+
+	public Star getStar()
+	{
+		return star;
 	}
 }

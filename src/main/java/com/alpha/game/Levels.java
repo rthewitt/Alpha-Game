@@ -1,54 +1,63 @@
 package com.alpha.game;
 
-import java.lang.reflect.Array;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Levels extends Thread
 {
 	private Timer timer;
-	private int sprites = 10;
-	private int width, height;
 	private Game game;
 	private GameState state;
 	
-	private Array[] lvl1 = new Array[100];
+	private int i = 0, i2 = 0;
 	
-	Levels(GameState s, Game g, int lvl)
+	int[][] work;
+	
+	private int[][] lvl1 = {{3, 1}, {4, 1}, {5, 1}, {6, 1}, {7, 1}, {8, 1}, {9, 1}, {10, 1}, {11, 1}, {12, 1}};
+	private int[][] lvl2 = {{3, 3}, {4, 3}, {5, 3}, {6, 3}, {7, 3}, {8, 3}, {9, 3}, {10, 3}, {11, 3}, {12, 3}};
+	private int[][] lvl3 = {{3, 1}, {4, 1}, {5, 1}, {6, 1}, {7, 1}, {8, 1}, {9, 1}, {10, 1}, {11, 1}, {12, 1}, {3, 1}, {5, 1}, {7, 1}, {9, 1}, {11, 1}, {13, 1}, {13, 1}, {14, 1}, {14, 1}, {14, 1}};
+	
+	Levels(GameState s, int lvl)
 	{
 		state = s;
-		game = g;
-		width = game.getScreenWidth();
-		height = game.getScreenHeight();
+		game = state.getGame();
 		
 		Run(lvl);
 	}
 	
-	public void Setup()
-	{
-		
-	}
-	
 	private void Run(int lvl)
 	{
-		for(int i = 0; i < lvl1.length; i++)
+		switch(lvl)
+		{
+			case 1: work = lvl1.clone(); break;
+			
+			case 2: work = lvl2.clone(); break;
+			
+			case 3: work = lvl3.clone(); break;
+		}
+		
+		state.setEnemies(work.length);
+		
+		for(;i < work.length; i++)
 		{
 			timer = new Timer();
-			timer.schedule(new Task(), 3000, 1000);
+			timer.schedule(new Task(), work[i][0]*1000);
 		}
 	}
 	
-	private class Task extends TimerTask
+	public void build()
+	{
+		Enemy s = new Enemy(state, work[i2][1]);
+		game.Scouts.addElement(s);
+		s.start();
+		i2 ++;
+	}
+	
+	public class Task extends TimerTask
 	{
 		public void run()
 		{
-			if(sprites > 0)
-			{
-				Enemy s = new Enemy(width, height, game, state, 1);
-				game.Scouts.addElement(s);
-				s.start();
-				sprites --;
-			}
+			build();
 		}
 	}
 }

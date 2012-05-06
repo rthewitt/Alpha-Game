@@ -31,6 +31,10 @@ public class LandF
 	
 	public void Panel(JPanel p)
 	{
+		p.setBackground(Color.BLACK);
+		p.setBorder(border);
+		p.setForeground(Color.GREEN);
+		p.setFont(new Font("sansserif", Font.PLAIN, 20));
 	}
 	
 	public void ToolBar(JToolBar tb)
