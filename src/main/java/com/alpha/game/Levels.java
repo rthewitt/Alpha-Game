@@ -3,7 +3,7 @@ package com.alpha.game;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Levels extends Thread {
+public class Levels {
 	private Timer timer;
 	private Game game;
 	private GameState state;

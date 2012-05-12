@@ -50,6 +50,7 @@ public class Resource extends Thread {
 */
 	
 	// TODO talk to me about a better way to get the your ships' current image
+	//User Ship Choices
 	public static BufferedImage IMG_SMALL_GREEN;
 	public static BufferedImage IMG_SMALL_GREEN_ARMOR;
 	public static BufferedImage IMG_MED_GREEN;
@@ -68,32 +69,43 @@ public class Resource extends Thread {
 	public static BufferedImage IMG_MED_BLUE_ARMOR;
 	public static BufferedImage IMG_LARGE_BLUE;
 	public static BufferedImage IMG_LARGE_BLUE_ARMOR;
+	
+	//Enemy Ships
 	public static BufferedImage IMG_RED_FIGHTER;
 	public static BufferedImage IMG_RED_HEAVY;
 	public static BufferedImage IMG_BLUE_FIGHTER;
 	public static BufferedImage IMG_BLUE_HEAVY;
+	public static BufferedImage IMG_MED_YELLOW;
+	public static BufferedImage IMG_BIG_YELLOW;
+	public static BufferedImage IMG_BOSS_ONE;
 	
-	// New additions by Brennan
+	//Images dropped by Enemies
 	public static BufferedImage IMG_BOLT;
 	public static BufferedImage IMG_EXPLODING;
 	public static BufferedImage IMG_LASER;
 	public static BufferedImage IMG_PEN;
 	public static BufferedImage IMG_POISON;
 	public static BufferedImage IMG_WAVE;
+	
+	//Dynamic Image field for current games beam
 	public static BufferedImage IMG_CURRENT_BEAM;
+	
+	//Menu Images
 	public static BufferedImage IMG_DUAL_LASER;
 	public static BufferedImage IMG_SPREAD_LASER;
 	public static BufferedImage IMG_RAPID_LASER;
 	public static BufferedImage IMG_HEALTH;
 	public static BufferedImage IMG_SPEED;
+	public static BufferedImage IMG_DAMAGE;
 	
+	//Menu Icons
 	public static ImageIcon ICON_SMALL_GREEN_ICON;
 	public static ImageIcon ICON_SMALL_RED_ICON;
 	public static ImageIcon ICON_SMALL_BLUE_ICON;
 	
-	
-	
+	//Icon
 	public static ImageIcon ICON_DUAL_LASER;
+	
 	/*
 	static {
 			try
@@ -153,10 +165,14 @@ public class Resource extends Thread {
 			IMG_MED_BLUE_ARMOR = getImage("medBlueArmor.png");
 			IMG_LARGE_BLUE = getImage("largeBlue.png");
 			IMG_LARGE_BLUE_ARMOR = getImage("largeBlueArmor.png");
+			
 			IMG_RED_FIGHTER = getImage("redFighter.png");
-//			redHeavy = ImageIO.read( getImagePath("RedHeavy.png");
+			IMG_RED_HEAVY = getImage("redHeavy.png");
 			IMG_BLUE_FIGHTER = getImage("blueFighter.png");
-			IMG_BLUE_HEAVY = getImage("BlueHeavy.png");
+			IMG_BLUE_HEAVY = getImage("blueHeavy.png");
+			IMG_MED_YELLOW = getImage("medYellow.png");
+			IMG_BIG_YELLOW = getImage("bigYellow.png");
+			IMG_BOSS_ONE = getImage("bossOne.png");
 
 			IMG_BOLT = getImage("dropBolt.png");
 			IMG_EXPLODING = getImage("dropExploding.png");
@@ -170,6 +186,7 @@ public class Resource extends Thread {
 			IMG_RAPID_LASER = getImage("menuRapid.png");
 			IMG_HEALTH = getImage("Health.png");
 			IMG_SPEED = getImage("Speed.png");
+			IMG_DAMAGE = getImage("Damage.png");
 
 	        // Making these conform to API call
 	        ICON_SMALL_GREEN_ICON = new ImageIcon( getImage("smallGreen.png") );
