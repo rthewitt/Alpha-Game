@@ -12,8 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.alpha.error.AlphaResourceException;
 
-public class Resource extends Thread
-{
+public class Resource extends Thread {
 	public static final Logger alphaLog = Logger.getLogger(Resource.class);
 	
 	public static final String SEPARATOR;
@@ -25,8 +24,7 @@ public class Resource extends Thread
 //	public static final String fullImagesPath;
 //	public static final String codePath;
 	
-	static
-	{
+	static {
 		SEPARATOR = System.getProperty("file.separator");
 		classLoader = Resource.class.getClassLoader();
 		resourceURL = Resource.class.getResource(".");
@@ -99,7 +97,7 @@ public class Resource extends Thread
 	/*
 	static {
 			try
-			{
+			 {
 				IMG_SMALL_GREEN = getImage("smallGreen.png");
 				IMG_SMALL_GREEN_ARMOR = getImage("smallGreenArmor.png");
 				IMG_MED_GREEN= getImage("medGreen.png");
@@ -131,14 +129,12 @@ public class Resource extends Thread
 	} */
 	
 	// TODO boolean values will allow you to handle things gracefully
-	public static void init() throws AlphaResourceException
-	{
+	public static void init() throws AlphaResourceException {
 		initializeShips();
 	}
 	
 	public static void initializeShips() throws AlphaResourceException {
-		try
-		{
+		try {
 			IMG_SMALL_GREEN = getImage("smallGreen.png");
 			IMG_SMALL_GREEN_ARMOR = getImage("smallGreenArmor.png");
 			IMG_MED_GREEN= getImage("medGreen.png");
@@ -185,8 +181,7 @@ public class Resource extends Thread
 			alphaLog.error("Problem encountered while loading ship images", ioe);
 			throw new AlphaResourceException(ioe);
 		}
-		catch(Exception e)
-		{
+		catch(Exception e) {
 			throw new AlphaResourceException(e); // will add valuable information
 		}
 	}

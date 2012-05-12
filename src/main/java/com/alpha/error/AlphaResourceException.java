@@ -13,7 +13,9 @@ public class AlphaResourceException extends IOException {
 	
 	@SuppressWarnings("unused")
 	private AlphaResourceException() {
+		
 		// We need a message to be useful here...
+		// Never done exceptions before...
 	}
 	
 	public AlphaResourceException(String errorText) {

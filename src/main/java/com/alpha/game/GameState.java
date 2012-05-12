@@ -6,55 +6,47 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
-public class GameState extends Thread
-{
-	private int Level;
+public class GameState extends Thread {
+	private int level;
 	private int ship = 0;
 	private int speed;
-	private int Enemies;
-	private int Life;
-	private int Damage;
-	private boolean MachGun;
-	private boolean Laser;
-	private boolean HullUp;
-	private boolean Dual;
+	private int enemies;
+	private int life;
+	private int damage;
+	private boolean machGun;
+	private boolean laser;
+	private boolean hullUp;
+	private boolean dual;
 	
 	private Control con;
 	private Game game;
 	private Collision col;
 	private Star star;
 	
-	// This should not be kept in Resource
-	// also, cannot as it's not an object
-	static Image currentShip; // Changed to static - it can't find an instance of it for some reason
+	static Image currentShip;
 	private ImageIcon hullShip;
 	private ImageIcon nextShip;
 	
 	
-	GameState()
-	{
+	GameState() {
 		init();
 	}
 	
-	public void init()
-	{
-		Level = 1;
-		Damage = 5;
-		Life = 20;
+	public void init() {
+		level = 1;
+		damage = 5;
+		life = 20;
 		speed = 5;
-		MachGun = false;
-		Laser = false;
-		HullUp = false;
-		Dual = false;
+		machGun = false;
+		laser = false;
+		hullUp = false;
+		dual = false;
 	}
 	
-	public void updateShip()
-	{
+	public void updateShip() {
 		BufferedImage img = null;
-		if(getHull())
-		{
-			switch(getShip())
-			{
+		if(getHull()) {
+			switch(getShip()) {
 				case 1: img = Resource.IMG_SMALL_GREEN_ARMOR; break;
 				
 				case 2: img = Resource.IMG_MED_GREEN_ARMOR; break;
@@ -73,11 +65,8 @@ public class GameState extends Thread
 				
 				case 9: img = Resource.IMG_LARGE_BLUE_ARMOR; break;
 			}
-		}
-		else
-		{
-			switch(getShip())
-			{
+		}else {
+			switch(getShip()) {
 				case 1: img = Resource.IMG_SMALL_GREEN;
 					this.hullShip = new ImageIcon(Resource.IMG_SMALL_GREEN_ARMOR);
 					this.nextShip = new ImageIcon(Resource.IMG_MED_GREEN); break;
@@ -116,197 +105,159 @@ public class GameState extends Thread
 		GameState.currentShip = Toolkit.getDefaultToolkit().createImage(img.getSource());
 	}
 	
-	public Image getCurrentShip()
-	{
+	public Image getCurrentShip() {
 		return currentShip;
 	}
 	
-	public ImageIcon getNextShip()
-	{
+	public ImageIcon getNextShip() {
 		return this.nextShip;
 	}
 
-	public ImageIcon getHullShip()
-	{
+	public ImageIcon getHullShip() {
 		return this.hullShip;
 	}
 	
-	public void addMe(Game g)
-	{
+	public void addMe(Game g) {
 		game = g;
 	}
 	
-	public Game getGame()
-	{
+	public Game getGame() {
 		if(game == null)
 			System.out.println(game);
 			
 		return game;
 	}
 	
-	public void addMe(Control c)
-	{
+	public void addMe(Control c) {
 		con = c;
 	}
 	
-	public void addMe(Collision c)
-	{
+	public void addMe(Collision c) {
 		col = c;
 	}
 	
-	public Collision getCollision()
-	{
+	public Collision getCollision() {
 		return col;
 	}
 	
-	public int getLevel()
-	{
-		return Level;
+	public int getLevel() {
+		return level;
 	}
 	
-	public void setLevel(int lvl)
-	{
-		Level = lvl;
+	public void setLevel(int lvl) {
+		level = lvl;
 	}
 	
-	public void LevelUp()
-	{
-		Level++;
+	public void LevelUp() {
+		level++;
 	}
 	
-	public int getShip()
-	{
+	public int getShip() {
 		return ship;
 	}
 	
-	public void UpgradeShip()
-	{
+	public void UpgradeShip() {
 		ship++;
 	}
 	
-	public void setShip(int s)
-	{
+	public void setShip(int s) {
 		ship = s;
 	}
 	
-	public int getEnemies()
-	{
-		return Enemies;
+	public int getEnemies() {
+		return enemies;
 	}
 	
-	public void IncrementEnemies()
-	{
-		Enemies ++;
+	public void IncrementEnemies() {
+		enemies ++;
 	}
 	
-	public void setEnemies(int e)
-	{
-		Enemies = e;
+	public void setEnemies(int e) {
+		enemies = e;
 	}
 	
-	public void DecrementEnemies()
-	{
-		Enemies --;
+	public void DecrementEnemies() {
+		enemies --;
 		LevelOver();
 	}
 	
-	private void LevelOver()
-	{
-		if(Enemies <= 0)
-		{
+	private void LevelOver() {
+		if(enemies <= 0) {
 			LevelUp();
-			game.Scouts.clear();
+			game.scouts.clear();
 			con.RunUpgrade(2);
 		}
 	}
 	
-	public void Dual()
-	{
-		Dual = true;
+	public void Dual() {
+		dual = true;
 	}
 	
-	public boolean getDual()
-	{
-		return Dual;
+	public boolean getDual() {
+		return dual;
 	}
 	
-	public void DamageUp(int up)
-	{
-		Damage += up;
+	public void DamageUp(int up) {
+		damage += up;
 	}
 	
-	public int getDamage()
-	{
-		return Damage;
+	public int getDamage() {
+		return damage;
 	}
 	
-	public void addLaser()
-	{
-		Laser = true;
+	public void addLaser() {
+		laser = true;
 	}
 	
-	public boolean getLaser()
-	{
-		return Laser;
+	public boolean getLaser() {
+		return laser;
 	}
 	
-	public void addMachGun()
-	{
-		MachGun = true;
+	public void addMachGun() {
+		machGun = true;
 	}
 	
-	public boolean getMachGun()
-	{
-		return MachGun;
+	public boolean getMachGun() {
+		return machGun;
 	}
 	
-	public void IncrementSpeed()
-	{
+	public void IncrementSpeed() {
 		speed += 3;
 	}
 	
-	public void setSpeed(int s)
-	{
+	public void setSpeed(int s) {
 		speed = s;
 	}
 	
-	public int getSpeed()
-	{
+	public int getSpeed() {
 		return speed;
 	}
 	
-	public void LifeUp(int up)
-	{
-		Life += up;
+	public void LifeUp(int up) {
+		life += up;
 	}
 	
-	public int getLife()
-	{
-		return Life;
+	public int getLife() {
+		return life;
 	}
 	
-	public void HullUp()
-	{
-		HullUp = true;
+	public void HullUp() {
+		hullUp = true;
 	}
 	
-	public void HullDown()
-	{
-		HullUp = false;
+	public void HullDown() {
+		hullUp = false;
 	}
 	
-	public boolean getHull()
-	{
-		return HullUp;
+	public boolean getHull() {
+		return hullUp;
 	}
 
-	public void addStar(Star s)
-	{
+	public void addStar(Star s) {
 		star = s;
 	}
 
-	public Star getStar()
-	{
+	public Star getStar() {
 		return star;
 	}
 }

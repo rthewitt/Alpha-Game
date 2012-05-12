@@ -9,14 +9,12 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
-public class NestedPanel extends JPanel
-{
-	private Vector<Star> Stars = new Vector<Star>();
+public class NestedPanel extends JPanel {
+	private Vector<Star> stars = new Vector<Star>();
 	private int width, height;
 	private Border border = new LineBorder(Color.GREEN, 1);
 	
-	NestedPanel(int w, int h)
-	{
+	NestedPanel(int w, int h) {
 		width = w;
 		height = h;
 		setBounds(0, 0, width, height);
@@ -25,16 +23,14 @@ public class NestedPanel extends JPanel
 		setBorder(border);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.fillRect(3, 3, width - 3, height - 3);
 		
-		for (int i = 0; i < Stars.size(); i++) 
-    	{
-        	Stars.elementAt(i).draw(g2d);
+		for (int i = 0; i < stars.size(); i++) {
+        	stars.elementAt(i).draw(g2d);
      	}
 	}
 }

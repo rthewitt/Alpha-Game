@@ -4,17 +4,15 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public class Control extends JFrame
-{
-	private Menu Menu;
+public class Control extends JFrame {
+	private Menu menu;
 	private Game game;
 	private UpgradeMenu Up;
 	private GameState state;
 	private int width = 500, height = 800;
 	Star star;
 	
-	Control(GameState s)
-	{
+	Control(GameState s) {
 		state = s;
 		
 		setSize(width, height);
@@ -29,49 +27,40 @@ public class Control extends JFrame
 		RunMenu(0);
 	}
 	
-	void startStars()
-	{
+	void startStars() {
 		star = new Star(width, height);
 		state.addStar(star);
 		star.setNumber(50);
 		star.start();
 	}
 	
-	void RunMenu(int con)
-	{
-		if(con != 0)
-		{
+	void RunMenu(int con) {
+		if(con != 0) {
 			nullIt(con);
 		}
-		Menu = new Menu(width, height, this, state);
-		add(Menu, BorderLayout.CENTER);
+		menu = new Menu(width, height, this, state);
+		add(menu, BorderLayout.CENTER);
 	}
 	
-	void RunGame(int con)
-	{
-		if(con != 0)
-		{
+	void RunGame(int con) {
+		if(con != 0) {
 			nullIt(con);
 		}
 		game = new Game(width, height, this, state);
 		add(game, BorderLayout.CENTER);
 	}
 	
-	void RunUpgrade(int con)
-	{
-		if(con != 0)
-		{
+	void RunUpgrade(int con) {
+		if(con != 0) {
 			nullIt(con);
 		}
 		Up = new UpgradeMenu(width, height, this, state);
 		add(Up, BorderLayout.CENTER);
 	}
 	
-	void nullIt(int con)
-	{
-		switch(con)
-		{
-			case 1: remove(Menu); Menu = null; break;
+	void nullIt(int con) {
+		switch(con) {
+			case 1: remove(menu); menu = null; break;
 			
 			case 2: remove(game); game = null; break;
 			

@@ -3,8 +3,7 @@ package com.alpha.game;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class Enemy extends Thread
-{
+public class Enemy extends Thread {
 	private boolean scoutStarted;
 	private boolean draw = true;
 	boolean taken = false;
@@ -18,19 +17,17 @@ public class Enemy extends Thread
 	private int speed;
 	private int width, height;
 	private int health = 10;
-	private int Type;
+	private int type;
 	
-	Enemy(GameState st, int t)
-	{
+	Enemy(GameState st, int t) {
 		state = st;
 		col = state.getCollision();
 		game = state.getGame();
 		width = game.getScreenWidth();
 		height = game.getScreenHeight();
-		Type = t;
+		type = t;
 		
-		switch(Type)
-		{
+		switch(type) {
 			case 1: using = Resource.IMG_RED_FIGHTER; setHealth(5); break;
 			
 //			case 2: using = res.getRedHeavy(); setHealth(30); break;
@@ -47,86 +44,67 @@ public class Enemy extends Thread
 		col.addShip(this);
 	}
 	
-	public void setPosition(int x)
-	{
+	public void setPosition(int x) {
 		startX = x;
 	}
 	
-	public void setSpeed(int s)
-	{
+	public void setSpeed(int s) {
 		speed = s;
 	}
 	
-	public void setHealth(int h)
-	{
+	public void setHealth(int h) {
 		health = h;
 	}
 	
-//	private class BeamTask extends TimerTask
-//	{
-//		public void run()
-//		{
+//	private class BeamTask extends TimerTask {
+//		public void run() {
 //			Beam newBeam = new Beam(StartX, StartY, game, state, 2);
 //			game.Beams.addElement(newBeam);
 //			newBeam.start();
 //		}
 //	}
 	
-	public void	draw(Graphics2D g2d)
-	{
-		if(scoutStarted && draw)
-		{
+	public void	draw(Graphics2D g2d) {
+		if(scoutStarted && draw) {
 			g2d.drawImage(using, startX, startY, null);
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
-	public boolean kill()
-	{
+	public boolean kill() {
 		health -= 5;
-		if(health <1)
-		{
+		if(health <1) {
 			state.DecrementEnemies();
 			draw = false;
 			scoutStarted = false;
 			this.stop();
 			return true;
-		}
-		else
-		{
+		}else {
 			return false;
 		}
 	}
 	
-	public void run()
-    {
-		while(scoutStarted)
-		{
-			try
-			{
+	public void run() {
+		while(scoutStarted) {
+			try {
 				Thread.sleep(speed);
-			}
-			catch (InterruptedException e)
-			{
+			}catch (InterruptedException e) {
 				System.out.println("Woke up prematurely");
 			}
 			
 			startY += 2;
 			
-			if(startY > height)
-			{
+			if(startY > height) {
 				kill();
 			}
 		}
 	}
 
-	public int getX()
-	{
+	public int getX() {
 		return startX;
 	}
 
-	public int getY()
-	{
+	public int getY() {
 		return startY;
 	}
 }

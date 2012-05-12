@@ -9,8 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Menu extends JPanel implements ActionListener
-{
+public class Menu extends JPanel implements ActionListener {
 	JButton go = new JButton("Start a New Game");
 	JButton ship1 = new JButton("1");
 	JButton ship2 = new JButton("2");
@@ -26,9 +25,9 @@ public class Menu extends JPanel implements ActionListener
 	private Control control;
 	private LandF LF = new LandF();
 	
-	String ship1Tip = "<html>Green\nSpeed = 2\nPower = 2\nDefense = 2</html>";
-	String ship2Tip = "<html>Red\nSpeed = 1\nPower = 3\nDefense = 2</html>";
-	String ship3Tip = "<html>Blue\nSpeed = 3\nPower = 2\nDefense = 1</html>";
+	String ship1Tip = "<html>Green<br>Speed = 2<br>Power = 2<br>Defense = 2</html>";
+	String ship2Tip = "<html>Red<br>Speed = 1<br>Power = 3<br>Defense = 2</html>";
+	String ship3Tip = "<html>Blue<br>Speed = 3<br>Power = 2<br>Defense = 1</html>";
 	
 	String stringIntstruct = "This will be instructions";
 	String stringCredits = " Producer: Brennan Zuber\n Programmer: Brennan Zuber\n Structural design: Ryan Hewitt\n Graphics: Elyse Zuber\n Music: David Torres\n\n" +
@@ -40,8 +39,7 @@ public class Menu extends JPanel implements ActionListener
 	private boolean drawInstructions = false;
 	private boolean drawCredits = false;
 	
-	public Menu(int w, int h, Control con, GameState s)
-	{
+	public Menu(int w, int h, Control con, GameState s) {
 		state = s;
 		control = con;
 		width = w;
@@ -55,10 +53,8 @@ public class Menu extends JPanel implements ActionListener
 		
 		buttonSetup();
 		
-		go.addActionListener(new ActionListener()
-		{
-			public void	actionPerformed(ActionEvent e)
-			{
+		go.addActionListener(new ActionListener() {
+			public void	actionPerformed(ActionEvent e) {
 				add(ship1);
 				add(ship2);
 				add(ship3);
@@ -68,14 +64,12 @@ public class Menu extends JPanel implements ActionListener
 		setBackground(Color.BLACK);
 	}
 	
-	private void drawString(Graphics2D g2d, String text, int x, int y)
-	{
+	private void drawString(Graphics2D g2d, String text, int x, int y) {
         for (String line : text.split("\n"))
             g2d.drawString(line, x, y += 50);
     }
 	
-	private void buttonSetup()
-	{
+	private void buttonSetup() {
 		ship1.setBounds(90, 255, 100, 50);
 		ship2.setBounds(193, 255, 100, 50);
 		ship3.setBounds(296, 255, 100, 50);
@@ -118,21 +112,18 @@ public class Menu extends JPanel implements ActionListener
 		done.addActionListener(this);
 	}
 	
-	public void	paintComponent(Graphics g)  
-	{
+	public void	paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
         star.draw(g2d);
         
-        if(drawInstructions)
-        {
+        if(drawInstructions) {
         	g2d.setColor(Color.GREEN);
         	drawString(g2d, stringIntstruct, 10, 10);
         }
         
-        if(drawCredits)
-        {
+        if(drawCredits) {
         	g2d.setColor(Color.GREEN);
         	drawString(g2d, stringCredits, 10, 10);
         }
@@ -140,8 +131,7 @@ public class Menu extends JPanel implements ActionListener
         repaint();
 	}
 	
-	private void runNull()
-	{
+	private void runNull() {
 		go.setVisible(false);
 		go = null;
 		ship1 = null;
@@ -150,8 +140,7 @@ public class Menu extends JPanel implements ActionListener
 		control.RunGame(1);
 	}
 	
-	public void enable(boolean b)
-	{
+	public void enable(boolean b) {
 		boolean o = false;
 		if(b)
 			o = false;
@@ -175,43 +164,34 @@ public class Menu extends JPanel implements ActionListener
 		done.setEnabled(o);
 	}
 
-	public void actionPerformed(ActionEvent ae)
-	{
-		if(ae.getSource() == ship1)
-		{
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource() == ship1) {
 			state.setShip(1);
 			state.setSpeed(2);
 			runNull();
-		}
-		else if(ae.getSource() == ship2)
-		{
+		}else if(ae.getSource() == ship2) {
 			state.setShip(4);
 			state.setSpeed(1);
 			runNull();
-		}
-		else if(ae.getSource() == ship3)
-		{
+		}else if(ae.getSource() == ship3) {
 			state.setShip(7);
 			state.setSpeed(3);
 			runNull();
 		}
 		
-		if(ae.getSource() == instruct)
-		{
+		if(ae.getSource() == instruct) {
 			enable(false);
 			drawInstructions = true;
 			add(done);
 		}
 		
-		if(ae.getSource() == credit)
-		{
+		if(ae.getSource() == credit) {
 			enable(false);
 			drawCredits = true;
 			add(done);
 		}
 		
-		if(ae.getSource() == done)
-		{
+		if(ae.getSource() == done) {
 			drawInstructions = false;
 			drawCredits = false;
 			enable(true);

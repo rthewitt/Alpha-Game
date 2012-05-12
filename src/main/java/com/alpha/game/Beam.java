@@ -3,8 +3,7 @@ package com.alpha.game;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
-public class Beam extends Thread
-{
+public class Beam extends Thread {
 	private boolean beamStarted;
 	private boolean draw = true;
 	private Ellipse2D.Double thisBeam;
@@ -19,8 +18,7 @@ public class Beam extends Thread
 	private GameState state;
 	private Collision col;
 	
-	public Beam(int StartX,	int StartY, Game g, GameState s)
-	{
+	public Beam(int StartX,	int StartY, Game g, GameState s) {
 		state = s;
 		col = state.getCollision();
 		game = g;
@@ -28,56 +26,44 @@ public class Beam extends Thread
 		beamStarted	= true;
 	}
 	
-	public void	draw(Graphics2D g2d)
-	{
-		if(thisBeam	!= null && beamStarted && draw)
-		{
+	public void	draw(Graphics2D g2d) {
+		if(thisBeam	!= null && beamStarted && draw) {
 			g2d.drawImage(Resource.IMG_BOLT, getX(), getY(), null);
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void kill()
-	{
+	public void kill() {
 		game.IncrementChecks();
 		draw = false;
 		beamStarted = false;
 		this.stop();
 	}
 	
-	public void setDirX(int dir)
-	{
+	public void setDirX(int dir) {
 		dirx = dir;
 	}
 	
-	public void setDirY(int dir)
-	{
+	public void setDirY(int dir) {
 		diry = dir;
 	}
 	
-	public void setSpeed(int s)
-	{
+	public void setSpeed(int s) {
 		speed = s;
 	}
 	
-	public void	run()
-	{
-		while(beamStarted)
-		{
-			if(counter > 9)
-			{
+	public void	run() {
+		while(beamStarted) {
+			if(counter > 9) {
 				col.TestBeam(this);
-			}
-			else
-			{
+			}else {
 				counter ++;
 			}
 			
-			try
-			{
+			try {
 				Thread.sleep(speed);
 			}
-			catch(InterruptedException e){}
+			catch(InterruptedException e) {}
 			
 			int OldY = (int) thisBeam.getY();
 			int NewY = OldY;
@@ -87,8 +73,7 @@ public class Beam extends Thread
 			NewY -= diry;
 			NewX += dirx;
 			
-			if(NewY < 0 || NewX < 0 || NewX > 500)
-			{
+			if(NewY < 0 || NewX < 0 || NewX > 500) {
 				kill();
 			}
 			
@@ -101,17 +86,14 @@ public class Beam extends Thread
 		}
 	}
 
-	public int getX()
-	{
+	public int getX() {
 		return (int) thisBeam.getX();
 	}
-	public int getY()
-	{
+	public int getY() {
 		return (int) thisBeam.getY();
 	}
 
-	public int getDir()
-	{
+	public int getDir() {
 		return dirx;
 	}
 }

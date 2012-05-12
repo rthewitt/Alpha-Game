@@ -15,11 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 @SuppressWarnings("serial")
-public class UpgradeMenu extends JPanel implements ActionListener
-{
+public class UpgradeMenu extends JPanel implements ActionListener {
 	private Control control;
 	private Star star;
-	private int Width = 0, Height = 0; 
+	private int width = 0, Height = 0; 
 	private GameState state;
 	private LandF LF = new LandF();
 	private GridLayout layout = new GridLayout(0,1);
@@ -43,11 +42,10 @@ public class UpgradeMenu extends JPanel implements ActionListener
 //	JButton plus = new JButton();
 //	JTextField number = new JTextField();
 	
-	UpgradeMenu(int x, int y, Control con, GameState s)
-	{
+	UpgradeMenu(int x, int y, Control con, GameState s) {
 		state = s;
 		control = con;
-		Width = x - 8;
+		width = x - 8;
 		Height = y - 31;
 		setVisible(true);
 		
@@ -67,7 +65,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		
 		setupButtons();
 		
-		NestedPanel np1 = new NestedPanel(Width, Height * 40);
+		NestedPanel np1 = new NestedPanel(width, Height * 40);
 		np1.setLayout(layout);
 		np1.add(dual);
 		np1.add(life);
@@ -79,14 +77,14 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		LF.Scroll(scroll);
 		Bar.addTab("SHIP", scroll);
 		
-		NestedPanel np2 = new NestedPanel(Width, Height);
+		NestedPanel np2 = new NestedPanel(width, Height);
 		np2.setLayout(layout);
 		np2.add(machgun);
 		np2.add(damage);
 		JScrollPane scroll2 = new JScrollPane(np2);
 		Bar.addTab("WEAPONS", scroll2);
 		
-		NestedPanel np3 = new NestedPanel(Width, Height);
+		NestedPanel np3 = new NestedPanel(width, Height);
 		np3.setLayout(layout);
 		np3.add(laser);
 		JScrollPane scroll3 = new JScrollPane(np3);
@@ -99,15 +97,14 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		add(Bar);
 		add(done);
 		
-		setBounds(0, 0, Width, Height);
+		setBounds(0, 0, width, Height);
 		Bar.setBounds(0, 200, 495, 200);
-		done.setBounds(0, Height - 30, Width, Height);
-		done.setSize(Width, 30);
+		done.setBounds(0, Height - 30, width, Height);
+		done.setSize(width, 30);
 	}
 
 	// TODO Set the current, next and hull ship at the start of this context
-	public void setupButtons()
-	{
+	public void setupButtons() {
 //		minus.setBounds(230, 10, 60, 50);
 //		number.setBounds(290, 10, 50, 50);
 //		plus.setBounds(340, 10, 60, 50);
@@ -119,48 +116,47 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		
 		LF.Button(done);
 		
-		dual.setPreferredSize(new Dimension(Width - 20, 50));
+		dual.setPreferredSize(new Dimension(width - 20, 50));
 		dual.setMinimumSize(dual.getPreferredSize());
 		dual.setIcon(new ImageIcon(Resource.IMG_DUAL_LASER));
 		LF.Button(dual);
 		
-		damage.setPreferredSize(new Dimension(Width - 20, 50));
+		damage.setPreferredSize(new Dimension(width - 20, 50));
 		damage.setMinimumSize(damage.getPreferredSize());
 		LF.Button(damage);
 		
-		laser.setPreferredSize(new Dimension(Width - 20, 50));
+		laser.setPreferredSize(new Dimension(width - 20, 50));
 		laser.setMinimumSize(laser.getPreferredSize());
 		LF.Button(laser);
 		
-		machgun.setPreferredSize(new Dimension(Width - 20, 50));
+		machgun.setPreferredSize(new Dimension(width - 20, 50));
 		machgun.setMinimumSize(machgun.getPreferredSize());
 		LF.Button(machgun);
 		
-		life.setPreferredSize(new Dimension(Width - 20, 50));
+		life.setPreferredSize(new Dimension(width - 20, 50));
 		life.setMinimumSize(life.getPreferredSize());
 		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
 		LF.Button(life);
 		
-		speed.setPreferredSize(new Dimension(Width - 20, 50));
+		speed.setPreferredSize(new Dimension(width - 20, 50));
 		speed.setMinimumSize(speed.getPreferredSize());
 		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
 		LF.Button(speed);
 		
-		hull.setPreferredSize(new Dimension(Width - 20, 50));
+		hull.setPreferredSize(new Dimension(width - 20, 50));
 		hull.setMinimumSize(hull.getPreferredSize());
 		hull.setIcon(state.getHullShip());
 		LF.Button(hull);
-		if(state.getHull())
-		{
+		
+		if(state.getHull()) {
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
 		}
 		
-		if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9)
-		{
+		if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9) {
 			shipUp.setEnabled(false);
 		}
-		shipUp.setPreferredSize(new Dimension(Width - 20, 50));
+		shipUp.setPreferredSize(new Dimension(width - 20, 50));
 		shipUp.setMinimumSize(shipUp.getPreferredSize());
 		shipUp.setIcon(state.getNextShip());
 		LF.Button(shipUp);
@@ -176,42 +172,26 @@ public class UpgradeMenu extends JPanel implements ActionListener
 		shipUp.addActionListener(this);
 	}
 	
-	public void actionPerformed(ActionEvent ae)
-	{
-		if(ae.getSource() == done)
-		{
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource() == done) {
 			star = null; done.setVisible(false);
 			done = null;
 			control.RunGame(3);
-		}
-		else if(ae.getSource() == dual)
-		{
+		}else if(ae.getSource() == dual) {
 			state.Dual();
 			dual.setEnabled(false);
 			dual.setBackground(Color.BLACK);
-		}
-		else if(ae.getSource() == damage)
-		{
+		}else if(ae.getSource() == damage) {
 			state.DamageUp(5);
-		}	
-		else if(ae.getSource() == laser)
-		{
+		}else if(ae.getSource() == laser) {
 			state.addLaser();
-		}	
-		else if(ae.getSource() == machgun)
-		{
+		}else if(ae.getSource() == machgun) {
 			state.addMachGun();
-		}	
-		else if(ae.getSource() == life)
-		{
+		}else if(ae.getSource() == life) {
 			state.LifeUp(2);
-		}
-		else if(ae.getSource() == speed)
-		{
+		}else if(ae.getSource() == speed) {
 			state.IncrementSpeed();		
-		}
-		else if(ae.getSource() == hull)
-		{
+		}else if(ae.getSource() == hull) {
 			state.HullUp();
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
@@ -220,9 +200,7 @@ public class UpgradeMenu extends JPanel implements ActionListener
 			label.setIcon(new ImageIcon(state.getCurrentShip()));
 			hull.setIcon(state.getHullShip());
 			shipUp.setIcon(state.getNextShip());
-		}
-		else if(ae.getSource() == shipUp)
-		{
+		}else if(ae.getSource() == shipUp) {
 			state.UpgradeShip();
 			state.updateShip();
 			state.HullDown();
@@ -232,15 +210,13 @@ public class UpgradeMenu extends JPanel implements ActionListener
 			hull.setIcon(state.getHullShip());
 			shipUp.setIcon(state.getNextShip());
 			
-			if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9)
-			{
+			if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9) {
 				shipUp.setEnabled(false);
 			}
 		}
 	}
 	
-	public void	paintComponent(Graphics g)  
-	{
+	public void	paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		

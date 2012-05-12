@@ -3,12 +3,11 @@ package com.alpha.game;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Go extends Thread
-{
-	private boolean Up = false;
-	private boolean Down = false;
-	private boolean Left = false;
-	private boolean Right = false;
+public class Go extends Thread {
+	private boolean up = false;
+	private boolean down = false;
+	private boolean left = false;
+	private boolean right = false;
 	
 	public int x, y;
 	public int leap = 1;
@@ -17,8 +16,7 @@ public class Go extends Thread
 	private GameState state;
 	private Game game;
 	
-	Go(GameState s)
-	{
+	Go(GameState s) {
 		state = s;
 		game = state.getGame();
 		x = game.getLocX();
@@ -29,65 +27,52 @@ public class Go extends Thread
 		createTimer();
 	}
 
-	public void setUp(boolean b)
-	{
-		Up = b;
+	public void setUp(boolean b) {
+		up = b;
 	}
 	
-	public void setDown(boolean b)
-	{
-		Down = b;
+	public void setDown(boolean b) {
+		down = b;
 	}
 	
-	public void setLeft(boolean b)
-	{
-		Left = b;
+	public void setLeft(boolean b) {
+		left = b;
 	}
 	
-	public void setRight(boolean b)
-	{
-		Right = b;
+	public void setRight(boolean b) {
+		right = b;
 	}
 	
-	private void createTimer()
-	{
+	private void createTimer() {
 		timer = new Timer();
 		timer.schedule(new Task(this), 1, 14);
 	}
 	
-	private class Task extends TimerTask
-	{
+	private class Task extends TimerTask {
 		private Go go;
-		Task(Go g)
-		{
+		Task(Go g) {
 			go = g;
 		}
 		
-		public void run()
-		{
+		public void run() {
 			go.run();
 		}
 	}
 	
-	public void run()
-	{
-		if(Up)
-		{
+	public void run() {
+		if(up) {
 			game.setLocY(y -= leap);
 		}
 		
-		if(Down)
-		{
+		if(down) {
 			game.setLocY(y += leap);
 		}
 		
-		if(Left)
-		{
+		if(left) {
 			game.setLocX(x -= leap);
 		}
 		
-		if(Right)
-		{
+		if(right) {
 			game.setLocX(x += leap);
 		}
 		
