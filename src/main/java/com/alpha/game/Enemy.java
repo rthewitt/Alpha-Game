@@ -30,11 +30,17 @@ public class Enemy extends Thread {
 		switch(type) {
 			case 1: using = Resource.IMG_RED_FIGHTER; setHealth(5); break;
 			
-//			case 2: using = res.getRedHeavy(); setHealth(30); break;
+			case 2: using = Resource.IMG_RED_HEAVY; setHealth(20); break;
 			
 			case 3: using = Resource.IMG_BLUE_FIGHTER; setHealth(10); break;
 			
 			case 4: using = Resource.IMG_BLUE_HEAVY; setHealth(30); break;
+			
+			case 5: using = Resource.IMG_MED_YELLOW; setHealth(30); break;
+			
+			case 6: using = Resource.IMG_BIG_YELLOW; setHealth(40); break;
+			
+			case 7: using = Resource.IMG_BOSS_ONE; setHealth(300); break;
 		}
 		
 		startX = (int)(10 + Math.random() * (width - 30));

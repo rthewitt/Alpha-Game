@@ -30,7 +30,7 @@ public class Menu extends JPanel implements ActionListener {
 	String ship3Tip = "<html>Blue<br>Speed = 3<br>Power = 2<br>Defense = 1</html>";
 	
 	String stringIntstruct = "This will be instructions";
-	String stringCredits = " Producer: Brennan Zuber\n Programmer: Brennan Zuber\n Structural design: Ryan Hewitt\n Graphics: Elyse Zuber\n Music: David Torres\n\n" +
+	String stringCredits = " Producer: Brennan Zuber\n Programmer: Brennan Zuber\n Structural design and lots more: Ryan Hewitt\n Graphics: Elyse Zuber\n Music: David Torres\n\n" +
 			"Testers: Greg Wright - Willaim Wright - Dean Mellas - Trevor Davenport\n Various students, staff and teachers of Cerritos College";
 	
 	Star star;

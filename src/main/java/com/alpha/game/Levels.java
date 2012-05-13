@@ -1,5 +1,8 @@
 package com.alpha.game;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,11 +13,20 @@ public class Levels {
 	
 	private int i = 0, i2 = 0;
 	
-	int[][] work;
+	File lvl1 = new File(Resource.levelsPath + "lvl1.txt");
+	File lvl2 = new File(Resource.levelsPath + "lvl2.txt");
+	File lvl3 = new File(Resource.levelsPath + "lvl3.txt");
+	File lvl4 = new File(Resource.levelsPath + "lvl4.txt");
+	File lvl5 = new File(Resource.levelsPath + "lvl5.txt");
+	File lvl6 = new File(Resource.levelsPath + "lvl6.txt");
+	File lvl7 = new File(Resource.levelsPath + "lvl7.txt");
+	File lvl8 = new File(Resource.levelsPath + "lvl8.txt");
+	File lvl9 = new File(Resource.levelsPath + "lvl9.txt");
+	File lvl10 = new File(Resource.levelsPath + "lvl10.txt");
 	
-	private int[][] lvl1 =  { {3, 1},  {4, 1},  {5, 1},  {6, 1},  {7, 1},  {8, 1},  {9, 1},  {10, 1},  {11, 1},  {12, 1}};
-	private int[][] lvl2 =  { {3, 3},  {4, 3},  {5, 3},  {6, 3},  {7, 3},  {8, 3},  {9, 3},  {10, 3},  {11, 3},  {12, 3}};
-	private int[][] lvl3 =  { {4, 1},  {3, 3},  {4, 1},  {7, 1},  {6, 3},  {7, 1},  {10, 1},  {9, 3},  {10, 1},  {13, 1},  {12, 3},  {13, 1}};
+	Scanner scan;
+	int length;
+	int[][] work = new int[100][2];
 	
 	Levels(GameState s, int lvl) {
 		state = s;
@@ -25,19 +37,36 @@ public class Levels {
 	
 	private void Run(int lvl) {
 		switch(lvl) {
-			case 1: work = lvl1.clone(); break;
+			case 1: getData(lvl1);; break;
 			
-			case 2: work = lvl2.clone(); break;
+			case 2: getData(lvl2); break;
 			
-			case 3: work = lvl3.clone(); break;
+			case 3: getData(lvl3); break;
 		}
 		
-		state.setEnemies(work.length);
+		state.setEnemies(length);
 		
-		for(;i < work.length; i++) {
+		for(;i < length; i++) {
 			timer = new Timer();
 			timer.schedule(new Task(), work[i][0]*1000);
 		}
+	}
+	
+	public void getData(File f)
+	{
+		try {
+			
+			scan = new Scanner(f);
+			for(int i = 0; scan.hasNext(); i++) {
+				work[i][0] = scan.nextInt();
+				work[i][1] = scan.nextInt();
+				length = i + 1;
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void build() {

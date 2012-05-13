@@ -1,15 +1,14 @@
 package com.alpha.game;
+
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-
 import org.apache.log4j.Logger;
-
 import com.alpha.error.AlphaResourceException;
 
 public class Resource extends Thread {
@@ -23,6 +22,8 @@ public class Resource extends Thread {
 	public static final String imagesPath;
 //	public static final String fullImagesPath;
 //	public static final String codePath;
+	
+	public static String levelsPath;
 	
 	static {
 		SEPARATOR = System.getProperty("file.separator");
@@ -143,6 +144,7 @@ public class Resource extends Thread {
 	// TODO boolean values will allow you to handle things gracefully
 	public static void init() throws AlphaResourceException {
 		initializeShips();
+		initializeLevels();
 	}
 	
 	public static void initializeShips() throws AlphaResourceException {
@@ -199,7 +201,20 @@ public class Resource extends Thread {
 			throw new AlphaResourceException(ioe);
 		}
 		catch(Exception e) {
-			throw new AlphaResourceException(e); // will add valuable information
+			throw new AlphaResourceException(e);
+		}
+	}
+	
+	public static void initializeLevels() {
+		File file = new File(".");  
+		File[] files = file.listFiles();  
+		 
+		for (int fileInList = 0; fileInList < files.length; fileInList++)  {
+			levelsPath = files[fileInList].toString() + SEPARATOR + "main" + SEPARATOR + "resources" + SEPARATOR + "levels" + SEPARATOR;
+			
+			if(levelsPath.contains(SEPARATOR + "src" + SEPARATOR + "main" + SEPARATOR + "resources" + SEPARATOR + "levels" + SEPARATOR)) {
+				break;
+			}
 		}
 	}
 	
@@ -244,6 +259,5 @@ public class Resource extends Thread {
 	public static BufferedImage getImageFromSystemPath(String imgName) throws IOException {
 		return (BufferedImage)( ImageIO.read(
 				classLoader.getSystemResourceAsStream("images" + SEPARATOR + imgName)) );
-	}
-	
+	}	
 }
