@@ -9,7 +9,6 @@ public class Enemy extends Thread {
 	boolean taken = false;
 	
 	private BufferedImage using;
-	private GameState state;
 	private Collision col;
 	private Game game;
 	
@@ -19,10 +18,9 @@ public class Enemy extends Thread {
 	private int health = 10;
 	private int type;
 	
-	Enemy(GameState st, int t) {
-		state = st;
-		col = state.getCollision();
-		game = state.getGame();
+	Enemy(int t) {
+		col = GameState.col;
+		game = GameState.game;
 		width = game.getScreenWidth();
 		height = game.getScreenHeight();
 		type = t;
@@ -64,7 +62,7 @@ public class Enemy extends Thread {
 	
 //	private class BeamTask extends TimerTask {
 //		public void run() {
-//			Beam newBeam = new Beam(StartX, StartY, game, state, 2);
+//			Beam newBeam = new Beam(StartX, StartY, game, 2);
 //			game.Beams.addElement(newBeam);
 //			newBeam.start();
 //		}
@@ -80,7 +78,9 @@ public class Enemy extends Thread {
 	public boolean kill() {
 		health -= 5;
 		if(health <1) {
-			state.DecrementEnemies();
+			GameState.enemies --;
+			GameState.LevelOver();
+			
 			draw = false;
 			scoutStarted = false;
 			this.stop();

@@ -7,10 +7,9 @@ public class Alpha {
 	public static void main (String args[]) throws AlphaException {
 		try {
 			Resource.init();
-			GameState state = new GameState();
 			Collision col = new Collision();
-			state.addMe(col);
-			new Control(state);
+			GameState.col = col;
+			new Control();
 		}
 		catch(AlphaResourceException are) {
 			throw new AlphaException(are);

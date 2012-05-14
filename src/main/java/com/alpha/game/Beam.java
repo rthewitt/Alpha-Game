@@ -15,12 +15,10 @@ public class Beam extends Thread {
 	private int counter = 0;
 	
 	private Game game;
-	private GameState state;
 	private Collision col;
 	
-	public Beam(int StartX,	int StartY, Game g, GameState s) {
-		state = s;
-		col = state.getCollision();
+	public Beam(int StartX,	int StartY, Game g) {
+		col = GameState.col;
 		game = g;
 		thisBeam = new Ellipse2D.Double(StartX, StartY, size, size);
 		beamStarted	= true;

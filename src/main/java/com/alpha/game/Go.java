@@ -13,16 +13,14 @@ public class Go extends Thread {
 	public int leap = 1;
 	
 	private Timer timer;
-	private GameState state;
 	private Game game;
 	
-	Go(GameState s) {
-		state = s;
-		game = state.getGame();
+	Go() {
+		game = GameState.game;
 		x = game.getLocX();
 		y = game.getLocY();
 		
-		leap = state.getSpeed();
+		leap = GameState.speed;
 		
 		createTimer();
 	}

@@ -34,19 +34,17 @@ public class Menu extends JPanel implements ActionListener {
 			"Testers: Greg Wright - Willaim Wright - Dean Mellas - Trevor Davenport\n Various students, staff and teachers of Cerritos College";
 	
 	Star star;
-	GameState state;
 
 	private boolean drawInstructions = false;
 	private boolean drawCredits = false;
 	
-	public Menu(int w, int h, Control con, GameState s) {
-		state = s;
+	public Menu(int w, int h, Control con) {
 		control = con;
 		width = w;
 		height = h;
 		setSize(width, height);
 		
-		star = state.getStar();
+		star = GameState.star;
 		star.setDraw(this);
 			
 		this.setLayout(null);
@@ -166,16 +164,16 @@ public class Menu extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == ship1) {
-			state.setShip(1);
-			state.setSpeed(2);
+			GameState.ship = 1;
+			GameState.speed = 2;
 			runNull();
 		}else if(ae.getSource() == ship2) {
-			state.setShip(4);
-			state.setSpeed(1);
+			GameState.ship = 4;
+			GameState.speed = 1;
 			runNull();
 		}else if(ae.getSource() == ship3) {
-			state.setShip(7);
-			state.setSpeed(3);
+			GameState.ship = 7;
+			GameState.speed = 3;
 			runNull();
 		}
 		

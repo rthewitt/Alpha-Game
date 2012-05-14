@@ -1,19 +1,17 @@
-PATCH NOTES - Update 1.3
+PATCH NOTES - Update 1.3.1
 
-1. Classes
-  - Resource
-    a. added initializeLevels()
+- GameState
+  a. Removed all get/set type methods
+  b. Changed fields to static
+  c. Modified levelOver() to fit new level selector
 
-  - Levels
-    a. added getData()
-    b. Switched to file I/O system instead of arrays
+- UpgradeMenu
+  a. Added replay button and functionality
+  b. Added plus button and functionality
+  c. Added minus button and functionality
 
-  - Menu
-    a. tweaked the credits
+- All Classes
+  a. Modified all classes to fit static GameState fields instead of methods
 
-2. Files
-  - Added Levels files under a new Directory named levels next to images.
-    a. this will be the new level system
-
-3. Game systems
-  - Implemented levels system with the changes above.
+- Game Systems
+  a. Implemented Level Selector in UpgradeMenu

@@ -9,7 +9,6 @@ import java.util.TimerTask;
 public class Levels {
 	private Timer timer;
 	private Game game;
-	private GameState state;
 	
 	private int i = 0, i2 = 0;
 	
@@ -28,23 +27,36 @@ public class Levels {
 	int length;
 	int[][] work = new int[100][2];
 	
-	Levels(GameState s, int lvl) {
-		state = s;
-		game = state.getGame();
+	Levels(int lvl) {
+		game = GameState.game;
 		
 		Run(lvl);
 	}
 	
 	private void Run(int lvl) {
 		switch(lvl) {
-			case 1: getData(lvl1);; break;
+			case 1: getData(lvl1); break;
 			
 			case 2: getData(lvl2); break;
 			
 			case 3: getData(lvl3); break;
+			
+			case 4: getData(lvl4); break;
+			
+			case 5: getData(lvl5); break;
+			
+			case 6: getData(lvl6); break;
+			
+			case 7: getData(lvl7); break;
+			
+			case 8: getData(lvl8); break;
+			
+			case 9: getData(lvl9); break;
+			
+			case 10: getData(lvl10); break;
 		}
 		
-		state.setEnemies(length);
+		GameState.enemies = length;
 		
 		for(;i < length; i++) {
 			timer = new Timer();
@@ -70,7 +82,7 @@ public class Levels {
 	}
 	
 	public void build() {
-		Enemy s = new Enemy(state, work[i2][1]);
+		Enemy s = new Enemy(work[i2][1]);
 		game.scouts.addElement(s);
 		s.start();
 		i2 ++;

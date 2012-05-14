@@ -8,12 +8,10 @@ public class Control extends JFrame {
 	private Menu menu;
 	private Game game;
 	private UpgradeMenu Up;
-	private GameState state;
 	private int width = 500, height = 800;
 	Star star;
 	
-	Control(GameState s) {
-		state = s;
+	Control() {
 		
 		setSize(width, height);
 		setVisible(true);
@@ -21,7 +19,7 @@ public class Control extends JFrame {
 		setTitle("Alpha");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		state.addMe(this);
+		GameState.con = this;
 		startStars();
 		
 		RunMenu(0);
@@ -29,7 +27,7 @@ public class Control extends JFrame {
 	
 	void startStars() {
 		star = new Star(width, height);
-		state.addStar(star);
+		GameState.star = star;
 		star.setNumber(50);
 		star.start();
 	}
@@ -38,7 +36,7 @@ public class Control extends JFrame {
 		if(con != 0) {
 			nullIt(con);
 		}
-		menu = new Menu(width, height, this, state);
+		menu = new Menu(width, height, this);
 		add(menu, BorderLayout.CENTER);
 	}
 	
@@ -46,7 +44,7 @@ public class Control extends JFrame {
 		if(con != 0) {
 			nullIt(con);
 		}
-		game = new Game(width, height, this, state);
+		game = new Game(width, height, this);
 		add(game, BorderLayout.CENTER);
 	}
 	
@@ -54,7 +52,7 @@ public class Control extends JFrame {
 		if(con != 0) {
 			nullIt(con);
 		}
-		Up = new UpgradeMenu(width, height, this, state);
+		Up = new UpgradeMenu(width, height, this);
 		add(Up, BorderLayout.CENTER);
 	}
 	

@@ -28,28 +28,22 @@ public class Game extends JPanel implements KeyListener, MouseListener {
 	Go go;
 	
 	Panel draw;
-	private GameState state;
-	@SuppressWarnings("unused")
-	private Levels lvl;
 	
-	public Game(int pwid, int pht, Control con, GameState s) {
-		state = s;
-		state.addMe(this);
-		state.getSpeed();
-		star = state.getStar();
+	public Game(int pwid, int pht, Control con) {
+		GameState.game = this;
+		star = GameState.star;
 		star.setDraw(this);
 		width = pwid;
 		height = pht;
 		setSize(width, height);
 		
-		go = new Go(state);
+		go = new Go();
 		
 		setVisible(true);
 		addKeyListener(this);
-		
 		setBackground(Color.BLACK);
-		state.updateShip();
-		Ship newShip = new Ship(this, state.getShip(), state.getHull());
+		GameState.updateShip();
+		Ship newShip = new Ship(this, GameState.ship, GameState.hull);
 		ships.addElement(newShip);
 		newShip.start();
 		
@@ -63,7 +57,11 @@ public class Game extends JPanel implements KeyListener, MouseListener {
 			}
 		);
 		
-		lvl = new Levels(state, state.getLevel());
+		if(GameState.useWantedLevel) {
+			new Levels(GameState.wantedLevel);
+		}else {
+			new Levels(GameState.level);
+		}
 	}
 	
 	public Vector<Beam> getVector1() {
@@ -76,20 +74,20 @@ public class Game extends JPanel implements KeyListener, MouseListener {
 	
 	public void Clicked() {
 		if(clicks < 6) {
-			if(state.getDual()) {
-				Beam newBeam = new Beam(getLocX() - 15, getLocY(), this, state);
+			if(GameState.dual) {
+				Beam newBeam = new Beam(getLocX() - 15, getLocY(), this);
 				beams.addElement(newBeam);
 				newBeam.setSpeed(3);
 				
 			
-				Beam newBeam1 = new Beam(getLocX() + 15, getLocY(), this, state);
+				Beam newBeam1 = new Beam(getLocX() + 15, getLocY(), this);
 				beams.addElement(newBeam1);
 				newBeam1.setSpeed(3);
 				
 				newBeam.start();
 				newBeam1.start();
 			}else {
-				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state);
+				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this);
 				beams.addElement(newBeam);
 				newBeam.setSpeed(3);
 				newBeam.start();
@@ -138,9 +136,9 @@ public class Game extends JPanel implements KeyListener, MouseListener {
 	
 	public void mousePressed(MouseEvent me) {
 		pressed = true;
-		if(state.getMachGun()) {
+		if(GameState.machGun) {
 			while(pressed) {
-				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this, state);
+				Beam newBeam = new Beam(getLocX() - 3, getLocY(), this);
 				beams.addElement(newBeam);
 				newBeam.start();
 			}

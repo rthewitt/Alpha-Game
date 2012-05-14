@@ -1,6 +1,8 @@
 package com.alpha.game;
+
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -18,8 +20,7 @@ import javax.swing.JTabbedPane;
 public class UpgradeMenu extends JPanel implements ActionListener {
 	private Control control;
 	private Star star;
-	private int width = 0, Height = 0; 
-	private GameState state;
+	private int width = 0, height = 0; 
 	private LandF LF = new LandF();
 	private GridLayout layout = new GridLayout(0,1);
 	JLabel label = new JLabel();
@@ -36,36 +37,31 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	JButton shipUp = new JButton("UPGRADE SHIP");
 	private ImageObserver observer;
 	
-	//Will be implemented later
-//	JButton replay = new JButton();
-//	JButton minus = new JButton();
-//	JButton plus = new JButton();
-//	JTextField number = new JTextField();
+	JButton replay = new JButton("REPLAY");
+	JButton minus = new JButton("-");
+	JButton plus = new JButton("+");
 	
-	UpgradeMenu(int x, int y, Control con, GameState s) {
-		state = s;
+	UpgradeMenu(int x, int y, Control con) {
 		control = con;
 		width = x - 8;
-		Height = y - 31;
+		height = y - 31;
 		setVisible(true);
 		
 		setBackground(Color.BLACK);
-		star = state.getStar();
+		star = GameState.star;
 		star.setDraw(this);
 		LF.TabbedPane(Bar);
 		
 		this.setLayout(null);
 		layout.setVgap(1);
 		
-//		number.setText("Yes");
-//		add(replay);
-//		add(minus);
-//		add(number);
-//		add(plus);
+		add(replay);
+		add(minus);
+		add(plus);
 		
 		setupButtons();
 		
-		NestedPanel np1 = new NestedPanel(width, Height * 40);
+		NestedPanel np1 = new NestedPanel(width, height * 40);
 		np1.setLayout(layout);
 		np1.add(dual);
 		np1.add(life);
@@ -77,42 +73,40 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		LF.Scroll(scroll);
 		Bar.addTab("SHIP", scroll);
 		
-		NestedPanel np2 = new NestedPanel(width, Height);
+		NestedPanel np2 = new NestedPanel(width, height);
 		np2.setLayout(layout);
 		np2.add(machgun);
 		np2.add(damage);
 		JScrollPane scroll2 = new JScrollPane(np2);
 		Bar.addTab("WEAPONS", scroll2);
 		
-		NestedPanel np3 = new NestedPanel(width, Height);
+		NestedPanel np3 = new NestedPanel(width, height);
 		np3.setLayout(layout);
 		np3.add(laser);
 		JScrollPane scroll3 = new JScrollPane(np3);
 		Bar.addTab("SPECIAL", scroll3);
 		
-		label.setIcon(new ImageIcon( state.getCurrentShip() ));
-		label.setBounds(0, 0, state.getCurrentShip().getWidth(observer), state.getCurrentShip().getHeight(observer));
+		label.setIcon(new ImageIcon(GameState.currentShip));
+		label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
 		
 		add(label);
 		add(Bar);
 		add(done);
 		
-		setBounds(0, 0, width, Height);
+		setBounds(0, 0, width, height);
 		Bar.setBounds(0, 200, 495, 200);
-		done.setBounds(0, Height - 30, width, Height);
-		done.setSize(width, 30);
+		done.setBounds(width/2, height - 40, width/2, 30);
+		minus.setBounds(width/2 + 100, height - 70, 50, 30);
+		plus.setBounds(width - 50, height - 70, 50, 30);
+		replay.setBounds(width/2, height - 70, 100, 30);
 	}
 
 	// TODO Set the current, next and hull ship at the start of this context
 	public void setupButtons() {
-//		minus.setBounds(230, 10, 60, 50);
-//		number.setBounds(290, 10, 50, 50);
-//		plus.setBounds(340, 10, 60, 50);
-//		replay.setBounds(100, 10, 300, 50);
 		
-//		LF.Button(replay);
-//		LF.Button(plus);
-//		LF.Button(minus);
+		LF.Button(replay);
+		LF.Button(plus);
+		LF.Button(minus);
 		
 		LF.Button(done);
 		
@@ -123,6 +117,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		
 		damage.setPreferredSize(new Dimension(width - 20, 50));
 		damage.setMinimumSize(damage.getPreferredSize());
+		damage.setIcon(new ImageIcon(Resource.IMG_DAMAGE));
 		LF.Button(damage);
 		
 		laser.setPreferredSize(new Dimension(width - 20, 50));
@@ -145,20 +140,20 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		
 		hull.setPreferredSize(new Dimension(width - 20, 50));
 		hull.setMinimumSize(hull.getPreferredSize());
-		hull.setIcon(state.getHullShip());
+		hull.setIcon(GameState.hullShip);
 		LF.Button(hull);
 		
-		if(state.getHull()) {
+		if(GameState.hull) {
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
 		}
 		
-		if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9) {
+		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9) {
 			shipUp.setEnabled(false);
 		}
 		shipUp.setPreferredSize(new Dimension(width - 20, 50));
 		shipUp.setMinimumSize(shipUp.getPreferredSize());
-		shipUp.setIcon(state.getNextShip());
+		shipUp.setIcon(GameState.nextShip);
 		LF.Button(shipUp);
 		
 		done.addActionListener(this);
@@ -170,49 +165,64 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		speed.addActionListener(this);
 		hull.addActionListener(this);
 		shipUp.addActionListener(this);
+		minus.addActionListener(this);
+		plus.addActionListener(this);
+		replay.addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == done) {
-			star = null; done.setVisible(false);
+			star = null;
+			done.setVisible(false);
 			done = null;
+			GameState.useWantedLevel = false;
 			control.RunGame(3);
 		}else if(ae.getSource() == dual) {
-			state.Dual();
+			GameState.dual = true;
 			dual.setEnabled(false);
 			dual.setBackground(Color.BLACK);
 		}else if(ae.getSource() == damage) {
-			state.DamageUp(5);
+			GameState.damage += 5;
 		}else if(ae.getSource() == laser) {
-			state.addLaser();
+			GameState.laser = true;
 		}else if(ae.getSource() == machgun) {
-			state.addMachGun();
+			GameState.machGun = true;
 		}else if(ae.getSource() == life) {
-			state.LifeUp(2);
+			GameState.life += 10;
 		}else if(ae.getSource() == speed) {
-			state.IncrementSpeed();		
+			GameState.speed ++;		
 		}else if(ae.getSource() == hull) {
-			state.HullUp();
+			GameState.hull = true;
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
-			state.updateShip();
-			label.setBounds(0, 0, state.getCurrentShip().getWidth(observer), state.getCurrentShip().getHeight(observer));
-			label.setIcon(new ImageIcon(state.getCurrentShip()));
-			hull.setIcon(state.getHullShip());
-			shipUp.setIcon(state.getNextShip());
+			GameState.updateShip();
+			label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
+			label.setIcon(new ImageIcon(GameState.currentShip));
+			hull.setIcon(GameState.hullShip);
+			shipUp.setIcon(GameState.nextShip);
 		}else if(ae.getSource() == shipUp) {
-			state.UpgradeShip();
-			state.updateShip();
-			state.HullDown();
+			GameState.ship ++;
+			GameState.updateShip();
+			GameState.hull = false;
 			hull.setEnabled(true);
-			label.setBounds(0, 0, state.getCurrentShip().getWidth(observer), state.getCurrentShip().getHeight(observer));
-			label.setIcon(new ImageIcon(state.getCurrentShip()));
-			hull.setIcon(state.getHullShip());
-			shipUp.setIcon(state.getNextShip());
-			
-			if(state.getShip() == 3 || state.getShip() == 6 || state.getShip() == 9) {
-				shipUp.setEnabled(false);
-			}
+			label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
+			label.setIcon(new ImageIcon(GameState.currentShip));
+			hull.setIcon(GameState.hullShip);
+			shipUp.setIcon(GameState.nextShip);
+		}else if(ae.getSource() == minus) {
+			GameState.wantedLevel --;
+		}else if(ae.getSource() == plus) {
+			GameState.wantedLevel ++;
+		}else if(ae.getSource() == replay) {
+			star = null;
+			done.setVisible(false);
+			done = null;
+			GameState.useWantedLevel = true;
+			control.RunGame(3);
+		}
+		
+		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9) {
+			shipUp.setEnabled(false);
 		}
 	}
 	
@@ -220,6 +230,13 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
+		String s = Integer.toString(GameState.wantedLevel);
+		
         star.draw(g2d);
+        
+        g2d.setFont(new Font("TimesNewRoman", Font.PLAIN, 20));
+        g2d.setColor(Color.GREEN);
+        g2d.drawRect(width/2 + 150, height - 70, 47, 29);
+        g2d.drawString(s, width/2 + 167, height - 47);
 	}
 }
