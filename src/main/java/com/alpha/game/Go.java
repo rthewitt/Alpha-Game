@@ -17,8 +17,8 @@ public class Go extends Thread {
 	
 	Go() {
 		game = GameState.game;
-		x = game.getLocX();
-		y = game.getLocY();
+		x = Ship.x;
+		y = Ship.y;
 		
 		leap = GameState.speed;
 		
@@ -59,19 +59,19 @@ public class Go extends Thread {
 	
 	public void run() {
 		if(up) {
-			game.setLocY(y -= leap);
+			Ship.y -= leap;
 		}
 		
 		if(down) {
-			game.setLocY(y += leap);
+			Ship.y += leap;
 		}
 		
 		if(left) {
-			game.setLocX(x -= leap);
+			Ship.x -= leap;
 		}
 		
 		if(right) {
-			game.setLocX(x += leap);
+			Ship.x += leap;
 		}
 		
 		game.repaint();

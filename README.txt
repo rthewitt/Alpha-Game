@@ -1,17 +1,27 @@
-PATCH NOTES - Update 1.3.1
+PATCH NOTES - Update 1.4
 
-- GameState
-  a. Removed all get/set type methods
-  b. Changed fields to static
-  c. Modified levelOver() to fit new level selector
+1. Removed Beam Class
 
-- UpgradeMenu
-  a. Added replay button and functionality
-  b. Added plus button and functionality
-  c. Added minus button and functionality
+2. Removed Collision Class
 
-- All Classes
-  a. Modified all classes to fit static GameState fields instead of methods
+3. Added BeamElement and subclasses
+  -SingleBeam(only one that is currently functional)
+  -PiercingBeam
+  -DualBeam
+  -ExplodingBeam
+  -ShotgunBeam
+  -WaveBeam
+  -ShotgunBeam
+  -MachgunBeam
+  -PoisonBeam
 
-- Game Systems
-  a. Implemented Level Selector in UpgradeMenu
+4. Modified Game Class
+  -Removed Mouse Listener
+  -changed class to support new way of making beams
+
+5. Enemies class
+  -Added testHit method
+
+6. Removed some lines in Alpha pertaining to Collision class
+
+7. I made a lot of small changes that would take a long time to list.

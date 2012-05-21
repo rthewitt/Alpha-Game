@@ -8,7 +8,7 @@ public class Control extends JFrame {
 	private Menu menu;
 	private Game game;
 	private UpgradeMenu Up;
-	private int width = 500, height = 800;
+	static int width = 500, height = 800;
 	Star star;
 	
 	Control() {
@@ -36,7 +36,7 @@ public class Control extends JFrame {
 		if(con != 0) {
 			nullIt(con);
 		}
-		menu = new Menu(width, height, this);
+		menu = new Menu();
 		add(menu, BorderLayout.CENTER);
 	}
 	
@@ -44,7 +44,7 @@ public class Control extends JFrame {
 		if(con != 0) {
 			nullIt(con);
 		}
-		game = new Game(width, height, this);
+		game = new Game();
 		add(game, BorderLayout.CENTER);
 	}
 	
@@ -52,7 +52,7 @@ public class Control extends JFrame {
 		if(con != 0) {
 			nullIt(con);
 		}
-		Up = new UpgradeMenu(width, height, this);
+		Up = new UpgradeMenu();
 		add(Up, BorderLayout.CENTER);
 	}
 	

@@ -13,15 +13,20 @@ import javax.swing.ImageIcon;
 	static int enemies;
 	static int life = 20;
 	static int damage = 5;
-	static boolean machGun = false;
-	static boolean laser = false;
-	static boolean hull = false;
-	static boolean dual = false;
+	static int beamType = 0;
+	
 	static boolean useWantedLevel = false;
+	
+	//UpgradeMenu
+	static boolean damageEnabled = false;
+	static boolean machGunEnabled = false;
+	static boolean laserEnabled = false;
+	static boolean hullEnabled = false;
+	static boolean dualEnabled = false;
+	static boolean lifeEnabled = false;
 	
 	static Control con;
 	static Game game;
-	static Collision col;
 	static Star star;
 	
 	static Image currentShip;
@@ -30,7 +35,7 @@ import javax.swing.ImageIcon;
 	
 	public static void updateShip() {
 		BufferedImage img = null;
-		if(hull) {
+		if(hullEnabled) {
 			switch(ship) {
 				case 1: img = Resource.IMG_SMALL_GREEN_ARMOR; break;
 				

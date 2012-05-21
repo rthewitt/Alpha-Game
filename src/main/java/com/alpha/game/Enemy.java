@@ -9,20 +9,13 @@ public class Enemy extends Thread {
 	boolean taken = false;
 	
 	private BufferedImage using;
-	private Collision col;
-	private Game game;
 	
 	int startX, startY;
 	private int speed;
-	private int width, height;
 	private int health = 10;
 	private int type;
 	
 	Enemy(int t) {
-		col = GameState.col;
-		game = GameState.game;
-		width = game.getScreenWidth();
-		height = game.getScreenHeight();
 		type = t;
 		
 		switch(type) {
@@ -41,11 +34,10 @@ public class Enemy extends Thread {
 			case 7: using = Resource.IMG_BOSS_ONE; setHealth(300); break;
 		}
 		
-		startX = (int)(10 + Math.random() * (width - 30));
+		startX = (int)(10 + Math.random() * (Control.width - 30));
 		startY = -30;
 		speed = 30;
 		scoutStarted = true;
-		col.addShip(this);
 	}
 	
 	public void setPosition(int x) {
@@ -71,6 +63,23 @@ public class Enemy extends Thread {
 	public void	draw(Graphics2D g2d) {
 		if(scoutStarted && draw) {
 			g2d.drawImage(using, startX, startY, null);
+		}
+	}
+	
+	public void testHit(BeamElement be) {
+		int Y = be.getY();
+		int X = be.getX();
+		boolean go = false;
+		
+		if(startX < X && X < startX + using.getWidth()) {
+			go = true;
+		}
+		
+		if(go) {
+			if(startY < Y && Y < startY + using.getHeight()) {
+				be.kill();
+				kill();
+			}
 		}
 	}
 	
@@ -100,7 +109,7 @@ public class Enemy extends Thread {
 			
 			startY += 2;
 			
-			if(startY > height) {
+			if(startY > Control.height) {
 				kill();
 			}
 		}

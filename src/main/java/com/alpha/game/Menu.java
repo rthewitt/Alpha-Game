@@ -21,7 +21,6 @@ public class Menu extends JPanel implements ActionListener {
 	JPanel instructions = new JPanel();
 	JPanel credits = new JPanel();
 	
-	private int width, height;
 	private Control control;
 	private LandF LF = new LandF();
 	
@@ -32,20 +31,15 @@ public class Menu extends JPanel implements ActionListener {
 	String stringIntstruct = "This will be instructions";
 	String stringCredits = " Producer: Brennan Zuber\n Programmer: Brennan Zuber\n Structural design and lots more: Ryan Hewitt\n Graphics: Elyse Zuber\n Music: David Torres\n\n" +
 			"Testers: Greg Wright - Willaim Wright - Dean Mellas - Trevor Davenport\n Various students, staff and teachers of Cerritos College";
-	
-	Star star;
 
 	private boolean drawInstructions = false;
 	private boolean drawCredits = false;
 	
-	public Menu(int w, int h, Control con) {
-		control = con;
-		width = w;
-		height = h;
-		setSize(width, height);
+	public Menu() {
+		control = GameState.con;
+		setSize(Control.width, Control.height);
 		
-		star = GameState.star;
-		star.setDraw(this);
+		GameState.star.setDraw(this);
 			
 		this.setLayout(null);
 		
@@ -74,10 +68,10 @@ public class Menu extends JPanel implements ActionListener {
 		go.setBounds(70,150,350,100);
 		instruct.setBounds(70, 400, 350, 100);
 		credit.setBounds(70, 600, 350, 100);
-		done.setBounds(width - 100, height - 80, 80, 30);
+		done.setBounds(Control.width - 100, Control.height - 80, 80, 30);
 		
-		instructions.setBounds(0, 0, width, height);
-		credits.setBounds(0, 0, width, height);
+		instructions.setBounds(0, 0, Control.width, Control.height);
+		credits.setBounds(0, 0, Control.width, Control.height);
 		
 		LF.Button(ship1);
 		LF.Button(ship2);
@@ -86,7 +80,6 @@ public class Menu extends JPanel implements ActionListener {
 		LF.Button(instruct);
 		LF.Button(credit);
 		LF.Button(done);
-		
 		LF.Panel(instructions);
 		LF.Panel(credits);
 		
@@ -108,25 +101,6 @@ public class Menu extends JPanel implements ActionListener {
 		instruct.addActionListener(this);
 		credit.addActionListener(this);
 		done.addActionListener(this);
-	}
-	
-	public void	paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d	= (Graphics2D)	g;
-		
-        star.draw(g2d);
-        
-        if(drawInstructions) {
-        	g2d.setColor(Color.GREEN);
-        	drawString(g2d, stringIntstruct, 10, 10);
-        }
-        
-        if(drawCredits) {
-        	g2d.setColor(Color.GREEN);
-        	drawString(g2d, stringCredits, 10, 10);
-        }
-        
-        repaint();
 	}
 	
 	private void runNull() {
@@ -194,5 +168,24 @@ public class Menu extends JPanel implements ActionListener {
 			drawCredits = false;
 			enable(true);
 		}
+	}
+	
+	public void	paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d	= (Graphics2D)	g;
+		
+        GameState.star.draw(g2d);
+        
+        if(drawInstructions) {
+        	g2d.setColor(Color.GREEN);
+        	drawString(g2d, stringIntstruct, 10, 10);
+        }
+        
+        if(drawCredits) {
+        	g2d.setColor(Color.GREEN);
+        	drawString(g2d, stringCredits, 10, 10);
+        }
+        
+        repaint();
 	}
 }

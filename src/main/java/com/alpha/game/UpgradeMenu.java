@@ -1,5 +1,6 @@
 package com.alpha.game;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,10 +20,13 @@ import javax.swing.JTabbedPane;
 @SuppressWarnings("serial")
 public class UpgradeMenu extends JPanel implements ActionListener {
 	private Control control;
-	private Star star;
-	private int width = 0, height = 0; 
+	private int panelWidth = 0, panelHeight = 0; 
+	
 	private LandF LF = new LandF();
-	private GridLayout layout = new GridLayout(0,1);
+	
+	private GridLayout pnaelLayout = new GridLayout(0,1);
+	BorderLayout buttonLayout = new BorderLayout();
+	
 	JLabel label = new JLabel();
 	
 	private JTabbedPane Bar = new JTabbedPane();
@@ -41,121 +45,103 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	JButton minus = new JButton("-");
 	JButton plus = new JButton("+");
 	
-	UpgradeMenu(int x, int y, Control con) {
-		control = con;
-		width = x - 8;
-		height = y - 31;
+	NestedPanel np1 = new NestedPanel();
+	NestedPanel np2 = new NestedPanel();
+	NestedPanel np3 = new NestedPanel();
+	JScrollPane scroll = new JScrollPane(np1);
+	JScrollPane scroll2 = new JScrollPane(np2);
+	JScrollPane scroll3 = new JScrollPane(np3);
+	
+	UpgradeMenu() {
+		control = GameState.con;
+		panelWidth = Control.width - 8;
+		panelHeight = Control.height - 31;
 		setVisible(true);
 		
 		setBackground(Color.BLACK);
-		star = GameState.star;
-		star.setDraw(this);
+		GameState.star.setDraw(this);
 		LF.TabbedPane(Bar);
 		
 		this.setLayout(null);
-		layout.setVgap(1);
 		
-		add(replay);
-		add(minus);
-		add(plus);
-		
-		setupButtons();
-		
-		NestedPanel np1 = new NestedPanel(width, height * 40);
-		np1.setLayout(layout);
-		np1.add(dual);
-		np1.add(life);
-		np1.add(speed);
-		np1.add(hull);
-		np1.add(shipUp);
-		JScrollPane scroll = new JScrollPane(np1);
-		scroll.setWheelScrollingEnabled(true);
-		LF.Scroll(scroll);
-		Bar.addTab("SHIP", scroll);
-		
-		NestedPanel np2 = new NestedPanel(width, height);
-		np2.setLayout(layout);
-		np2.add(machgun);
-		np2.add(damage);
-		JScrollPane scroll2 = new JScrollPane(np2);
-		Bar.addTab("WEAPONS", scroll2);
-		
-		NestedPanel np3 = new NestedPanel(width, height);
-		np3.setLayout(layout);
-		np3.add(laser);
-		JScrollPane scroll3 = new JScrollPane(np3);
-		Bar.addTab("SPECIAL", scroll3);
-		
-		label.setIcon(new ImageIcon(GameState.currentShip));
-		label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
-		
-		add(label);
-		add(Bar);
-		add(done);
-		
-		setBounds(0, 0, width, height);
-		Bar.setBounds(0, 200, 495, 200);
-		done.setBounds(width/2, height - 40, width/2, 30);
-		minus.setBounds(width/2 + 100, height - 70, 50, 30);
-		plus.setBounds(width - 50, height - 70, 50, 30);
-		replay.setBounds(width/2, height - 70, 100, 30);
+		setup();
 	}
 
-	// TODO Set the current, next and hull ship at the start of this context
-	public void setupButtons() {
-		
+	public void setup() {
+		setLayout();
+		setSize();
+		setBounds();
+		setIcon();
+		setLandF();
+		setListener();
+		setEnabled();
+		add();
+		scroll.setWheelScrollingEnabled(true);
+	}
+	
+	private void setLayout() {
+		pnaelLayout.setVgap(1);
+		dual.setLayout(buttonLayout);
+		damage.setLayout(buttonLayout);
+		machgun.setLayout(buttonLayout);
+		life.setLayout(buttonLayout);
+		laser.setLayout(buttonLayout);
+		speed.setLayout(buttonLayout);
+		hull.setLayout(buttonLayout);
+		shipUp.setLayout(buttonLayout);
+		np1.setLayout(pnaelLayout);
+		np2.setLayout(pnaelLayout);
+		np3.setLayout(pnaelLayout);
+	}
+	
+	private void setSize() {
+		dual.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
+		damage.setPreferredSize(new Dimension(panelWidth - 20, 50)); damage.setMinimumSize(damage.getPreferredSize());
+		laser.setPreferredSize(new Dimension(panelWidth - 20, 50)); laser.setMinimumSize(laser.getPreferredSize());
+		machgun.setPreferredSize(new Dimension(panelWidth - 20, 50)); machgun.setMinimumSize(machgun.getPreferredSize());
+		life.setPreferredSize(new Dimension(panelWidth - 20, 50)); life.setMinimumSize(life.getPreferredSize());
+		speed.setPreferredSize(new Dimension(panelWidth - 20, 50)); speed.setMinimumSize(speed.getPreferredSize());
+		hull.setPreferredSize(new Dimension(panelWidth - 20, 50)); hull.setMinimumSize(hull.getPreferredSize());
+		shipUp.setPreferredSize(new Dimension(panelWidth - 20, 50)); shipUp.setMinimumSize(shipUp.getPreferredSize());
+	}
+	
+	private void setBounds() {
+		setBounds(0, 0, panelWidth, panelHeight);
+		Bar.setBounds(0, 200, 495, 200);
+		done.setBounds(panelWidth/2, panelHeight - 40, panelWidth/2, 30);
+		minus.setBounds(panelWidth/2 + 100, panelHeight - 70, 50, 30);
+		plus.setBounds(panelWidth - 50, panelHeight - 70, 50, 30);
+		replay.setBounds(panelWidth/2, panelHeight - 70, 100, 30);
+		label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
+	}
+	
+	private void setIcon() {
+		dual.setIcon(new ImageIcon(Resource.IMG_DUAL_LASER));
+		damage.setIcon(new ImageIcon(Resource.IMG_DAMAGE));
+		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
+		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
+		hull.setIcon(GameState.hullShip);
+		shipUp.setIcon(GameState.nextShip);
+		label.setIcon(new ImageIcon(GameState.currentShip));
+	}
+	
+	private void setLandF() {
 		LF.Button(replay);
 		LF.Button(plus);
 		LF.Button(minus);
-		
 		LF.Button(done);
-		
-		dual.setPreferredSize(new Dimension(width - 20, 50));
-		dual.setMinimumSize(dual.getPreferredSize());
-		dual.setIcon(new ImageIcon(Resource.IMG_DUAL_LASER));
 		LF.Button(dual);
-		
-		damage.setPreferredSize(new Dimension(width - 20, 50));
-		damage.setMinimumSize(damage.getPreferredSize());
-		damage.setIcon(new ImageIcon(Resource.IMG_DAMAGE));
 		LF.Button(damage);
-		
-		laser.setPreferredSize(new Dimension(width - 20, 50));
-		laser.setMinimumSize(laser.getPreferredSize());
 		LF.Button(laser);
-		
-		machgun.setPreferredSize(new Dimension(width - 20, 50));
-		machgun.setMinimumSize(machgun.getPreferredSize());
 		LF.Button(machgun);
-		
-		life.setPreferredSize(new Dimension(width - 20, 50));
-		life.setMinimumSize(life.getPreferredSize());
-		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
 		LF.Button(life);
-		
-		speed.setPreferredSize(new Dimension(width - 20, 50));
-		speed.setMinimumSize(speed.getPreferredSize());
-		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
 		LF.Button(speed);
-		
-		hull.setPreferredSize(new Dimension(width - 20, 50));
-		hull.setMinimumSize(hull.getPreferredSize());
-		hull.setIcon(GameState.hullShip);
 		LF.Button(hull);
-		
-		if(GameState.hull) {
-			hull.setEnabled(false);
-			hull.setBackground(Color.BLACK);
-		}
-		
-		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9) {
-			shipUp.setEnabled(false);
-		}
-		shipUp.setPreferredSize(new Dimension(width - 20, 50));
-		shipUp.setMinimumSize(shipUp.getPreferredSize());
-		shipUp.setIcon(GameState.nextShip);
 		LF.Button(shipUp);
-		
+		LF.Scroll(scroll);
+	}
+	
+	private void setListener() {
 		done.addActionListener(this);
 		dual.addActionListener(this);
 		damage.addActionListener(this);
@@ -170,60 +156,125 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		replay.addActionListener(this);
 	}
 	
+	private void setEnabled() {
+		if(GameState.hullEnabled) {
+			hull.setEnabled(false);
+			hull.setBackground(Color.BLACK);
+		} else {
+			hull.setEnabled(true);
+			hull.setBackground(Color.GREEN);
+		}
+		
+		if(GameState.lifeEnabled) {
+			life.setEnabled(false);
+			life.setBackground(Color.BLACK);
+		} else {
+			life.setEnabled(true);
+			life.setBackground(Color.GREEN);
+		}
+		
+		if(GameState.damageEnabled) {
+			damage.setEnabled(false);
+			damage.setBackground(Color.BLACK);
+		} else {
+			damage.setEnabled(true);
+			damage.setBackground(Color.GREEN);
+		}
+		
+		if(GameState.dualEnabled) {
+			dual.setEnabled(false);
+			hull.setBackground(Color.BLACK);
+		} else {
+			dual.setEnabled(true);
+			dual.setBackground(Color.GREEN);
+		}
+		
+		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9) {
+			shipUp.setEnabled(false);
+			shipUp.setBackground(Color.BLACK);
+		} else {
+			shipUp.setEnabled(true);
+			shipUp.setBackground(Color.GREEN);
+		}
+		
+		if(GameState.wantedLevel < GameState.level - 1) {
+			plus.setEnabled(true);
+			plus.setBackground(Color.BLACK);
+		} else {
+			plus.setEnabled(false);
+			plus.setBackground(Color.GREEN);
+		}
+			
+		if(GameState.wantedLevel > 1) {
+			minus.setEnabled(true);
+			minus.setBackground(Color.BLACK);
+		} else {
+			minus.setEnabled(false);
+			minus.setBackground(Color.GREEN);
+		}
+	}
+	
+	private void add() {
+		Bar.addTab("SHIP", scroll);
+		Bar.addTab("WEAPONS", scroll2);
+		Bar.addTab("SPECIAL", scroll3);
+		np1.add(dual);
+		np1.add(life);
+		np1.add(speed);
+		np1.add(hull);
+		np1.add(shipUp);
+		np2.add(machgun);
+		np2.add(damage);
+		np3.add(laser);
+		add(label);
+		add(Bar);
+		add(done);
+		add(replay);
+		add(minus);
+		add(plus);
+	}
+	
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == done) {
-			star = null;
 			done.setVisible(false);
 			done = null;
 			GameState.useWantedLevel = false;
 			control.RunGame(3);
 		}else if(ae.getSource() == dual) {
-			GameState.dual = true;
-			dual.setEnabled(false);
+			GameState.dualEnabled = true;
 			dual.setBackground(Color.BLACK);
 		}else if(ae.getSource() == damage) {
 			GameState.damage += 5;
 		}else if(ae.getSource() == laser) {
-			GameState.laser = true;
+			GameState.laserEnabled = true;
 		}else if(ae.getSource() == machgun) {
-			GameState.machGun = true;
+			GameState.machGunEnabled = true;
 		}else if(ae.getSource() == life) {
 			GameState.life += 10;
 		}else if(ae.getSource() == speed) {
 			GameState.speed ++;		
 		}else if(ae.getSource() == hull) {
-			GameState.hull = true;
-			hull.setEnabled(false);
-			hull.setBackground(Color.BLACK);
+			GameState.hullEnabled = true;
 			GameState.updateShip();
 			label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
-			label.setIcon(new ImageIcon(GameState.currentShip));
-			hull.setIcon(GameState.hullShip);
-			shipUp.setIcon(GameState.nextShip);
 		}else if(ae.getSource() == shipUp) {
 			GameState.ship ++;
 			GameState.updateShip();
-			GameState.hull = false;
-			hull.setEnabled(true);
+			GameState.hullEnabled = false;
 			label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
-			label.setIcon(new ImageIcon(GameState.currentShip));
-			hull.setIcon(GameState.hullShip);
-			shipUp.setIcon(GameState.nextShip);
 		}else if(ae.getSource() == minus) {
 			GameState.wantedLevel --;
 		}else if(ae.getSource() == plus) {
 			GameState.wantedLevel ++;
 		}else if(ae.getSource() == replay) {
-			star = null;
 			done.setVisible(false);
 			done = null;
 			GameState.useWantedLevel = true;
 			control.RunGame(3);
 		}
 		
-		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9) {
-			shipUp.setEnabled(false);
-		}
+		setEnabled();
+		setIcon();
 	}
 	
 	public void	paintComponent(Graphics g) {
@@ -232,11 +283,11 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		
 		String s = Integer.toString(GameState.wantedLevel);
 		
-        star.draw(g2d);
+        GameState.star.draw(g2d);
         
         g2d.setFont(new Font("TimesNewRoman", Font.PLAIN, 20));
         g2d.setColor(Color.GREEN);
-        g2d.drawRect(width/2 + 150, height - 70, 47, 29);
-        g2d.drawString(s, width/2 + 167, height - 47);
+        g2d.drawRect(panelWidth/2 + 150, panelHeight - 70, 47, 29);
+        g2d.drawString(s, panelWidth/2 + 167, panelHeight - 47);
 	}
 }
