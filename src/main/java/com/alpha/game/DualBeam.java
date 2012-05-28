@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 public class DualBeam extends BeamElement {
 
 	private int x, y;
+	private int damage = 5;
 	
 	public DualBeam() {
 		x = Ship.x;
@@ -18,8 +19,8 @@ public class DualBeam extends BeamElement {
 			kill();
 		}
 		
-		for (int i = 0; i < game.scouts.size(); i++) {
-        	game.scouts.elementAt(i).testHit(this);
+		for (int i = 0; i < Game.enemies.size(); i++) {
+        	Game.enemies.elementAt(i).testHit(this);
      	}
 	}
 	
@@ -30,6 +31,10 @@ public class DualBeam extends BeamElement {
 	
 	public int getY() {
 		return y;
+	}
+	
+	public double getDamage() {
+		return damage;
 	}
 	
 	@SuppressWarnings("deprecation")

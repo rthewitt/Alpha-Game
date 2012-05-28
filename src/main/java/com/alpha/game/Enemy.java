@@ -52,14 +52,6 @@ public class Enemy extends Thread {
 		health = h;
 	}
 	
-//	private class BeamTask extends TimerTask {
-//		public void run() {
-//			Beam newBeam = new Beam(StartX, StartY, game, 2);
-//			game.Beams.addElement(newBeam);
-//			newBeam.start();
-//		}
-//	}
-	
 	public void	draw(Graphics2D g2d) {
 		if(scoutStarted && draw) {
 			g2d.drawImage(using, startX, startY, null);
@@ -78,25 +70,26 @@ public class Enemy extends Thread {
 		if(go) {
 			if(startY < Y && Y < startY + using.getHeight()) {
 				be.kill();
-				kill();
+				GameState.numHits ++;
+				health -= be.getDamage();
+				
+				if(health <1) {
+					kill();
+				}
 			}
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
-	public boolean kill() {
-		health -= 5;
-		if(health <1) {
-			GameState.enemies --;
-			GameState.LevelOver();
-			
-			draw = false;
-			scoutStarted = false;
-			this.stop();
-			return true;
-		}else {
-			return false;
-		}
+	public void kill() {
+		
+		draw = false;
+		scoutStarted = false;
+		GameState.enemiesKilled ++;
+		GameState.enemies --;
+		GameState.LevelOver();
+		Game.enemies.remove(this);
+		this.stop();
 	}
 	
 	public void run() {

@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 public class MachgunBeam extends BeamElement {
 	private int x, y;
+	private double damage = 3;
 	
 	public MachgunBeam() {
 		x = Ship.x;
@@ -17,8 +18,8 @@ public class MachgunBeam extends BeamElement {
 			kill();
 		}
 		
-		for (int i = 0; i < game.scouts.size(); i++) {
-        	game.scouts.elementAt(i).testHit(this);
+		for (int i = 0; i < Game.enemies.size(); i++) {
+        	Game.enemies.elementAt(i).testHit(this);
      	}
 	}
 	
@@ -29,6 +30,10 @@ public class MachgunBeam extends BeamElement {
 	
 	public int getY() {
 		return y;
+	}
+	
+	public double getDamage() {
+		return damage;
 	}
 	
 	@SuppressWarnings("deprecation")

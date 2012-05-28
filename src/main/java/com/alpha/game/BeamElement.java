@@ -5,7 +5,6 @@ import java.util.Vector;
 
 public class BeamElement extends Thread {
 	static Vector<BeamElement> beams = new Vector<BeamElement>();
-	Game game;
 	boolean beamsRunning = true;
 	int Counter;
 	
@@ -17,29 +16,29 @@ public class BeamElement extends Thread {
 	ExplodingBeam exb;
 	ShotgunBeam shb;
 	MachgunBeam mb;
-	PoisonBeam eb;
+	LaserBeam lb;
 	
 	BeamElement() {
-		game = GameState.game;
+		
 	}
 	
 	public void newBeam() {
 		switch(GameState.beamType) {
-			case 0: sb = new SingleBeam(); beams.addElement(sb);
+			case 0: sb = new SingleBeam(); beams.addElement(sb); break;
 			
-			case 1: db = new DualBeam(); beams.addElement(db);
+			case 1: db = new DualBeam(); beams.addElement(db); break;
 	
-			case 2: wb = new WaveBeam(); beams.addElement(wb);
-	
-			case 3: pb = new PiercingBeam(); beams.addElement(pb);
+			case 2: pb = new PiercingBeam(); beams.addElement(pb); break;
 			
-			case 4: exb = new ExplodingBeam(); beams.addElement(exb);
+			case 3: exb = new ExplodingBeam(); beams.addElement(exb); break;
+			
+			case 4: lb = new LaserBeam(); beams.addElement(lb); break;
+			
+			case 5: wb = new WaveBeam(); beams.addElement(wb); break;
+			
+			case 6: shb = new ShotgunBeam(); beams.addElement(shb); break;
 	
-			case 5: shb = new ShotgunBeam(); beams.addElement(shb);
-	
-			case 6: mb = new MachgunBeam(); beams.addElement(mb);
-	
-			case 7: eb = new PoisonBeam(); beams.addElement(eb);
+			case 7: mb = new MachgunBeam(); beams.addElement(mb); break;
 		}
 	}
 	
@@ -56,21 +55,28 @@ public class BeamElement extends Thread {
 		return 0;
 	}
 	
+	public double getDamage() {
+		return 0;
+		
+	}
+	
 	void kill() {
 		
 	}
 	
 	public void run() {
 		while(beamsRunning) {
-			try {
-				Thread.sleep(3);
-           	}
-			catch (InterruptedException e) {
-				System.out.println("Woke up prematurely");
-			}
-			
-			for(int i = 0; i < beams.size(); i++) {
-				beams.elementAt(i).run();
+			if(GameState.pause == false) {
+				try {
+					Thread.sleep(3);
+	           	}
+				catch (InterruptedException e) {
+					System.out.println("Woke up prematurely");
+				}
+				
+				for(int i = 0; i < beams.size(); i++) {
+					beams.elementAt(i).run();
+				}
 			}
 		}
 	}

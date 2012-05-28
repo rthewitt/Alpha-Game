@@ -12,7 +12,7 @@ public class Go extends Thread {
 	public int x, y;
 	public int leap = 1;
 	
-	private Timer timer;
+	static Timer timer;
 	private Game game;
 	
 	Go() {

@@ -9,11 +9,25 @@ import javax.swing.ImageIcon;
 	static int level = 1;
 	static int wantedLevel;
 	static int ship = 0;
-	static int speed;
 	static int enemies;
+	static int beamType = 0;
+	static boolean pause = false;
+	
+	//Ship stats
 	static int life = 20;
 	static int damage = 5;
-	static int beamType = 0;
+	static int speed = 0;
+	static int RateOfFire = 0;
+	
+	//Stats
+	static int enemiesKilled = 0;
+	static int numDeaths = 0;
+	static int shotsFired = 0;
+	static int numHits = 0;
+	static double hitRatio = 0;
+	static int timePlayed = 0;
+	static int timesPlayed = 0;
+	static int achievmentsEarned = 0;
 	
 	static boolean useWantedLevel = false;
 	
@@ -21,6 +35,7 @@ import javax.swing.ImageIcon;
 	static boolean damageEnabled = false;
 	static boolean machGunEnabled = false;
 	static boolean laserEnabled = false;
+	static boolean lastGunEnabled = false;
 	static boolean hullEnabled = false;
 	static boolean dualEnabled = false;
 	static boolean lifeEnabled = false;
@@ -100,7 +115,10 @@ import javax.swing.ImageIcon;
 			if(useWantedLevel == false)
 				level ++;
 			wantedLevel = level - 1;
-			game.scouts.clear();
+			Game.enemies.clear();
+			Game.timer.cancel();
+			Go.timer.cancel();
+			hitRatio = ((double)numHits/(double)shotsFired) * 100;
 			con.RunUpgrade(2);
 		}
 	}

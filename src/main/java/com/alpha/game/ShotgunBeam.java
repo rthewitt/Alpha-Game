@@ -3,8 +3,8 @@ package com.alpha.game;
 import java.awt.Graphics2D;
 
 public class ShotgunBeam extends BeamElement {
-
-private int x, y;
+	private int x, y;
+	private double damage = 7;
 	
 	public ShotgunBeam() {
 		x = Ship.x;
@@ -18,8 +18,8 @@ private int x, y;
 			kill();
 		}
 		
-		for (int i = 0; i < game.scouts.size(); i++) {
-        	game.scouts.elementAt(i).testHit(this);
+		for (int i = 0; i < Game.enemies.size(); i++) {
+        	Game.enemies.elementAt(i).testHit(this);
      	}
 	}
 	
@@ -30,6 +30,10 @@ private int x, y;
 	
 	public int getY() {
 		return y;
+	}
+	
+	public double getDamage() {
+		return damage;
 	}
 	
 	@SuppressWarnings("deprecation")

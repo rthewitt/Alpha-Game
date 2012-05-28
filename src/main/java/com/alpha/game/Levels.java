@@ -8,7 +8,6 @@ import java.util.TimerTask;
 
 public class Levels {
 	private Timer timer;
-	private Game game;
 	
 	private int i = 0, i2 = 0;
 	
@@ -28,8 +27,6 @@ public class Levels {
 	int[][] work = new int[100][2];
 	
 	Levels(int lvl) {
-		game = GameState.game;
-		
 		Run(lvl);
 	}
 	
@@ -67,14 +64,12 @@ public class Levels {
 	public void getData(File f)
 	{
 		try {
-			
 			scan = new Scanner(f);
 			for(int i = 0; scan.hasNext(); i++) {
 				work[i][0] = scan.nextInt();
 				work[i][1] = scan.nextInt();
 				length = i + 1;
 			}
-			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +78,7 @@ public class Levels {
 	
 	public void build() {
 		Enemy s = new Enemy(work[i2][1]);
-		game.scouts.addElement(s);
+		Game.enemies.addElement(s);
 		s.start();
 		i2 ++;
 	}

@@ -10,6 +10,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
+import java.text.DecimalFormat;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,21 +26,30 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	
 	private LandF LF = new LandF();
 	
-	private GridLayout pnaelLayout = new GridLayout(0,1);
+	private GridLayout panelLayout = new GridLayout(0,1);
 	BorderLayout buttonLayout = new BorderLayout();
+	DecimalFormat df = new DecimalFormat("#.##");
 	
 	JLabel label = new JLabel();
 	
 	private JTabbedPane Bar = new JTabbedPane();
 	JButton done = new JButton("Next Level");
-	JButton dual = new JButton("DUAL LASERS");
 	JButton damage = new JButton("+1 DAMAGE");
-	JButton laser = new JButton("LASER SIGHT");
-	JButton machgun = new JButton("MACHINE GUN");
 	JButton life = new JButton("LIFE UP");
 	JButton speed = new JButton("SPEED UP");
 	JButton hull = new JButton("HULL UP");
 	JButton shipUp = new JButton("UPGRADE SHIP");
+	JButton RofUp = new JButton("FIRING SPEED");
+	
+	//gun buttons
+	JButton dual = new JButton("DUAL GUN");
+	JButton machgun = new JButton("MACH GUN");
+	JButton pierce = new JButton("PIERCE GUN");
+	JButton explosive = new JButton("EXPLOSIVE GUN");
+	JButton laser = new JButton("LASER SIGHT");
+	JButton wave = new JButton("WAVE GUN");
+	JButton shotgun = new JButton("SHOT-GUN");
+	
 	private ImageObserver observer;
 	
 	JButton replay = new JButton("REPLAY");
@@ -62,8 +73,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		GameState.star.setDraw(this);
 		LF.TabbedPane(Bar);
 		
-		this.setLayout(null);
-		
+		setLayout(null);
 		setup();
 	}
 
@@ -80,22 +90,30 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	}
 	
 	private void setLayout() {
-		pnaelLayout.setVgap(1);
+		panelLayout.setVgap(1);
 		dual.setLayout(buttonLayout);
-		damage.setLayout(buttonLayout);
 		machgun.setLayout(buttonLayout);
+		pierce.setLayout(buttonLayout);
+		explosive.setLayout(buttonLayout);
+		shotgun.setLayout(buttonLayout);
+		wave.setLayout(buttonLayout);
+		damage.setLayout(buttonLayout);
 		life.setLayout(buttonLayout);
 		laser.setLayout(buttonLayout);
 		speed.setLayout(buttonLayout);
 		hull.setLayout(buttonLayout);
 		shipUp.setLayout(buttonLayout);
-		np1.setLayout(pnaelLayout);
-		np2.setLayout(pnaelLayout);
-		np3.setLayout(pnaelLayout);
+		np1.setLayout(panelLayout);
+		np2.setLayout(panelLayout);
+		np3.setLayout(panelLayout);
 	}
 	
 	private void setSize() {
 		dual.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
+		pierce.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
+		explosive.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
+		shotgun.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
+		wave.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
 		damage.setPreferredSize(new Dimension(panelWidth - 20, 50)); damage.setMinimumSize(damage.getPreferredSize());
 		laser.setPreferredSize(new Dimension(panelWidth - 20, 50)); laser.setMinimumSize(laser.getPreferredSize());
 		machgun.setPreferredSize(new Dimension(panelWidth - 20, 50)); machgun.setMinimumSize(machgun.getPreferredSize());
@@ -107,16 +125,21 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	
 	private void setBounds() {
 		setBounds(0, 0, panelWidth, panelHeight);
-		Bar.setBounds(0, 200, 495, 200);
+		Bar.setBounds(0, 120, 495, 200);
 		done.setBounds(panelWidth/2, panelHeight - 40, panelWidth/2, 30);
 		minus.setBounds(panelWidth/2 + 100, panelHeight - 70, 50, 30);
 		plus.setBounds(panelWidth - 50, panelHeight - 70, 50, 30);
 		replay.setBounds(panelWidth/2, panelHeight - 70, 100, 30);
-		label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
+		label.setBounds(50 - GameState.currentShip.getWidth(observer)/2, 50 - GameState.currentShip.getHeight(observer)/2, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
 	}
 	
 	private void setIcon() {
 		dual.setIcon(new ImageIcon(Resource.IMG_DUAL_LASER));
+		pierce.setIcon(new ImageIcon(Resource.IMG_PEN));
+		explosive.setIcon(new ImageIcon(Resource.IMG_EXPLODING));
+		machgun.setIcon(new ImageIcon(Resource.IMG_RAPID_LASER));
+		shotgun.setIcon(new ImageIcon(Resource.IMG_SPREAD_LASER));
+		wave.setIcon(new ImageIcon(Resource.IMG_WAVE));
 		damage.setIcon(new ImageIcon(Resource.IMG_DAMAGE));
 		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
 		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
@@ -131,9 +154,13 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		LF.Button(minus);
 		LF.Button(done);
 		LF.Button(dual);
-		LF.Button(damage);
+		LF.Button(pierce);
+		LF.Button(explosive);
 		LF.Button(laser);
 		LF.Button(machgun);
+		LF.Button(shotgun);
+		LF.Button(wave);
+		LF.Button(damage);
 		LF.Button(life);
 		LF.Button(speed);
 		LF.Button(hull);
@@ -144,6 +171,10 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	private void setListener() {
 		done.addActionListener(this);
 		dual.addActionListener(this);
+		pierce.addActionListener(this);
+		explosive.addActionListener(this);
+		shotgun.addActionListener(this);
+		wave.addActionListener(this);
 		damage.addActionListener(this);
 		machgun.addActionListener(this);
 		life.addActionListener(this);
@@ -218,14 +249,18 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		Bar.addTab("SHIP", scroll);
 		Bar.addTab("WEAPONS", scroll2);
 		Bar.addTab("SPECIAL", scroll3);
-		np1.add(dual);
 		np1.add(life);
 		np1.add(speed);
+		np1.add(damage);
 		np1.add(hull);
 		np1.add(shipUp);
+		np2.add(dual);
 		np2.add(machgun);
-		np2.add(damage);
-		np3.add(laser);
+		np2.add(laser);
+		np2.add(explosive);
+		np2.add(pierce);
+		np2.add(wave);
+		np2.add(shotgun);
 		add(label);
 		add(Bar);
 		add(done);
@@ -275,6 +310,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		
 		setEnabled();
 		setIcon();
+		setBounds();
 	}
 	
 	public void	paintComponent(Graphics g) {
@@ -289,5 +325,21 @@ public class UpgradeMenu extends JPanel implements ActionListener {
         g2d.setColor(Color.GREEN);
         g2d.drawRect(panelWidth/2 + 150, panelHeight - 70, 47, 29);
         g2d.drawString(s, panelWidth/2 + 167, panelHeight - 47);
+        
+        g2d.drawRect(1, 1, 100, 100);
+        
+        g2d.drawString("Speed: " + GameState.speed, 150, 30);
+        g2d.drawString("Health: " + GameState.life, 270, 30);
+        g2d.drawString("Damage: " + GameState.damage, 150, 70);
+        g2d.drawString("RoF: " + GameState.RateOfFire, 270, 70);
+        
+        g2d.drawString("Enemies Killed: " + GameState.enemiesKilled, 50, 350);
+        g2d.drawString("Number of Deaths: " + GameState.numDeaths, 50, 390);
+        g2d.drawString("Shots Fired: " + GameState.shotsFired, 50, 430);
+        g2d.drawString("Number of Hits: " + GameState.numHits, 50, 470);
+        g2d.drawString("Hit Ratio: " + df.format(GameState.hitRatio) + "%", 300, 350);
+        g2d.drawString("Time Played: " + GameState.timePlayed, 300, 390);
+        g2d.drawString("Times Played: " + GameState.timesPlayed, 300, 430);
+        g2d.drawString("Achievments: " + GameState.achievmentsEarned, 300, 470);
 	}
 }

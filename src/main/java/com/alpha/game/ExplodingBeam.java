@@ -3,8 +3,8 @@ package com.alpha.game;
 import java.awt.Graphics2D;
 
 public class ExplodingBeam extends BeamElement {
-
 	private int x, y;
+	private int damage = 20;
 	
 	public ExplodingBeam() {
 		x = Ship.x;
@@ -18,8 +18,8 @@ public class ExplodingBeam extends BeamElement {
 			kill();
 		}
 		
-		for (int i = 0; i < game.scouts.size(); i++) {
-        	game.scouts.elementAt(i).testHit(this);
+		for (int i = 0; i < Game.enemies.size(); i++) {
+        	Game.enemies.elementAt(i).testHit(this);
      	}
 	}
 	
@@ -32,6 +32,10 @@ public class ExplodingBeam extends BeamElement {
 		return y;
 	}
 	
+	public double getDamage() {
+		return damage;
+	}
+	
 	@SuppressWarnings("deprecation")
 	void kill() {
 		beams.remove(this);
@@ -39,6 +43,6 @@ public class ExplodingBeam extends BeamElement {
 	}
 
 	void draw(Graphics2D g2d) {
-		g2d.drawImage(Resource.IMG_BOLT, x, y, null);
+		g2d.drawImage(Resource.IMG_EXPLODING, x, y, null);
 	}
 }

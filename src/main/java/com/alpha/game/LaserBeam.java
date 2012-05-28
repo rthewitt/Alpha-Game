@@ -2,10 +2,11 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class PoisonBeam extends BeamElement {
+public class LaserBeam extends BeamElement {
 	private int x, y;
+	private double damage = 3;
 	
-	public PoisonBeam() {
+	public LaserBeam() {
 		x = Ship.x;
 		y = Ship.y;
 	}
@@ -17,8 +18,8 @@ public class PoisonBeam extends BeamElement {
 			kill();
 		}
 		
-		for (int i = 0; i < game.scouts.size(); i++) {
-        	game.scouts.elementAt(i).testHit(this);
+		for (int i = 0; i < Game.enemies.size(); i++) {
+        	Game.enemies.elementAt(i).testHit(this);
      	}
 	}
 	
@@ -31,6 +32,10 @@ public class PoisonBeam extends BeamElement {
 		return y;
 	}
 	
+	public double getDamage() {
+		return damage;
+	}
+	
 	@SuppressWarnings("deprecation")
 	void kill() {
 		beams.remove(this);
@@ -38,6 +43,6 @@ public class PoisonBeam extends BeamElement {
 	}
 
 	void draw(Graphics2D g2d) {
-		g2d.drawImage(Resource.IMG_BOLT, x, y, null);
+		g2d.drawImage(Resource.IMG_LASER, x, y, null);
 	}
 }
