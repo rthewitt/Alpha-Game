@@ -13,3 +13,6 @@ PATCH NOTES - Update 1.5
   8. Fixed the glitch of ending a level early by fixing the Enemy class's testHit() and kill() methods.
   9. Removed PoisonBeam Class since it will never be implemented.
   10. Added Laser as a replacement for Poison Beam.
+  11. Added a sort of cooldown for the beams. You can now just hold fire instead of repeatedly clicking. At the moment
+      it gives you slightly slower fire rate but that will be fixed.
+  12. Changed Game's scouts vector to enemies then made it static.
