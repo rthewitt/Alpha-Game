@@ -37,19 +37,6 @@ public class Resource extends Thread {
 //		codePath = Resource.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	}
 	
-/* TODO convert these images to "my" method
-
-	public static BufferedImage bolt;
-	public static BufferedImage exploding;
-	public static BufferedImage laser;
-	public static BufferedImage pen;
-	public static BufferedImage poison;
-	public static BufferedImage wave;
-	public static BufferedImage currentBeam;
-	
-	public static Image currentShip;
-*/
-	
 	// TODO talk to me about a better way to get the your ships' current image
 	//User Ship Choices
 	public static BufferedImage IMG_SMALL_GREEN;
@@ -106,40 +93,6 @@ public class Resource extends Thread {
 	
 	//Icon
 	public static ImageIcon ICON_DUAL_LASER;
-	
-	/*
-	static {
-			try
-			 {
-				IMG_SMALL_GREEN = getImage("smallGreen.png");
-				IMG_SMALL_GREEN_ARMOR = getImage("smallGreenArmor.png");
-				IMG_MED_GREEN= getImage("medGreen.png");
-				IMG_MED_GREEN_ARMOR = getImage("medGreenArmor.png");
-				IMG_LARGE_GREEN = getImage("largeGreen.png");
-				IMG_LARGE_GREEN_ARMOR = getImage("largeGreenArmor.png");
-				IMG_SMALL_RED = getImage("smallRed.png");
-				IMG_SMALL_RED_ARMOR = getImage("smallRedArmor.png");
-				IMG_MED_RED = getImage("medRed.png");
-				IMG_MED_RED_ARMOR = getImage("medRedArmor.png");
-				IMG_LARGE_RED = getImage("largeRed.png");
-				IMG_LARGE_RED_ARMOR = getImage("largeRedArmor.png");
-				IMG_SMALL_BLUE = getImage("smallBlue.png");
-				IMG_SMALL_BLUE_ARMOR = getImage("smallBlueArmor.png");
-				IMG_MED_BLUE = getImage("medBlue.png");
-				IMG_MED_BLUE_ARMOR = getImage("medBlueArmor.png");
-				IMG_LARGE_BLUE = getImage("largeBlue.png");
-				IMG_LARGE_BLUE_ARMOR = getImage("largeBlueArmor.png");
-				IMG_RED_FIGHTER = getImage("redFighter.png");
-//				redHeavy = ImageIO.read( getImagePath("RedHeavy.png");
-				IMG_BLUE_FIGHTER = getImage("blueFighter.png");
-				IMG_BLUE_HEAVY = getImage("BlueHeavy.png");
-			}
-			catch(IOException ioe) {
-				alphaLog.error("Problem encountered while loading ship images", ioe);
-				
-			}
-		
-	} */
 	
 	// TODO boolean values will allow you to handle things gracefully
 	public static void init() throws AlphaResourceException {

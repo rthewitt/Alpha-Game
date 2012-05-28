@@ -66,7 +66,6 @@ public class BeamElement extends Thread {
 	
 	public void run() {
 		while(beamsRunning) {
-			if(GameState.pause == false) {
 				try {
 					Thread.sleep(3);
 	           	}
@@ -74,6 +73,7 @@ public class BeamElement extends Thread {
 					System.out.println("Woke up prematurely");
 				}
 				
+			if(GameState.pause == false) {
 				for(int i = 0; i < beams.size(); i++) {
 					beams.elementAt(i).run();
 				}
