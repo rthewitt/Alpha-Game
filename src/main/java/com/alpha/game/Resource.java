@@ -67,7 +67,7 @@ public class Resource extends Thread {
 	public static BufferedImage IMG_BIG_YELLOW;
 	public static BufferedImage IMG_BOSS_ONE;
 	
-	//Images dropped by Enemies
+	//Beam Options
 	public static BufferedImage IMG_BOLT;
 	public static BufferedImage IMG_EXPLODING;
 	public static BufferedImage IMG_LASER;
@@ -82,6 +82,9 @@ public class Resource extends Thread {
 	public static BufferedImage IMG_DUAL_LASER;
 	public static BufferedImage IMG_SPREAD_LASER;
 	public static BufferedImage IMG_RAPID_LASER;
+	public static BufferedImage IMG_WAVE_LASER;
+	public static BufferedImage IMG_EXPLOSIVE_LASER;
+	public static BufferedImage IMG_PIERCE_LASER;
 	public static BufferedImage IMG_HEALTH;
 	public static BufferedImage IMG_SPEED;
 	public static BufferedImage IMG_DAMAGE;
@@ -139,6 +142,9 @@ public class Resource extends Thread {
 			IMG_DUAL_LASER = getImage("menuDual.png");
 			IMG_SPREAD_LASER = getImage("menuSpread.png");
 			IMG_RAPID_LASER = getImage("menuRapid.png");
+			IMG_PIERCE_LASER = getImage("menuPierce.png");
+			IMG_WAVE_LASER = getImage("menuWave.png");
+			IMG_EXPLOSIVE_LASER = getImage("menuExplosive.png");
 			IMG_HEALTH = getImage("Health.png");
 			IMG_SPEED = getImage("Speed.png");
 			IMG_DAMAGE = getImage("Damage.png");

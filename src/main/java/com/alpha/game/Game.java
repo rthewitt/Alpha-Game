@@ -18,7 +18,6 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements KeyListener, ActionListener {
@@ -28,7 +27,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	static boolean cooldown = true;
 	static Timer timer = new Timer();
 	BorderLayout buttonLayout = new BorderLayout();
-	LandF LF = new LandF();
 	
 	JButton power1 = new JButton();
 	JButton power2 = new JButton();
@@ -100,7 +98,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		setIcon();
 		setLandF();
 		setListener();
-		setKeys();
 		setEnabled();
 		add();
 	}
@@ -138,18 +135,16 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	private void setIcon() {
 		power1.setIcon(new ImageIcon(Resource.IMG_BOLT));
 		power2.setIcon(new ImageIcon(Resource.IMG_DUAL_LASER));
-		power3.setIcon(new ImageIcon(Resource.IMG_PEN));
-		power4.setIcon(new ImageIcon(Resource.IMG_EXPLODING));
+		power3.setIcon(new ImageIcon(Resource.IMG_PIERCE_LASER));
+		power4.setIcon(new ImageIcon(Resource.IMG_EXPLOSIVE_LASER));
 		power5.setIcon(new ImageIcon(Resource.IMG_LASER));
 		
-		if(GameState.lastGunEnabled) {
-			if(GameState.ship == 3) {
-				power6.setIcon(new ImageIcon(Resource.IMG_RAPID_LASER));
-			} else if(GameState.ship == 6) {
-				power6.setIcon(new ImageIcon(Resource.IMG_RAPID_LASER));
-			} else if(GameState.ship == 9) {
-				power6.setIcon(new ImageIcon(Resource.IMG_RAPID_LASER));
-			}
+		if(GameState.ship <= 3) {
+			power6.setIcon(new ImageIcon(Resource.IMG_WAVE_LASER));
+		} else if(GameState.ship <= 6) {
+			power6.setIcon(new ImageIcon(Resource.IMG_SPREAD_LASER));
+		} else if(GameState.ship <= 9) {
+			power6.setIcon(new ImageIcon(Resource.IMG_RAPID_LASER));
 		}
 	}
 	
@@ -173,19 +168,45 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	
 	private void setEnabled() {
 		power1.setEnabled(true);
-		power2.setEnabled(true);
-		power3.setEnabled(true);
-		power4.setEnabled(true);
-		power5.setEnabled(true);
+		
+		if(GameState.dualEnabled) {
+			power2.setEnabled(true);
+			LF.setGreen(power2);
+		} else {
+			power2.setEnabled(false);
+			LF.setBlack(power2);
+		}
+		
+		if(GameState.damageEnabled) {
+			power3.setEnabled(true);
+			LF.setGreen(power3);
+		} else {
+			power3.setEnabled(false);
+			LF.setBlack(power3);
+		}
+		
+		if(GameState.machGunEnabled) {
+			power4.setEnabled(true);
+			LF.setGreen(power4);
+		} else {
+			power4.setEnabled(false);
+			LF.setBlack(power4);
+		}
+		
+		if(GameState.laserEnabled) {
+			power5.setEnabled(true);
+			LF.setGreen(power5);
+		} else {
+			power5.setEnabled(false);
+			LF.setBlack(power5);
+		}
 		
 		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9 && GameState.lastGunEnabled) {
 			power6.setEnabled(true);
-			power6.setBackground(Color.GREEN);
-			power6.setVisible(true);
+			LF.setGreen(power6);
 		} else {
 			power6.setEnabled(false);
-			power6.setBackground(Color.BLACK);
-			power6.setVisible(false);
+			LF.setBlack(power6);
 		}
 	}
 	
@@ -212,10 +233,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		} else if(ae.getSource() == power6) {
 			GameState.beamType = 5;
 		}
-	}
-	
-	public void setKeys() {
-		power1.getInputMap().put(KeyStroke.getKeyStroke("1"), "doSomething");
 	}
 	
 	private class BeamTask extends TimerTask {

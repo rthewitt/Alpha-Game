@@ -24,8 +24,6 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	private Control control;
 	private int panelWidth = 0, panelHeight = 0; 
 	
-	private LandF LF = new LandF();
-	
 	private GridLayout panelLayout = new GridLayout(0,1);
 	BorderLayout buttonLayout = new BorderLayout();
 	DecimalFormat df = new DecimalFormat("#.##");
@@ -46,7 +44,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	JButton machgun = new JButton("MACH GUN");
 	JButton pierce = new JButton("PIERCE GUN");
 	JButton explosive = new JButton("EXPLOSIVE GUN");
-	JButton laser = new JButton("LASER SIGHT");
+	JButton laser = new JButton("LASER GUN");
 	JButton wave = new JButton("WAVE GUN");
 	JButton shotgun = new JButton("SHOT-GUN");
 	
@@ -65,7 +63,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	
 	UpgradeMenu() {
 		control = GameState.con;
-		panelWidth = Control.width - 8;
+		panelWidth = Control.width - 10;
 		panelHeight = Control.height - 31;
 		setVisible(true);
 		
@@ -135,11 +133,11 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	
 	private void setIcon() {
 		dual.setIcon(new ImageIcon(Resource.IMG_DUAL_LASER));
-		pierce.setIcon(new ImageIcon(Resource.IMG_PEN));
-		explosive.setIcon(new ImageIcon(Resource.IMG_EXPLODING));
+		pierce.setIcon(new ImageIcon(Resource.IMG_PIERCE_LASER));
+		explosive.setIcon(new ImageIcon(Resource.IMG_EXPLOSIVE_LASER));
 		machgun.setIcon(new ImageIcon(Resource.IMG_RAPID_LASER));
 		shotgun.setIcon(new ImageIcon(Resource.IMG_SPREAD_LASER));
-		wave.setIcon(new ImageIcon(Resource.IMG_WAVE));
+		wave.setIcon(new ImageIcon(Resource.IMG_WAVE_LASER));
 		damage.setIcon(new ImageIcon(Resource.IMG_DAMAGE));
 		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
 		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
@@ -271,8 +269,6 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == done) {
-			done.setVisible(false);
-			done = null;
 			GameState.useWantedLevel = false;
 			control.RunGame(3);
 		}else if(ae.getSource() == dual) {
@@ -302,8 +298,6 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		}else if(ae.getSource() == plus) {
 			GameState.wantedLevel ++;
 		}else if(ae.getSource() == replay) {
-			done.setVisible(false);
-			done = null;
 			GameState.useWantedLevel = true;
 			control.RunGame(3);
 		}
@@ -326,7 +320,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
         g2d.drawRect(panelWidth/2 + 150, panelHeight - 70, 47, 29);
         g2d.drawString(s, panelWidth/2 + 167, panelHeight - 47);
         
-        g2d.drawRect(1, 1, 100, 100);
+        g2d.drawRoundRect(1, 1, 100, 100, 15, 15);
         
         g2d.drawString("Speed: " + GameState.speed, 150, 30);
         g2d.drawString("Health: " + GameState.life, 270, 30);

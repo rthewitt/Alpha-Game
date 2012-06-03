@@ -33,12 +33,14 @@ import javax.swing.ImageIcon;
 	
 	//UpgradeMenu
 	static boolean damageEnabled = false;
+	static boolean hullEnabled = false;
+	static boolean lifeEnabled = false;
+	
+	static boolean dualEnabled = false;
+	static boolean pierceEnabled = false;
 	static boolean machGunEnabled = false;
 	static boolean laserEnabled = false;
 	static boolean lastGunEnabled = false;
-	static boolean hullEnabled = false;
-	static boolean dualEnabled = false;
-	static boolean lifeEnabled = false;
 	
 	static Control con;
 	static Game game;

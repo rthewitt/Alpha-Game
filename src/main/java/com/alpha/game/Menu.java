@@ -22,7 +22,6 @@ public class Menu extends JPanel implements ActionListener {
 	JPanel credits = new JPanel();
 	
 	private Control control;
-	private LandF LF = new LandF();
 	
 	String ship1Tip = "<html>Green<br>Speed = 2<br>Power = 2<br>Defense = 2</html>";
 	String ship2Tip = "<html>Red<br>Speed = 1<br>Power = 3<br>Defense = 2</html>";

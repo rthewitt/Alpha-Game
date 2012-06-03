@@ -8,7 +8,7 @@ public class Ship extends Thread {
 	
 	public Ship() {
 		x = 250;
-		y = 700;
+		y = 600;
 	}
 
 	public void	draw(Graphics2D g2d) {
