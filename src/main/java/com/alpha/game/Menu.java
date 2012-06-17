@@ -21,7 +21,7 @@ public class Menu extends JPanel implements ActionListener {
 	JPanel instructions = new JPanel();
 	JPanel credits = new JPanel();
 	
-	private Control control;
+	private Frame frame;
 	
 	String ship1Tip = "<html>Green<br>Speed = 2<br>Power = 2<br>Defense = 2</html>";
 	String ship2Tip = "<html>Red<br>Speed = 1<br>Power = 3<br>Defense = 2</html>";
@@ -35,10 +35,10 @@ public class Menu extends JPanel implements ActionListener {
 	private boolean drawCredits = false;
 	
 	public Menu() {
-		control = GameState.con;
-		setSize(Control.width, Control.height);
+		frame = Statics.frame;
+		setSize(Frame.width, Frame.height);
 		
-		GameState.star.setDraw(this);
+		Statics.star.setDraw(this);
 			
 		this.setLayout(null);
 		
@@ -67,10 +67,10 @@ public class Menu extends JPanel implements ActionListener {
 		go.setBounds(70,150,350,100);
 		instruct.setBounds(70, 400, 350, 100);
 		credit.setBounds(70, 600, 350, 100);
-		done.setBounds(Control.width - 100, Control.height - 80, 80, 30);
+		done.setBounds(Frame.width - 100, Frame.height - 80, 80, 30);
 		
-		instructions.setBounds(0, 0, Control.width, Control.height);
-		credits.setBounds(0, 0, Control.width, Control.height);
+		instructions.setBounds(0, 0, Frame.width, Frame.height);
+		credits.setBounds(0, 0, Frame.width, Frame.height);
 		
 		LF.Button(ship1);
 		LF.Button(ship2);
@@ -108,7 +108,7 @@ public class Menu extends JPanel implements ActionListener {
 		ship1 = null;
 		ship2 = null;
 		ship3 = null;
-		control.RunGame(1);
+		frame.RunGame(1);
 	}
 	
 	public void enable(boolean b) {
@@ -137,16 +137,16 @@ public class Menu extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == ship1) {
-			GameState.ship = 1;
-			GameState.speed = 2;
+			Statics.ship = 1;
+			Statics.speed = 2;
 			runNull();
 		}else if(ae.getSource() == ship2) {
-			GameState.ship = 4;
-			GameState.speed = 1;
+			Statics.ship = 4;
+			Statics.speed = 1;
 			runNull();
 		}else if(ae.getSource() == ship3) {
-			GameState.ship = 7;
-			GameState.speed = 3;
+			Statics.ship = 7;
+			Statics.speed = 3;
 			runNull();
 		}
 		
@@ -173,7 +173,7 @@ public class Menu extends JPanel implements ActionListener {
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
-        GameState.star.draw(g2d);
+        Statics.star.draw(g2d);
         
         if(drawInstructions) {
         	g2d.setColor(Color.GREEN);
@@ -184,7 +184,5 @@ public class Menu extends JPanel implements ActionListener {
         	g2d.setColor(Color.GREEN);
         	drawString(g2d, stringCredits, 10, 10);
         }
-        
-        repaint();
 	}
 }

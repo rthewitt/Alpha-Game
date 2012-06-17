@@ -16,11 +16,11 @@ public class Go extends Thread {
 	private Game game;
 	
 	Go() {
-		game = GameState.game;
+		game = Statics.game;
 		x = Ship.x;
 		y = Ship.y;
 		
-		leap = GameState.speed;
+		leap = Statics.speed;
 		
 		createTimer();
 	}

@@ -53,7 +53,7 @@ public class Levels {
 			case 10: getData(lvl10); break;
 		}
 		
-		GameState.enemies = length;
+		Statics.enemies = length;
 		
 		for(;i < length; i++) {
 			timer = new Timer();
@@ -77,9 +77,7 @@ public class Levels {
 	}
 	
 	public void build() {
-		Enemy s = new Enemy(work[i2][1]);
-		Game.enemies.addElement(s);
-		s.start();
+		new New().newEnemie(work[i2][1]);
 		i2 ++;
 	}
 	

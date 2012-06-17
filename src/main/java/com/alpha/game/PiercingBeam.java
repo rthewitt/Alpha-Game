@@ -2,7 +2,7 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class PiercingBeam extends BeamElement {
+public class PiercingBeam extends Runnable {
 	private int x, y;
 	private double damage = .3;
 	
@@ -18,9 +18,7 @@ public class PiercingBeam extends BeamElement {
 			kill();
 		}
 		
-		for (int i = 0; i < Game.enemies.size(); i++) {
-        	Game.enemies.elementAt(i).testHit(this);
-     	}
+		Runnable.testHit(x, y, damage);
 	}
 	
 	public int getX() {
@@ -36,10 +34,8 @@ public class PiercingBeam extends BeamElement {
 		return damage;
 	}
 	
-	@SuppressWarnings("deprecation")
 	void kill() {
 		beams.remove(this);
-		this.stop();
 	}
 
 	void draw(Graphics2D g2d) {

@@ -21,7 +21,7 @@ import javax.swing.JTabbedPane;
 
 @SuppressWarnings("serial")
 public class UpgradeMenu extends JPanel implements ActionListener {
-	private Control control;
+	private Frame frame;
 	private int panelWidth = 0, panelHeight = 0; 
 	
 	private GridLayout panelLayout = new GridLayout(0,1);
@@ -62,13 +62,13 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	JScrollPane scroll3 = new JScrollPane(np3);
 	
 	UpgradeMenu() {
-		control = GameState.con;
-		panelWidth = Control.width - 10;
-		panelHeight = Control.height - 31;
+		frame = Statics.frame;
+		panelWidth = Frame.width - 10;
+		panelHeight = Frame.height - 31;
 		setVisible(true);
 		
 		setBackground(Color.BLACK);
-		GameState.star.setDraw(this);
+		Statics.star.setDraw(this);
 		LF.TabbedPane(Bar);
 		
 		setLayout(null);
@@ -128,7 +128,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		minus.setBounds(panelWidth/2 + 100, panelHeight - 70, 50, 30);
 		plus.setBounds(panelWidth - 50, panelHeight - 70, 50, 30);
 		replay.setBounds(panelWidth/2, panelHeight - 70, 100, 30);
-		label.setBounds(50 - GameState.currentShip.getWidth(observer)/2, 50 - GameState.currentShip.getHeight(observer)/2, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
+		label.setBounds(50 - Statics.currentShip.getWidth(observer)/2, 50 - Statics.currentShip.getHeight(observer)/2, Statics.currentShip.getWidth(observer), Statics.currentShip.getHeight(observer));
 	}
 	
 	private void setIcon() {
@@ -141,9 +141,9 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		damage.setIcon(new ImageIcon(Resource.IMG_DAMAGE));
 		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
 		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
-		hull.setIcon(GameState.hullShip);
-		shipUp.setIcon(GameState.nextShip);
-		label.setIcon(new ImageIcon(GameState.currentShip));
+		hull.setIcon(Statics.hullShip);
+		shipUp.setIcon(Statics.nextShip);
+		label.setIcon(new ImageIcon(Statics.currentShip));
 	}
 	
 	private void setLandF() {
@@ -186,7 +186,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	}
 	
 	private void setEnabled() {
-		if(GameState.hullEnabled) {
+		if(Statics.hullEnabled) {
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
 		} else {
@@ -194,7 +194,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			hull.setBackground(Color.GREEN);
 		}
 		
-		if(GameState.lifeEnabled) {
+		if(Statics.lifeEnabled) {
 			life.setEnabled(false);
 			life.setBackground(Color.BLACK);
 		} else {
@@ -202,7 +202,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			life.setBackground(Color.GREEN);
 		}
 		
-		if(GameState.damageEnabled) {
+		if(Statics.damageEnabled) {
 			damage.setEnabled(false);
 			damage.setBackground(Color.BLACK);
 		} else {
@@ -210,7 +210,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			damage.setBackground(Color.GREEN);
 		}
 		
-		if(GameState.dualEnabled) {
+		if(Statics.dualEnabled) {
 			dual.setEnabled(false);
 			hull.setBackground(Color.BLACK);
 		} else {
@@ -218,7 +218,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			dual.setBackground(Color.GREEN);
 		}
 		
-		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9) {
+		if(Statics.ship == 3 || Statics.ship == 6 || Statics.ship == 9) {
 			shipUp.setEnabled(false);
 			shipUp.setBackground(Color.BLACK);
 		} else {
@@ -226,7 +226,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			shipUp.setBackground(Color.GREEN);
 		}
 		
-		if(GameState.wantedLevel < GameState.level - 1) {
+		if(Statics.wantedLevel < Statics.level - 1) {
 			plus.setEnabled(true);
 			plus.setBackground(Color.BLACK);
 		} else {
@@ -234,7 +234,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			plus.setBackground(Color.GREEN);
 		}
 			
-		if(GameState.wantedLevel > 1) {
+		if(Statics.wantedLevel > 1) {
 			minus.setEnabled(true);
 			minus.setBackground(Color.BLACK);
 		} else {
@@ -269,37 +269,37 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == done) {
-			GameState.useWantedLevel = false;
-			control.RunGame(3);
+			Statics.useWantedLevel = false;
+			frame.RunGame(3);
 		}else if(ae.getSource() == dual) {
-			GameState.dualEnabled = true;
+			Statics.dualEnabled = true;
 			dual.setBackground(Color.BLACK);
 		}else if(ae.getSource() == damage) {
-			GameState.damage += 5;
+			Statics.damage += 5;
 		}else if(ae.getSource() == laser) {
-			GameState.laserEnabled = true;
+			Statics.laserEnabled = true;
 		}else if(ae.getSource() == machgun) {
-			GameState.machGunEnabled = true;
+			Statics.machGunEnabled = true;
 		}else if(ae.getSource() == life) {
-			GameState.life += 10;
+			Statics.life += 10;
 		}else if(ae.getSource() == speed) {
-			GameState.speed ++;		
+			Statics.speed ++;		
 		}else if(ae.getSource() == hull) {
-			GameState.hullEnabled = true;
-			GameState.updateShip();
-			label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
+			Statics.hullEnabled = true;
+			Statics.updateShip();
+			label.setBounds(0, 0, Statics.currentShip.getWidth(observer), Statics.currentShip.getHeight(observer));
 		}else if(ae.getSource() == shipUp) {
-			GameState.ship ++;
-			GameState.updateShip();
-			GameState.hullEnabled = false;
-			label.setBounds(0, 0, GameState.currentShip.getWidth(observer), GameState.currentShip.getHeight(observer));
+			Statics.ship ++;
+			Statics.updateShip();
+			Statics.hullEnabled = false;
+			label.setBounds(0, 0, Statics.currentShip.getWidth(observer), Statics.currentShip.getHeight(observer));
 		}else if(ae.getSource() == minus) {
-			GameState.wantedLevel --;
+			Statics.wantedLevel --;
 		}else if(ae.getSource() == plus) {
-			GameState.wantedLevel ++;
+			Statics.wantedLevel ++;
 		}else if(ae.getSource() == replay) {
-			GameState.useWantedLevel = true;
-			control.RunGame(3);
+			Statics.useWantedLevel = true;
+			frame.RunGame(3);
 		}
 		
 		setEnabled();
@@ -311,9 +311,9 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
-		String s = Integer.toString(GameState.wantedLevel);
+		String s = Integer.toString(Statics.wantedLevel);
 		
-        GameState.star.draw(g2d);
+        Statics.star.draw(g2d);
         
         g2d.setFont(new Font("TimesNewRoman", Font.PLAIN, 20));
         g2d.setColor(Color.GREEN);
@@ -322,18 +322,18 @@ public class UpgradeMenu extends JPanel implements ActionListener {
         
         g2d.drawRoundRect(1, 1, 100, 100, 15, 15);
         
-        g2d.drawString("Speed: " + GameState.speed, 150, 30);
-        g2d.drawString("Health: " + GameState.life, 270, 30);
-        g2d.drawString("Damage: " + GameState.damage, 150, 70);
-        g2d.drawString("RoF: " + GameState.RateOfFire, 270, 70);
+        g2d.drawString("Speed: " + Statics.speed, 150, 30);
+        g2d.drawString("Health: " + Statics.life, 270, 30);
+        g2d.drawString("Damage: " + Statics.damage, 150, 70);
+        g2d.drawString("RoF: " + Statics.RateOfFire, 270, 70);
         
-        g2d.drawString("Enemies Killed: " + GameState.enemiesKilled, 50, 350);
-        g2d.drawString("Number of Deaths: " + GameState.numDeaths, 50, 390);
-        g2d.drawString("Shots Fired: " + GameState.shotsFired, 50, 430);
-        g2d.drawString("Number of Hits: " + GameState.numHits, 50, 470);
-        g2d.drawString("Hit Ratio: " + df.format(GameState.hitRatio) + "%", 300, 350);
-        g2d.drawString("Time Played: " + GameState.timePlayed, 300, 390);
-        g2d.drawString("Times Played: " + GameState.timesPlayed, 300, 430);
-        g2d.drawString("Achievments: " + GameState.achievmentsEarned, 300, 470);
+        g2d.drawString("Enemies Killed: " + Statics.enemiesKilled, 50, 350);
+        g2d.drawString("Number of Deaths: " + Statics.numDeaths, 50, 390);
+        g2d.drawString("Shots Fired: " + Statics.shotsFired, 50, 430);
+        g2d.drawString("Number of Hits: " + Statics.numHits, 50, 470);
+        g2d.drawString("Hit Ratio: " + df.format(Statics.hitRatio) + "%", 300, 350);
+        g2d.drawString("Time Played: " + Statics.timePlayed, 300, 390);
+        g2d.drawString("Times Played: " + Statics.timesPlayed, 300, 430);
+        g2d.drawString("Achievments: " + Statics.achievmentsEarned, 300, 470);
 	}
 }

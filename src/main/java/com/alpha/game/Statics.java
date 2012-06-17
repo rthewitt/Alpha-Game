@@ -1,11 +1,12 @@
 package com.alpha.game;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
- public class GameState extends Thread {
+ class Statics {
 	static int level = 1;
 	static int wantedLevel;
 	static int ship = 0;
@@ -42,13 +43,15 @@ import javax.swing.ImageIcon;
 	static boolean laserEnabled = false;
 	static boolean lastGunEnabled = false;
 	
-	static Control con;
+	static Frame frame;
 	static Game game;
 	static Star star;
 	
 	static Image currentShip;
 	static ImageIcon hullShip;
 	static ImageIcon nextShip;
+	
+	static Graphics2D g2d;
 	
 	public static void updateShip() {
 		BufferedImage img = null;
@@ -117,11 +120,10 @@ import javax.swing.ImageIcon;
 			if(useWantedLevel == false)
 				level ++;
 			wantedLevel = level - 1;
-			Game.enemies.clear();
 			Game.timer.cancel();
 			Go.timer.cancel();
 			hitRatio = ((double)numHits/(double)shotsFired) * 100;
-			con.RunUpgrade(2);
+			frame.RunUpgrade(2);
 		}
 	}
 }

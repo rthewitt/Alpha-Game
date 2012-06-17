@@ -14,16 +14,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements KeyListener, ActionListener {
-	private Vector<Ship> ships = new Vector<Ship>();
-	static Vector<Enemy> enemies = new Vector<Enemy>();
-	BeamElement beams = new BeamElement();
 	static boolean cooldown = true;
 	static Timer timer = new Timer();
 	BorderLayout buttonLayout = new BorderLayout();
@@ -39,26 +35,22 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	Panel draw;
 	
 	public Game() {
-		setSize(Control.width, Control.height);
+		setSize(Frame.width, Frame.height);
 		setLayout(null);
 		
-		GameState.game = this;
-		GameState.star.setDraw(this);
+		Statics.game = this;
+		Statics.star.setDraw(this);
+		
+		new New().newShip();
 		
 		go = new Go();
 		timer = new Timer();
 		
-		Ship newShip = new Ship();
-		ships.addElement(newShip);
-		newShip.start();
-		
-		GameState.updateShip();
+		Statics.updateShip();
 		
 		setVisible(true);
 		addKeyListener(this);
 		setBackground(Color.BLACK);
-		
-		beams.start();
 		
 		addMouseListener(
 			new MouseAdapter() {
@@ -74,19 +66,19 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	 	  		}
 	 	  		
 	 	  		public void mouseExited(MouseEvent e) {
-	 	  			GameState.pause = true;
+	 	  			Statics.pause = true;
 	 	  		}
 	 	  		
 	 	  		public void mouseEntered(MouseEvent e) {
-	 	  			GameState.pause = false;
+	 	  			Statics.pause = false;
 	 	  		}
 			}
 		);
 		
-		if(GameState.useWantedLevel) {
-			new Levels(GameState.wantedLevel);
+		if(Statics.useWantedLevel) {
+			new Levels(Statics.wantedLevel);
 		}else {
-			new Levels(GameState.level);
+			new Levels(Statics.level);
 		}
 		setup();
 	}
@@ -124,12 +116,12 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	private void setBounds() {
 		int Offset = 110;
 		int dia = 50;
-		power1.setBounds(12, Control.height - Offset, dia, dia);
-		power2.setBounds(94, Control.height - Offset, dia, dia);
-		power3.setBounds(176, Control.height - Offset, dia, dia);
-		power4.setBounds(258, Control.height - Offset, dia, dia);
-		power5.setBounds(340, Control.height - Offset, dia, dia);
-		power6.setBounds(422, Control.height - Offset, dia, dia);
+		power1.setBounds(12, Frame.height - Offset, dia, dia);
+		power2.setBounds(94, Frame.height - Offset, dia, dia);
+		power3.setBounds(176, Frame.height - Offset, dia, dia);
+		power4.setBounds(258, Frame.height - Offset, dia, dia);
+		power5.setBounds(340, Frame.height - Offset, dia, dia);
+		power6.setBounds(422, Frame.height - Offset, dia, dia);
 	}
 	
 	private void setIcon() {
@@ -139,11 +131,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		power4.setIcon(new ImageIcon(Resource.IMG_EXPLOSIVE_LASER));
 		power5.setIcon(new ImageIcon(Resource.IMG_LASER));
 		
-		if(GameState.ship <= 3) {
+		if(Statics.ship <= 3) {
 			power6.setIcon(new ImageIcon(Resource.IMG_WAVE_LASER));
-		} else if(GameState.ship <= 6) {
+		} else if(Statics.ship <= 6) {
 			power6.setIcon(new ImageIcon(Resource.IMG_SPREAD_LASER));
-		} else if(GameState.ship <= 9) {
+		} else if(Statics.ship <= 9) {
 			power6.setIcon(new ImageIcon(Resource.IMG_RAPID_LASER));
 		}
 	}
@@ -169,7 +161,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	private void setEnabled() {
 		power1.setEnabled(true);
 		
-		if(GameState.dualEnabled) {
+		if(Statics.dualEnabled) {
 			power2.setEnabled(true);
 			LF.setGreen(power2);
 		} else {
@@ -177,7 +169,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			LF.setBlack(power2);
 		}
 		
-		if(GameState.damageEnabled) {
+		if(Statics.damageEnabled) {
 			power3.setEnabled(true);
 			LF.setGreen(power3);
 		} else {
@@ -185,7 +177,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			LF.setBlack(power3);
 		}
 		
-		if(GameState.machGunEnabled) {
+		if(Statics.machGunEnabled) {
 			power4.setEnabled(true);
 			LF.setGreen(power4);
 		} else {
@@ -193,7 +185,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			LF.setBlack(power4);
 		}
 		
-		if(GameState.laserEnabled) {
+		if(Statics.laserEnabled) {
 			power5.setEnabled(true);
 			LF.setGreen(power5);
 		} else {
@@ -201,7 +193,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			LF.setBlack(power5);
 		}
 		
-		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9 && GameState.lastGunEnabled) {
+		if(Statics.ship == 3 || Statics.ship == 6 || Statics.ship == 9 && Statics.lastGunEnabled) {
 			power6.setEnabled(true);
 			LF.setGreen(power6);
 		} else {
@@ -221,25 +213,25 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == power1) {
-			GameState.beamType = 0;
+			Statics.beamType = 0;
 		} else if(ae.getSource() == power2) {
-			GameState.beamType = 1;
+			Statics.beamType = 1;
 		} else if(ae.getSource() == power3) {
-			GameState.beamType = 2;
+			Statics.beamType = 2;
 		} else if(ae.getSource() == power4) {
-			GameState.beamType = 3;
+			Statics.beamType = 3;
 		} else if(ae.getSource() == power5) {
-			GameState.beamType = 4;
+			Statics.beamType = 4;
 		} else if(ae.getSource() == power6) {
-			GameState.beamType = 5;
+			Statics.beamType = 5;
 		}
 	}
 	
 	private class BeamTask extends TimerTask {
 		public void run() {
-			beams.newBeam();
+			new New().newBeam();
 			cooldown = true;
-			GameState.shotsFired ++;
+			Statics.shotsFired ++;
 		}
 	}
 	
@@ -253,24 +245,24 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			
 			case KeyEvent.VK_D: go.setRight(true); break;
 			
-			case KeyEvent.VK_1: GameState.beamType = 0; break;
+			case KeyEvent.VK_1: Statics.beamType = 0; break;
         	
-        	case KeyEvent.VK_2: GameState.beamType = 1; break;
+        	case KeyEvent.VK_2: Statics.beamType = 1; break;
         	
-        	case KeyEvent.VK_3: GameState.beamType = 2; break;
+        	case KeyEvent.VK_3: Statics.beamType = 2; break;
         	
-        	case KeyEvent.VK_4: GameState.beamType = 3; break;
+        	case KeyEvent.VK_4: Statics.beamType = 3; break;
         	
-        	case KeyEvent.VK_5: GameState.beamType = 4; break;
+        	case KeyEvent.VK_5: Statics.beamType = 4; break;
 		}
 		
-		if(GameState.lastGunEnabled) {
-			if(GameState.ship == 3 && ke.getKeyCode() == KeyEvent.VK_6) {
-				GameState.beamType = 5;
-			} else if(GameState.ship == 6 && ke.getKeyCode() == KeyEvent.VK_7) {
-				GameState.beamType = 6;
-			} else if(GameState.ship == 9 && ke.getKeyCode() == KeyEvent.VK_8) {
-				GameState.beamType = 7;
+		if(Statics.lastGunEnabled) {
+			if(Statics.ship == 3 && ke.getKeyCode() == KeyEvent.VK_6) {
+				Statics.beamType = 5;
+			} else if(Statics.ship == 6 && ke.getKeyCode() == KeyEvent.VK_7) {
+				Statics.beamType = 6;
+			} else if(Statics.ship == 9 && ke.getKeyCode() == KeyEvent.VK_8) {
+				Statics.beamType = 7;
 			}
 		}
 	}
@@ -290,24 +282,20 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	public void keyTyped(KeyEvent e) { }
 	
 	public Dimension getPreferredSize() {
-      return new Dimension(Control.width, Control.height);
+      return new Dimension(Frame.width, Frame.height);
 	}
 	
 	public void paintComponent (Graphics g) {
      	super.paintComponent(g);
      	Graphics2D g2d = (Graphics2D) g;
      	
-     	GameState.star.draw(g2d);
+     	Statics.g2d = g2d;
      	
-     	beams.draw(g2d);
-		
-		for (int i = 0; i < enemies.size(); i++) {
-        	enemies.elementAt(i).draw(g2d);
-     	}
-        
-		for (int i = 0; i < ships.size(); i++) {
-        	ships.elementAt(i).draw(g2d);
-     	}
+     	EnemyRunner.draw();
+     	BeamRunner.draw();
+     	ShipRunner.draw();
+     	
+     	Statics.star.draw(g2d);
 		
 		requestFocus();
 	}

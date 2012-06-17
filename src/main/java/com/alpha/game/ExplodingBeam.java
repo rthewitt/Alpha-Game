@@ -2,7 +2,7 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class ExplodingBeam extends BeamElement {
+public class ExplodingBeam extends Runnable {
 	private int x, y;
 	private int damage = 20;
 	
@@ -18,9 +18,9 @@ public class ExplodingBeam extends BeamElement {
 			kill();
 		}
 		
-		for (int i = 0; i < Game.enemies.size(); i++) {
-        	Game.enemies.elementAt(i).testHit(this);
-     	}
+		if(Runnable.testHit(x, y, damage)) {
+			kill();
+		}
 	}
 	
 	public int getX() {
@@ -36,10 +36,8 @@ public class ExplodingBeam extends BeamElement {
 		return damage;
 	}
 	
-	@SuppressWarnings("deprecation")
 	void kill() {
 		beams.remove(this);
-		this.stop();
 	}
 
 	void draw(Graphics2D g2d) {

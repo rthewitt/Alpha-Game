@@ -12,7 +12,7 @@ public class NestedPanel extends JPanel {
 	private Border border = new LineBorder(Color.GREEN, 1);
 	
 	NestedPanel() {
-		setBounds(0, 0, Control.width, Control.height);
+		setBounds(0, 0, Frame.width, Frame.height);
 		setOpaque(false);
 		setBackground(Color.BLACK);
 		setBorder(border);
@@ -22,6 +22,6 @@ public class NestedPanel extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		g2d.fillRect(3, 3, Control.width - 3, Control.height - 3);
+		g2d.fillRect(3, 3, Frame.width - 3, Frame.height - 3);
 	}
 }

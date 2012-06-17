@@ -7,7 +7,7 @@ public class Alpha {
 	public static void main (String args[]) throws AlphaException {
 		try {
 			Resource.init();
-			new Control();
+			new Frame();
 		}
 		catch(AlphaResourceException are) {
 			throw new AlphaException(are);
