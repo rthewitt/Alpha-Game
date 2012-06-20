@@ -1,8 +1,24 @@
 package com.alpha.game;
 
+import com.alpha.game.beams.DualBeam;
+import com.alpha.game.beams.ExplodingBeam;
+import com.alpha.game.beams.LaserBeam;
+import com.alpha.game.beams.MachgunBeam;
+import com.alpha.game.beams.PiercingBeam;
+import com.alpha.game.beams.ShotgunBeam;
+import com.alpha.game.beams.SingleBeam;
+import com.alpha.game.beams.WaveBeam;
+import com.alpha.game.enemies.BigYellow;
+import com.alpha.game.enemies.BlueFighter;
+import com.alpha.game.enemies.BlueHeavy;
+import com.alpha.game.enemies.BossOne;
+import com.alpha.game.enemies.MedYellow;
+import com.alpha.game.enemies.RedFighter;
+import com.alpha.game.enemies.RedHeavy;
+
 public class New {
 	
-	Dif r;
+	MovableEntity r;
 	
 	void newBeam() {
 		switch(Statics.beamType) {
@@ -22,7 +38,7 @@ public class New {
 
 		case 7: r = new MachgunBeam(); break;
 		}
-		Dif.beams.addElement(r);
+		MovableEntity.beams.addElement(r);
 	}
 	
 	void newEnemy(int type) {
@@ -41,11 +57,11 @@ public class New {
 		
 		case 7: r = new BossOne(); break;
 		}
-		Dif.enemies.addElement(r);
+		MovableEntity.enemies.addElement(r);
 	}
 	
 	void newShip() {
 		Ship s = new Ship();
-		Dif.ships.addElement(s);
+		MovableEntity.ships.addElement(s);
 	}
 }

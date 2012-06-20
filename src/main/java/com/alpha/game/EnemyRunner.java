@@ -16,15 +16,15 @@ class EnemyRunner extends Thread{
 			}
 			
 			if(Statics.pause == false)
-			for(int i = 0; i < Dif.enemies.size(); i++) {
-				Dif.enemies.elementAt(i).run();
+			for(int i = 0; i < MovableEntity.enemies.size(); i++) {
+				MovableEntity.enemies.elementAt(i).update();
 			}
 		}
 	}
 	
 	static void draw() {
-		for(int i = 0; i < Dif.enemies.size(); i++) {
-			Dif.enemies.elementAt(i).draw(Statics.g2d);
+		for(int i = 0; i < MovableEntity.enemies.size(); i++) {
+			MovableEntity.enemies.elementAt(i).draw(Statics.g2d);
 		}
 	}
 }

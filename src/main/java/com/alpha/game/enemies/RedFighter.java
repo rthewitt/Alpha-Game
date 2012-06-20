@@ -1,15 +1,18 @@
-package com.alpha.game;
+package com.alpha.game.enemies;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import com.alpha.game.Frame;
+import com.alpha.game.Resource;
+import com.alpha.game.Statics;
 
-public class BlueHeavy extends Dif {
-	private BufferedImage using;
-	int x, y = -30;
-	private int health = 10;
+public class RedFighter extends EnemyEntity {
 	
-	BlueHeavy() {
-		
+	int x, y = -30;
+	private int health = 5;
+	private BufferedImage using = Resource.IMG_RED_FIGHTER;
+	
+	public RedFighter() {
 		x = (int)(10 + Math.random() * (Frame.width - 30));
 	}
 	
@@ -50,7 +53,7 @@ public class BlueHeavy extends Dif {
 		enemies.remove(this);
 	}
 	
-	public void run() {
+	public void update() {
 		y += 2;
 		
 		if(y > Frame.height) {
@@ -60,9 +63,5 @@ public class BlueHeavy extends Dif {
 	
 	public void	draw(Graphics2D g2d) {
 		g2d.drawImage(using, x, y, null);
-	}
-
-	double getReload() {
-		return 0;
 	}
 }

@@ -8,7 +8,8 @@ public class Frame extends JFrame {
 	private Menu menu;
 	private Game game;
 	private UpgradeMenu Up;
-	static int width = 500, height = 800;
+	public static int width = 500;
+	public static int height = 800;
 	Star star;
 	
 	Frame() {

@@ -4,23 +4,23 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
- class Statics {
+public class Statics {
 	static int level = 1;
 	static int wantedLevel;
 	static int ship = 0;
-	static int enemies;
+	public static int enemies;
 	static int beamType = 0;
 	static boolean pause = false;
 	
 	//Stats
-	static int enemiesKilled = 0;
-	static int numDeaths = 0;
-	static int shotsFired = 0;
-	static int numHits = 0;
-	static double hitRatio = 0;
-	static int timePlayed = 0;
-	static int timesPlayed = 0;
-	static int achievmentsEarned = 0;
+	public static int enemiesKilled = 0;
+	public static int numDeaths = 0;
+	public static int shotsFired = 0;
+	public static int numHits = 0;
+	public static double hitRatio = 0;
+	public static int timePlayed = 0;
+	public static int timesPlayed = 0;
+	public static int achievmentsEarned = 0;
 	
 	static boolean useWantedLevel = false;
 	
@@ -109,7 +109,7 @@ import javax.swing.ImageIcon;
 		currentShip = img;
 	}
 	
-	static void LevelOver() {
+	public static void LevelOver() {
 		if(enemies <= 0) {
 			if(useWantedLevel == false)
 				level ++;

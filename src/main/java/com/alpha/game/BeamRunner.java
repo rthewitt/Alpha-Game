@@ -16,15 +16,15 @@ class BeamRunner extends Thread{
 			}
 			
 			if(Statics.pause == false)
-			for(int i = 0; i < Dif.beams.size(); i++) {
-				Dif.beams.elementAt(i).run();
+			for(int i = 0; i < MovableEntity.beams.size(); i++) {
+				MovableEntity.beams.elementAt(i).update();
 			}
 		}
 	}
 	
 	static void draw() {
-		for(int i = 0; i < Dif.beams.size(); i++) {
-			Dif.beams.elementAt(i).draw(Statics.g2d);
+		for(int i = 0; i < MovableEntity.beams.size(); i++) {
+			MovableEntity.beams.elementAt(i).draw(Statics.g2d);
 		}
 	}
 }

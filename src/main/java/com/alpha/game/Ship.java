@@ -2,8 +2,9 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class Ship extends Dif{
-	static int x, y;
+public class Ship extends MovableEntity{
+	public static int x;
+	public static int y;
 	static int speed;
 	static int initialHealth = 100;
 	static int life = 40;
@@ -15,11 +16,11 @@ public class Ship extends Dif{
 		y = 600;
 	}
 	
-	int getX() {		
+	public int getX() {		
 		return x;
 	}
 	
-	int getY() {		
+	public int getY() {		
 		return x;
 	}
 	
@@ -27,23 +28,15 @@ public class Ship extends Dif{
 		return (life%initialHealth);
 	}
 	
-	static int shipMiddle() {
+	public static int shipMiddle() {
 		return (int)x + Statics.currentShip.getWidth()/2;
 	}
 	
-	void kill() {
-		
-	}
+	public void kill() {}
 
-	void run() {
-		
-	}
+	public void update() {}
 
 	public void	draw(Graphics2D g2d) {
 		g2d.drawImage(Statics.currentShip, x, y, null);
-	}
-
-	double getReload() {
-		return 0;
 	}
 }
