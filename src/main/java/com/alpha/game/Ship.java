@@ -2,8 +2,13 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class Ship extends Runnable{
+public class Ship extends Dif{
 	static int x, y;
+	static int speed;
+	static int initialHealth = 100;
+	static int life = 40;
+	static int damage = 5;
+	static int rateOfFire;
 	
 	public Ship() {
 		x = 250;
@@ -11,11 +16,19 @@ public class Ship extends Runnable{
 	}
 	
 	int getX() {		
-		return 0;
+		return x;
 	}
 	
 	int getY() {		
-		return 0;
+		return x;
+	}
+	
+	static double percentLeft() {
+		return (life%initialHealth);
+	}
+	
+	static int shipMiddle() {
+		return (int)x + Statics.currentShip.getWidth()/2;
 	}
 	
 	void kill() {
@@ -27,6 +40,10 @@ public class Ship extends Runnable{
 	}
 
 	public void	draw(Graphics2D g2d) {
-		g2d.drawImage(Statics.currentShip, x - 15, y, null);
+		g2d.drawImage(Statics.currentShip, x, y, null);
+	}
+
+	double getReload() {
+		return 0;
 	}
 }

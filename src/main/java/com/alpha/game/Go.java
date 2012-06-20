@@ -20,7 +20,7 @@ public class Go extends Thread {
 		x = Ship.x;
 		y = Ship.y;
 		
-		leap = Statics.speed;
+		leap = Ship.speed;
 		
 		createTimer();
 	}
@@ -58,19 +58,19 @@ public class Go extends Thread {
 	}
 	
 	public void run() {
-		if(up) {
+		if(up && Ship.y > 0) {
 			Ship.y -= leap;
 		}
 		
-		if(down) {
+		if(down && Ship.y < Frame.height - Statics.currentShip.getHeight()) {
 			Ship.y += leap;
 		}
 		
-		if(left) {
+		if(left && Ship.x > 0) {
 			Ship.x -= leap;
 		}
 		
-		if(right) {
+		if(right && Ship.x < Frame.width - Statics.currentShip.getWidth()) {
 			Ship.x += leap;
 		}
 		

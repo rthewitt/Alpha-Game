@@ -2,9 +2,10 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class PiercingBeam extends Runnable {
+public class PiercingBeam extends Dif {
 	private int x, y;
 	private double damage = .3;
+	private double RELOAD = 1;
 	
 	public PiercingBeam() {
 		x = Ship.x;
@@ -18,7 +19,7 @@ public class PiercingBeam extends Runnable {
 			kill();
 		}
 		
-		Runnable.testHit(x, y, damage);
+		Dif.testHit(x, y, damage);
 	}
 	
 	public int getX() {
@@ -39,6 +40,11 @@ public class PiercingBeam extends Runnable {
 	}
 
 	void draw(Graphics2D g2d) {
-		g2d.drawImage(Resource.IMG_PEN, x, y, null);
+		g2d.drawImage(Resource.IMG_PEN, x - Resource.IMG_PEN.getWidth(), y, null);
+	}
+
+	@Override
+	double getReload() {
+		return RELOAD;
 	}
 }

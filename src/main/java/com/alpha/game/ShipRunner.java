@@ -12,8 +12,8 @@ class ShipRunner extends Thread{
 	}
 	
 	static void draw() {
-		for(int i = 0; i < Runnable.ships.size(); i++) {
-			Runnable.ships.elementAt(i).draw(Statics.g2d);
+		for(int i = 0; i < Dif.ships.size(); i++) {
+			Dif.ships.elementAt(i).draw(Statics.g2d);
 		}
 	}
 }

@@ -3,7 +3,7 @@ package com.alpha.game;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class BossOne extends Runnable {
+public class BossOne extends Dif {
 	
 	private BufferedImage using = Resource.IMG_BOSS_ONE;
 	int x, y = -30;
@@ -61,5 +61,9 @@ public class BossOne extends Runnable {
 	
 	public void	draw(Graphics2D g2d) {
 		g2d.drawImage(using, x, y, null);
+	}
+
+	double getReload() {
+		return 0;
 	}
 }

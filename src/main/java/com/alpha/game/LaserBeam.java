@@ -2,9 +2,10 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class LaserBeam extends Runnable {
+public class LaserBeam extends Dif {
 	private int x, y;
 	private double damage = 3;
+	private final double RELOAD = 1;
 	
 	public LaserBeam() {
 		x = Ship.x;
@@ -18,7 +19,7 @@ public class LaserBeam extends Runnable {
 			kill();
 		}
 		
-		if(Runnable.testHit(x, y, damage)) {
+		if(Dif.testHit(x, y, damage)) {
 			kill();
 		}
 	}
@@ -41,6 +42,11 @@ public class LaserBeam extends Runnable {
 	}
 
 	void draw(Graphics2D g2d) {
-		g2d.drawImage(Resource.IMG_LASER, x, y, null);
+		g2d.drawImage(Resource.IMG_LASER, x + Resource.IMG_LASER.getWidth(), y, null);
+	}
+
+	@Override
+	double getReload() {
+		return RELOAD;
 	}
 }

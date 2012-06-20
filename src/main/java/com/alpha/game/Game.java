@@ -236,6 +236,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	}
 	
 	public void keyPressed(KeyEvent ke) {
+		if(Statics.pause == false)
 		switch(ke.getKeyCode()) {
 			case KeyEvent.VK_W: go.setUp(true); break;
 			
@@ -288,6 +289,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	public void paintComponent (Graphics g) {
      	super.paintComponent(g);
      	Graphics2D g2d = (Graphics2D) g;
+     	
+     	g2d.setColor(Color.RED);
+     	g2d.fillRoundRect(10, 673, 475, 10, 3, 3);
+     	g2d.setColor(Color.GREEN);
+     	g2d.fillRoundRect(10, 673, (int)(Ship.percentLeft()/100 * 475), 10, 3, 3);
      	
      	Statics.g2d = g2d;
      	

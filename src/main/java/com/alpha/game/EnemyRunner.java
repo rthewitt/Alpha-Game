@@ -15,15 +15,16 @@ class EnemyRunner extends Thread{
 				System.out.println("Woke up prematurely");
 			}
 			
-			for(int i = 0; i < Runnable.enemies.size(); i++) {
-				Runnable.enemies.elementAt(i).run();
+			if(Statics.pause == false)
+			for(int i = 0; i < Dif.enemies.size(); i++) {
+				Dif.enemies.elementAt(i).run();
 			}
 		}
 	}
 	
 	static void draw() {
-		for(int i = 0; i < Runnable.enemies.size(); i++) {
-			Runnable.enemies.elementAt(i).draw(Statics.g2d);
+		for(int i = 0; i < Dif.enemies.size(); i++) {
+			Dif.enemies.elementAt(i).draw(Statics.g2d);
 		}
 	}
 }

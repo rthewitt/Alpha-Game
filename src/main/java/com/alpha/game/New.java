@@ -2,7 +2,7 @@ package com.alpha.game;
 
 public class New {
 	
-	Runnable r;
+	Dif r;
 	
 	void newBeam() {
 		switch(Statics.beamType) {
@@ -22,10 +22,10 @@ public class New {
 
 		case 7: r = new MachgunBeam(); break;
 		}
-		Runnable.beams.addElement(r);
+		Dif.beams.addElement(r);
 	}
 	
-	void newEnemie(int type) {
+	void newEnemy(int type) {
 		switch(type) {
 		case 1: r = new RedFighter(); break;
 		
@@ -41,11 +41,11 @@ public class New {
 		
 		case 7: r = new BossOne(); break;
 		}
-		Runnable.enemies.addElement(r);
+		Dif.enemies.addElement(r);
 	}
 	
 	void newShip() {
 		Ship s = new Ship();
-		Runnable.ships.addElement(s);
+		Dif.ships.addElement(s);
 	}
 }

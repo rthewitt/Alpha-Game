@@ -10,20 +10,21 @@ class BeamRunner extends Thread{
 	public void run() {
 		while(running) {
 			try {
-				Thread.sleep(3);
+				Thread.sleep(Statics.bulletSpeed);
 			}catch (InterruptedException e) {
 				System.out.println("Woke up prematurely");
 			}
 			
-			for(int i = 0; i < Runnable.beams.size(); i++) {
-				Runnable.beams.elementAt(i).run();
+			if(Statics.pause == false)
+			for(int i = 0; i < Dif.beams.size(); i++) {
+				Dif.beams.elementAt(i).run();
 			}
 		}
 	}
 	
 	static void draw() {
-		for(int i = 0; i < Runnable.beams.size(); i++) {
-			Runnable.beams.elementAt(i).draw(Statics.g2d);
+		for(int i = 0; i < Dif.beams.size(); i++) {
+			Dif.beams.elementAt(i).draw(Statics.g2d);
 		}
 	}
 }

@@ -2,10 +2,11 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class DualBeam extends Runnable {
+public class DualBeam extends Dif {
 
 	private int x, y;
 	private int damage = 5;
+	private final double RELOAD = 1;
 	
 	public DualBeam() {
 		x = Ship.x;
@@ -19,7 +20,7 @@ public class DualBeam extends Runnable {
 			kill();
 		}
 		
-		if(Runnable.testHit(x, y, damage)) {
+		if(Dif.testHit(x, y, damage)) {
 			kill();
 		}
 	}
@@ -43,5 +44,10 @@ public class DualBeam extends Runnable {
 
 	void draw(Graphics2D g2d) {
 		g2d.drawImage(Resource.IMG_BOLT, x, y, null);
+	}
+
+	@Override
+	double getReload() {
+		return RELOAD;
 	}
 }

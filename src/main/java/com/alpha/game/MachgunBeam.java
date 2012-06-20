@@ -2,9 +2,10 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class MachgunBeam extends Runnable {
+public class MachgunBeam extends Dif {
 	private int x, y;
 	private double damage = 3;
+	private final double RELOAD = 1;
 	
 	public MachgunBeam() {
 		x = Ship.x;
@@ -18,7 +19,7 @@ public class MachgunBeam extends Runnable {
 			kill();
 		}
         
-		if(Runnable.testHit(x, y, damage)) {
+		if(Dif.testHit(x, y, damage)) {
 			kill();
 		}
 	}
@@ -41,6 +42,11 @@ public class MachgunBeam extends Runnable {
 	}
 
 	void draw(Graphics2D g2d) {
-		g2d.drawImage(Resource.IMG_BOLT, x, y, null);
+		g2d.drawImage(Resource.IMG_BOLT, x + Resource.IMG_BOLT.getWidth(), y, null);
+	}
+
+	@Override
+	double getReload() {
+		return RELOAD;
 	}
 }

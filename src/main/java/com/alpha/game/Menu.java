@@ -138,15 +138,15 @@ public class Menu extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == ship1) {
 			Statics.ship = 1;
-			Statics.speed = 2;
+			Ship.speed = 2;
 			runNull();
 		}else if(ae.getSource() == ship2) {
 			Statics.ship = 4;
-			Statics.speed = 1;
+			Ship.speed = 1;
 			runNull();
 		}else if(ae.getSource() == ship3) {
 			Statics.ship = 7;
-			Statics.speed = 3;
+			Ship.speed = 3;
 			runNull();
 		}
 		

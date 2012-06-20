@@ -11,7 +11,7 @@ public class Levels {
 	
 	private int i = 0, i2 = 0;
 	
-	File lvl1 = new File(Resource.levelsPath + "lvl1.txt");
+	File lvl1 = new File(Resource.levelsPath + "lvl" + 1 + ".txt");
 	File lvl2 = new File(Resource.levelsPath + "lvl2.txt");
 	File lvl3 = new File(Resource.levelsPath + "lvl3.txt");
 	File lvl4 = new File(Resource.levelsPath + "lvl4.txt");
@@ -61,8 +61,7 @@ public class Levels {
 		}
 	}
 	
-	public void getData(File f)
-	{
+	public void getData(File f) {
 		try {
 			scan = new Scanner(f);
 			for(int i = 0; scan.hasNext(); i++) {
@@ -73,11 +72,10 @@ public class Levels {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void build() {
-		new New().newEnemie(work[i2][1]);
+		new New().newEnemy(work[i2][1]);
 		i2 ++;
 	}
 	

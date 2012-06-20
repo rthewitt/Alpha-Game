@@ -2,9 +2,10 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class WaveBeam extends Runnable {
+public class WaveBeam extends Dif {
 	private int x, y;
 	private double damage = .5;
+	private final double RELOAD = 1;
 	
 	public WaveBeam() {
 		x = Ship.x;
@@ -18,7 +19,7 @@ public class WaveBeam extends Runnable {
 			kill();
 		}
 		
-		if(Runnable.testHit(x, y, damage)) {
+		if(Dif.testHit(x, y, damage)) {
 			kill();
 		}
 	}
@@ -42,5 +43,10 @@ public class WaveBeam extends Runnable {
 
 	void draw(Graphics2D g2d) {
 		g2d.drawImage(Resource.IMG_WAVE, x, y, null);
+	}
+
+	@Override
+	double getReload() {
+		return RELOAD;
 	}
 }

@@ -131,13 +131,6 @@ public class Resource extends Thread {
 			IMG_MED_YELLOW = getImage("medYellow.png");
 			IMG_BIG_YELLOW = getImage("bigYellow.png");
 			IMG_BOSS_ONE = getImage("bossOne.png");
-
-			IMG_BOLT = getImage("dropBolt.png");
-			IMG_EXPLODING = getImage("dropExploding.png");
-			IMG_LASER = getImage("dropLaser.png");
-			IMG_PEN = getImage("dropPen.png");
-			IMG_POISON = getImage("dropPoison.png");
-			IMG_WAVE = getImage("dropWave.png");
 			
 			IMG_DUAL_LASER = getImage("menuDual.png");
 			IMG_SPREAD_LASER = getImage("menuSpread.png");
@@ -145,9 +138,9 @@ public class Resource extends Thread {
 			IMG_PIERCE_LASER = getImage("menuPierce.png");
 			IMG_WAVE_LASER = getImage("menuWave.png");
 			IMG_EXPLOSIVE_LASER = getImage("menuExplosive.png");
-			IMG_HEALTH = getImage("Health.png");
-			IMG_SPEED = getImage("Speed.png");
-			IMG_DAMAGE = getImage("Damage.png");
+			IMG_HEALTH = getImage("health.png");
+			IMG_SPEED = getImage("speed.png");
+			IMG_DAMAGE = getImage("damage.png");
 
 	        // Making these conform to API call
 	        ICON_SMALL_GREEN_ICON = new ImageIcon( getImage("smallGreen.png") );

@@ -1,8 +1,6 @@
 package com.alpha.game;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
@@ -13,12 +11,6 @@ import javax.swing.ImageIcon;
 	static int enemies;
 	static int beamType = 0;
 	static boolean pause = false;
-	
-	//Ship stats
-	static int life = 20;
-	static int damage = 5;
-	static int speed = 0;
-	static int RateOfFire = 0;
 	
 	//Stats
 	static int enemiesKilled = 0;
@@ -43,11 +35,13 @@ import javax.swing.ImageIcon;
 	static boolean laserEnabled = false;
 	static boolean lastGunEnabled = false;
 	
+	static int bulletSpeed = 3;
+	
 	static Frame frame;
 	static Game game;
 	static Star star;
 	
-	static Image currentShip;
+	static BufferedImage currentShip;
 	static ImageIcon hullShip;
 	static ImageIcon nextShip;
 	
@@ -112,7 +106,7 @@ import javax.swing.ImageIcon;
 			}
 		}
 		
-		currentShip = Toolkit.getDefaultToolkit().createImage(img.getSource());
+		currentShip = img;
 	}
 	
 	static void LevelOver() {

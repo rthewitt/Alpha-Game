@@ -2,12 +2,13 @@ package com.alpha.game;
 
 import java.awt.Graphics2D;
 
-public class SingleBeam extends Runnable {
+public class SingleBeam extends Dif {
 	private int x, y;
-	private double damage = 5;
+	private final double damage = 5;
+	private final double RELOAD = 1;
 	
 	public SingleBeam() {
-		x = Ship.x;
+		x = Ship.shipMiddle();
 		y = Ship.y;
 	}
 	
@@ -18,7 +19,7 @@ public class SingleBeam extends Runnable {
 			kill();
 		}
 		
-		if(Runnable.testHit(x, y, damage)) {
+		if(Dif.testHit(x, y, damage)) {
 			kill();
 		}
 	}
@@ -41,6 +42,10 @@ public class SingleBeam extends Runnable {
 	}
 
 	void draw(Graphics2D g2d) {
-		g2d.drawImage(Resource.IMG_BOLT, x, y, null);
+		g2d.drawImage(Resource.IMG_BOLT, x - Resource.IMG_BOLT.getWidth()/2, y, null);
+	}
+
+	double getReload() {
+		return RELOAD;
 	}
 }

@@ -9,9 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ImageObserver;
 import java.text.DecimalFormat;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,7 +29,10 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	JLabel label = new JLabel();
 	
 	private JTabbedPane Bar = new JTabbedPane();
+	
 	JButton done = new JButton("Next Level");
+	
+	//Ship Upgrades
 	JButton damage = new JButton("+1 DAMAGE");
 	JButton life = new JButton("LIFE UP");
 	JButton speed = new JButton("SPEED UP");
@@ -48,7 +49,8 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	JButton wave = new JButton("WAVE GUN");
 	JButton shotgun = new JButton("SHOT-GUN");
 	
-	private ImageObserver observer;
+	//Bonus Buttons
+	JButton bulletSpeed = new JButton("BULLET SPEED");
 	
 	JButton replay = new JButton("REPLAY");
 	JButton minus = new JButton("-");
@@ -63,7 +65,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	
 	UpgradeMenu() {
 		frame = Statics.frame;
-		panelWidth = Frame.width - 10;
+		panelWidth = Frame.width - 7;
 		panelHeight = Frame.height - 31;
 		setVisible(true);
 		
@@ -101,6 +103,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		speed.setLayout(buttonLayout);
 		hull.setLayout(buttonLayout);
 		shipUp.setLayout(buttonLayout);
+		bulletSpeed.setLayout(buttonLayout);
 		np1.setLayout(panelLayout);
 		np2.setLayout(panelLayout);
 		np3.setLayout(panelLayout);
@@ -119,6 +122,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		speed.setPreferredSize(new Dimension(panelWidth - 20, 50)); speed.setMinimumSize(speed.getPreferredSize());
 		hull.setPreferredSize(new Dimension(panelWidth - 20, 50)); hull.setMinimumSize(hull.getPreferredSize());
 		shipUp.setPreferredSize(new Dimension(panelWidth - 20, 50)); shipUp.setMinimumSize(shipUp.getPreferredSize());
+		bulletSpeed.setPreferredSize(new Dimension(panelWidth - 20, 50)); bulletSpeed.setMinimumSize(bulletSpeed.getPreferredSize());
 	}
 	
 	private void setBounds() {
@@ -128,7 +132,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		minus.setBounds(panelWidth/2 + 100, panelHeight - 70, 50, 30);
 		plus.setBounds(panelWidth - 50, panelHeight - 70, 50, 30);
 		replay.setBounds(panelWidth/2, panelHeight - 70, 100, 30);
-		label.setBounds(50 - Statics.currentShip.getWidth(observer)/2, 50 - Statics.currentShip.getHeight(observer)/2, Statics.currentShip.getWidth(observer), Statics.currentShip.getHeight(observer));
+		label.setBounds(50 - Statics.currentShip.getWidth()/2, 50 - Statics.currentShip.getHeight()/2, Statics.currentShip.getWidth(), Statics.currentShip.getHeight());
 	}
 	
 	private void setIcon() {
@@ -163,6 +167,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		LF.Button(speed);
 		LF.Button(hull);
 		LF.Button(shipUp);
+		LF.Button(bulletSpeed);
 		LF.Scroll(scroll);
 	}
 	
@@ -183,6 +188,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		minus.addActionListener(this);
 		plus.addActionListener(this);
 		replay.addActionListener(this);
+		bulletSpeed.addActionListener(this);
 	}
 	
 	private void setEnabled() {
@@ -259,6 +265,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		np2.add(pierce);
 		np2.add(wave);
 		np2.add(shotgun);
+		np3.add(bulletSpeed);
 		add(label);
 		add(Bar);
 		add(done);
@@ -275,24 +282,24 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			Statics.dualEnabled = true;
 			dual.setBackground(Color.BLACK);
 		}else if(ae.getSource() == damage) {
-			Statics.damage += 5;
+			Ship.damage += 5;
 		}else if(ae.getSource() == laser) {
 			Statics.laserEnabled = true;
 		}else if(ae.getSource() == machgun) {
 			Statics.machGunEnabled = true;
 		}else if(ae.getSource() == life) {
-			Statics.life += 10;
+			Ship.life += 10;
 		}else if(ae.getSource() == speed) {
-			Statics.speed ++;		
+			Ship.speed ++;		
 		}else if(ae.getSource() == hull) {
 			Statics.hullEnabled = true;
 			Statics.updateShip();
-			label.setBounds(0, 0, Statics.currentShip.getWidth(observer), Statics.currentShip.getHeight(observer));
+			label.setBounds(0, 0, Statics.currentShip.getWidth(), Statics.currentShip.getHeight());
 		}else if(ae.getSource() == shipUp) {
 			Statics.ship ++;
 			Statics.updateShip();
 			Statics.hullEnabled = false;
-			label.setBounds(0, 0, Statics.currentShip.getWidth(observer), Statics.currentShip.getHeight(observer));
+			label.setBounds(0, 0, Statics.currentShip.getWidth(), Statics.currentShip.getHeight());
 		}else if(ae.getSource() == minus) {
 			Statics.wantedLevel --;
 		}else if(ae.getSource() == plus) {
@@ -322,10 +329,10 @@ public class UpgradeMenu extends JPanel implements ActionListener {
         
         g2d.drawRoundRect(1, 1, 100, 100, 15, 15);
         
-        g2d.drawString("Speed: " + Statics.speed, 150, 30);
-        g2d.drawString("Health: " + Statics.life, 270, 30);
-        g2d.drawString("Damage: " + Statics.damage, 150, 70);
-        g2d.drawString("RoF: " + Statics.RateOfFire, 270, 70);
+        g2d.drawString("Speed: " + Ship.speed, 150, 30);
+        g2d.drawString("Health: " + Ship.life, 270, 30);
+        g2d.drawString("Damage: " + Ship.damage, 150, 70);
+        g2d.drawString("RoF: " + Ship.rateOfFire, 270, 70);
         
         g2d.drawString("Enemies Killed: " + Statics.enemiesKilled, 50, 350);
         g2d.drawString("Number of Deaths: " + Statics.numDeaths, 50, 390);

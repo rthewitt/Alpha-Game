@@ -3,7 +3,7 @@ package com.alpha.game;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class BlueHeavy extends Runnable {
+public class BlueHeavy extends Dif {
 	private BufferedImage using;
 	int x, y = -30;
 	private int health = 10;
@@ -60,5 +60,9 @@ public class BlueHeavy extends Runnable {
 	
 	public void	draw(Graphics2D g2d) {
 		g2d.drawImage(using, x, y, null);
+	}
+
+	double getReload() {
+		return 0;
 	}
 }
