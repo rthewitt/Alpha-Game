@@ -132,6 +132,13 @@ public class Resource extends Thread {
 			IMG_BIG_YELLOW = getImage("bigYellow.png");
 			IMG_BOSS_ONE = getImage("bossOne.png");
 			
+			IMG_BOLT = getImage("dropBolt.png");
+			IMG_EXPLODING = getImage("dropExploding.png");
+			IMG_LASER = getImage("dropLaser.png");
+			IMG_PEN = getImage("dropPen.png");
+			IMG_POISON = getImage("dropPoison.png");
+			IMG_WAVE = getImage("dropWave.png");
+			
 			IMG_DUAL_LASER = getImage("menuDual.png");
 			IMG_SPREAD_LASER = getImage("menuSpread.png");
 			IMG_RAPID_LASER = getImage("menuRapid.png");
