@@ -35,10 +35,10 @@ public class Menu extends JPanel implements ActionListener {
 	private boolean drawCredits = false;
 	
 	public Menu() {
-		frame = Statics.frame;
+		frame = GameState.frame;
 		setSize(Frame.width, Frame.height);
 		
-		Statics.star.setDraw(this);
+		GameState.star.setDraw(this);
 			
 		this.setLayout(null);
 		
@@ -137,16 +137,13 @@ public class Menu extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == ship1) {
-			Statics.ship = 1;
-			Ship.speed = 2;
+			GameState.ship = 1;
 			runNull();
 		}else if(ae.getSource() == ship2) {
-			Statics.ship = 4;
-			Ship.speed = 1;
+			GameState.ship = 4;
 			runNull();
 		}else if(ae.getSource() == ship3) {
-			Statics.ship = 7;
-			Ship.speed = 3;
+			GameState.ship = 7;
 			runNull();
 		}
 		
@@ -173,7 +170,7 @@ public class Menu extends JPanel implements ActionListener {
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
-        Statics.star.draw(g2d);
+        GameState.star.draw(g2d);
         
         if(drawInstructions) {
         	g2d.setColor(Color.GREEN);

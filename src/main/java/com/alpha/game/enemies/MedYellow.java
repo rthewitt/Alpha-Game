@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import com.alpha.game.Frame;
 import com.alpha.game.Resource;
-import com.alpha.game.Statics;
+import com.alpha.game.GameState;
 
 public class MedYellow extends EnemyEntity {
 	
@@ -25,11 +25,11 @@ public class MedYellow extends EnemyEntity {
 		
 		if(go) {
 			if(y < beamY && beamY < y + using.getHeight()) {
-				Statics.numHits ++;
+				GameState.numHits ++;
 				health -= damage;
 				
 				if(health <1) {
-					Statics.enemiesKilled ++;
+					GameState.enemiesKilled ++;
 					kill();
 				}
 				return true;
@@ -37,19 +37,11 @@ public class MedYellow extends EnemyEntity {
 		}
 		return false;
 	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
 	
 	public void kill() {
-		Statics.enemiesKilled ++;
-		Statics.enemies --;
-		Statics.LevelOver();
+		GameState.enemiesKilled ++;
+		GameState.enemies --;
+		GameState.LevelOver();
 		enemies.remove(this);
 	}
 	

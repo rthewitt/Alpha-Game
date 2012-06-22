@@ -4,18 +4,16 @@ import java.awt.Graphics2D;
 
 import com.alpha.game.MovableEntity;
 import com.alpha.game.Resource;
-import com.alpha.game.Ship;
 
 public class SingleBeam extends BeamEntity {
 	private int x, y;
 	private final double damage = 5;
 	private final double RELOAD = 1;
 	
-	public SingleBeam() {
-		x = Ship.shipMiddle();
-		y = Ship.y;
+	public SingleBeam(int X, int Y) {
+		x = X; y = Y;
 	}
-	
+
 	public void update() {
 		y --;
 		
@@ -26,15 +24,6 @@ public class SingleBeam extends BeamEntity {
 		if(MovableEntity.testHit(x, y, damage)) {
 			kill();
 		}
-	}
-	
-	public int getX() {
-		return x;
-		
-	}
-	
-	public int getY() {
-		return y;
 	}
 	
 	public double getDamage() {

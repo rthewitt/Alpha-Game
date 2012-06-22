@@ -3,7 +3,7 @@ package com.alpha.game.enemies;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import com.alpha.game.Frame;
-import com.alpha.game.Statics;
+import com.alpha.game.GameState;
 
 public class BlueHeavy extends EnemyEntity {
 	private BufferedImage using;
@@ -11,7 +11,6 @@ public class BlueHeavy extends EnemyEntity {
 	private int health = 10;
 	
 	public BlueHeavy() {
-		
 		x = (int)(10 + Math.random() * (Frame.width - 30));
 	}
 	
@@ -24,11 +23,11 @@ public class BlueHeavy extends EnemyEntity {
 		
 		if(go) {
 			if(y < beamY && beamY < y + using.getHeight()) {
-				Statics.numHits ++;
+				GameState.numHits ++;
 				health -= damage;
 				
 				if(health <1) {
-					Statics.enemiesKilled ++;
+					GameState.enemiesKilled ++;
 					kill();
 				}
 				return true;
@@ -36,24 +35,16 @@ public class BlueHeavy extends EnemyEntity {
 		}
 		return false;
 	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
 	
 	public void kill() {
-		Statics.enemiesKilled ++;
-		Statics.enemies --;
-		Statics.LevelOver();
+		GameState.enemiesKilled ++;
+		GameState.enemies --;
+		GameState.LevelOver();
 		enemies.remove(this);
 	}
 	
 	public void update() {
-		y += 2;
+		y += 1;
 		
 		if(y > Frame.height) {
 			kill();

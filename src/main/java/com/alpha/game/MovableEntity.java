@@ -21,8 +21,6 @@ public abstract class MovableEntity {
 		return false;
 	}
 	
-	abstract public int getX();
-	abstract public int getY();
 	abstract public void kill();
 	abstract public void update();
 	abstract public void draw(Graphics2D g2d);

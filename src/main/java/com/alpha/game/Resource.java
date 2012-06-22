@@ -150,9 +150,9 @@ public class Resource extends Thread {
 			IMG_DAMAGE = getImage("damage.png");
 
 	        // Making these conform to API call
-	        ICON_SMALL_GREEN_ICON = new ImageIcon( getImage("smallGreen.png") );
-	        ICON_SMALL_RED_ICON = new ImageIcon( getImage("smallRed.png") );
-	        ICON_SMALL_BLUE_ICON = new ImageIcon( getImage("smallBlue.png") );
+	        ICON_SMALL_GREEN_ICON = new ImageIcon( getImage("smallGreen.png"));
+	        ICON_SMALL_RED_ICON = new ImageIcon( getImage("smallRed.png"));
+	        ICON_SMALL_BLUE_ICON = new ImageIcon( getImage("smallBlue.png"));
 
 		}
 		catch(IOException ioe) {

@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
+import com.alpha.game.ships.ShipEntity;
+
 @SuppressWarnings("serial")
 public class UpgradeMenu extends JPanel implements ActionListener {
 	private Frame frame;
@@ -64,13 +66,13 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	JScrollPane scroll3 = new JScrollPane(np3);
 	
 	UpgradeMenu() {
-		frame = Statics.frame;
+		frame = GameState.frame;
 		panelWidth = Frame.width - 7;
 		panelHeight = Frame.height - 31;
 		setVisible(true);
 		
 		setBackground(Color.BLACK);
-		Statics.star.setDraw(this);
+		GameState.star.setDraw(this);
 		LF.TabbedPane(Bar);
 		
 		setLayout(null);
@@ -132,7 +134,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		minus.setBounds(panelWidth/2 + 100, panelHeight - 70, 50, 30);
 		plus.setBounds(panelWidth - 50, panelHeight - 70, 50, 30);
 		replay.setBounds(panelWidth/2, panelHeight - 70, 100, 30);
-		label.setBounds(50 - Statics.currentShip.getWidth()/2, 50 - Statics.currentShip.getHeight()/2, Statics.currentShip.getWidth(), Statics.currentShip.getHeight());
+		label.setBounds(50 - GameState.currentShip.getWidth()/2, 50 - GameState.currentShip.getHeight()/2, GameState.currentShip.getWidth(), GameState.currentShip.getHeight());
 	}
 	
 	private void setIcon() {
@@ -145,9 +147,9 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		damage.setIcon(new ImageIcon(Resource.IMG_DAMAGE));
 		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
 		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
-		hull.setIcon(Statics.hullShip);
-		shipUp.setIcon(Statics.nextShip);
-		label.setIcon(new ImageIcon(Statics.currentShip));
+		hull.setIcon(GameState.hullShip);
+		shipUp.setIcon(GameState.nextShip);
+		label.setIcon(new ImageIcon(GameState.currentShip));
 	}
 	
 	private void setLandF() {
@@ -192,7 +194,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	}
 	
 	private void setEnabled() {
-		if(Statics.hullEnabled) {
+		if(GameState.hullEnabled) {
 			hull.setEnabled(false);
 			hull.setBackground(Color.BLACK);
 		} else {
@@ -200,7 +202,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			hull.setBackground(Color.GREEN);
 		}
 		
-		if(Statics.lifeEnabled) {
+		if(GameState.lifeEnabled) {
 			life.setEnabled(false);
 			life.setBackground(Color.BLACK);
 		} else {
@@ -208,7 +210,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			life.setBackground(Color.GREEN);
 		}
 		
-		if(Statics.damageEnabled) {
+		if(GameState.damageEnabled) {
 			damage.setEnabled(false);
 			damage.setBackground(Color.BLACK);
 		} else {
@@ -216,7 +218,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			damage.setBackground(Color.GREEN);
 		}
 		
-		if(Statics.dualEnabled) {
+		if(GameState.dualEnabled) {
 			dual.setEnabled(false);
 			hull.setBackground(Color.BLACK);
 		} else {
@@ -224,7 +226,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			dual.setBackground(Color.GREEN);
 		}
 		
-		if(Statics.ship == 3 || Statics.ship == 6 || Statics.ship == 9) {
+		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9) {
 			shipUp.setEnabled(false);
 			shipUp.setBackground(Color.BLACK);
 		} else {
@@ -232,7 +234,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			shipUp.setBackground(Color.GREEN);
 		}
 		
-		if(Statics.wantedLevel < Statics.level - 1) {
+		if(GameState.wantedLevel < GameState.level - 1) {
 			plus.setEnabled(true);
 			plus.setBackground(Color.BLACK);
 		} else {
@@ -240,7 +242,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			plus.setBackground(Color.GREEN);
 		}
 			
-		if(Statics.wantedLevel > 1) {
+		if(GameState.wantedLevel > 1) {
 			minus.setEnabled(true);
 			minus.setBackground(Color.BLACK);
 		} else {
@@ -276,36 +278,33 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == done) {
-			Statics.useWantedLevel = false;
+			GameState.useWantedLevel = false;
 			frame.RunGame(3);
 		}else if(ae.getSource() == dual) {
-			Statics.dualEnabled = true;
+			GameState.dualEnabled = true;
 			dual.setBackground(Color.BLACK);
 		}else if(ae.getSource() == damage) {
-			Ship.damage += 5;
 		}else if(ae.getSource() == laser) {
-			Statics.laserEnabled = true;
+			GameState.laserEnabled = true;
 		}else if(ae.getSource() == machgun) {
-			Statics.machGunEnabled = true;
+			GameState.machGunEnabled = true;
 		}else if(ae.getSource() == life) {
-			Ship.life += 10;
-		}else if(ae.getSource() == speed) {
-			Ship.speed ++;		
+		}else if(ae.getSource() == speed) {	
 		}else if(ae.getSource() == hull) {
-			Statics.hullEnabled = true;
-			Statics.updateShip();
-			label.setBounds(0, 0, Statics.currentShip.getWidth(), Statics.currentShip.getHeight());
+			GameState.hullEnabled = true;
+			GameState.updateShip();
+			label.setBounds(0, 0, GameState.currentShip.getWidth(), GameState.currentShip.getHeight());
 		}else if(ae.getSource() == shipUp) {
-			Statics.ship ++;
-			Statics.updateShip();
-			Statics.hullEnabled = false;
-			label.setBounds(0, 0, Statics.currentShip.getWidth(), Statics.currentShip.getHeight());
+			GameState.ship ++;
+			GameState.updateShip();
+			GameState.hullEnabled = false;
+			label.setBounds(0, 0, GameState.currentShip.getWidth(), GameState.currentShip.getHeight());
 		}else if(ae.getSource() == minus) {
-			Statics.wantedLevel --;
+			GameState.wantedLevel --;
 		}else if(ae.getSource() == plus) {
-			Statics.wantedLevel ++;
+			GameState.wantedLevel ++;
 		}else if(ae.getSource() == replay) {
-			Statics.useWantedLevel = true;
+			GameState.useWantedLevel = true;
 			frame.RunGame(3);
 		}
 		
@@ -318,9 +317,9 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
-		String s = Integer.toString(Statics.wantedLevel);
+		String s = Integer.toString(GameState.wantedLevel);
 		
-        Statics.star.draw(g2d);
+        GameState.star.draw(g2d);
         
         g2d.setFont(new Font("TimesNewRoman", Font.PLAIN, 20));
         g2d.setColor(Color.GREEN);
@@ -329,18 +328,17 @@ public class UpgradeMenu extends JPanel implements ActionListener {
         
         g2d.drawRoundRect(1, 1, 100, 100, 15, 15);
         
-        g2d.drawString("Speed: " + Ship.speed, 150, 30);
-        g2d.drawString("Health: " + Ship.life, 270, 30);
-        g2d.drawString("Damage: " + Ship.damage, 150, 70);
-        g2d.drawString("RoF: " + Ship.rateOfFire, 270, 70);
+        g2d.drawString("Speed: " + ShipEntity.currentShip.getSpeed(), 150, 30);
+        g2d.drawString("Health: " + ShipEntity.currentShip.getHealth(), 270, 30);
+        g2d.drawString("Damage: " + ShipEntity.currentShip.getDamage(), 150, 70);
         
-        g2d.drawString("Enemies Killed: " + Statics.enemiesKilled, 50, 350);
-        g2d.drawString("Number of Deaths: " + Statics.numDeaths, 50, 390);
-        g2d.drawString("Shots Fired: " + Statics.shotsFired, 50, 430);
-        g2d.drawString("Number of Hits: " + Statics.numHits, 50, 470);
-        g2d.drawString("Hit Ratio: " + df.format(Statics.hitRatio) + "%", 300, 350);
-        g2d.drawString("Time Played: " + Statics.timePlayed, 300, 390);
-        g2d.drawString("Times Played: " + Statics.timesPlayed, 300, 430);
-        g2d.drawString("Achievments: " + Statics.achievmentsEarned, 300, 470);
+        g2d.drawString("Enemies Killed: " + GameState.enemiesKilled, 50, 350);
+        g2d.drawString("Number of Deaths: " + GameState.numDeaths, 50, 390);
+        g2d.drawString("Shots Fired: " + GameState.shotsFired, 50, 430);
+        g2d.drawString("Number of Hits: " + GameState.numHits, 50, 470);
+        g2d.drawString("Hit Ratio: " + df.format(GameState.hitRatio) + "%", 300, 350);
+        g2d.drawString("Time Played: " + GameState.timePlayed, 300, 390);
+        g2d.drawString("Times Played: " + GameState.timesPlayed, 300, 430);
+        g2d.drawString("Achievments: " + GameState.achievmentsEarned, 300, 470);
 	}
 }

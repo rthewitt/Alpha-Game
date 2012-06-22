@@ -1,7 +1,6 @@
 package com.alpha.game;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.alpha.game.ships.ShipEntity;
 
 public class Go extends Thread {
 	private boolean up = false;
@@ -9,20 +8,14 @@ public class Go extends Thread {
 	private boolean left = false;
 	private boolean right = false;
 	
-	public int x, y;
 	public int leap = 1;
-	
-	static Timer timer;
-	private Game game;
+	private ShipEntity currentShip;
+	boolean running = true;
 	
 	Go() {
-		game = Statics.game;
-		x = Ship.x;
-		y = Ship.y;
-		
-		leap = Ship.speed;
-		
-		createTimer();
+		currentShip = ShipEntity.currentShip;
+		leap = currentShip.getSpeed();
+		this.start();
 	}
 
 	public void setUp(boolean b) {
@@ -41,39 +34,31 @@ public class Go extends Thread {
 		right = b;
 	}
 	
-	private void createTimer() {
-		timer = new Timer();
-		timer.schedule(new Task(this), 1, 14);
-	}
-	
-	private class Task extends TimerTask {
-		private Go go;
-		Task(Go g) {
-			go = g;
-		}
-		
-		public void run() {
-			go.run();
-		}
-	}
-	
 	public void run() {
-		if(up && Ship.y > 0) {
-			Ship.y -= leap;
+		while(running) {
+			int x = currentShip.getX() , y = currentShip.getY();
+			
+			if(up && y > 0) {
+				currentShip.setY(y - leap);
+			}
+			
+			if(down && y < Frame.height - GameState.currentShip.getHeight()) {
+				currentShip.setY(y + leap);
+			}
+			
+			if(left && x > 0) {
+				currentShip.setX(x - leap);
+			}
+			
+			if(right && x < Frame.width - GameState.currentShip.getWidth()) {
+				currentShip.setX(x + leap);
+			}
+			
+			try {
+				Thread.sleep(14);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		if(down && Ship.y < Frame.height - Statics.currentShip.getHeight()) {
-			Ship.y += leap;
-		}
-		
-		if(left && Ship.x > 0) {
-			Ship.x -= leap;
-		}
-		
-		if(right && Ship.x < Frame.width - Statics.currentShip.getWidth()) {
-			Ship.x += leap;
-		}
-		
-		game.repaint();
 	}
 }

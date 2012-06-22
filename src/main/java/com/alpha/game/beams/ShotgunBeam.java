@@ -4,16 +4,15 @@ import java.awt.Graphics2D;
 
 import com.alpha.game.MovableEntity;
 import com.alpha.game.Resource;
-import com.alpha.game.Ship;
 
 public class ShotgunBeam extends BeamEntity {
 	private int x, y;
 	private double damage = 7;
 	private final double RELOAD = 1;
 	
-	public ShotgunBeam() {
-		x = Ship.x;
-		y = Ship.y;
+	public ShotgunBeam(int X, int Y) {
+		x = X;
+		y = Y;
 	}
 	
 	public void update() {
@@ -26,15 +25,6 @@ public class ShotgunBeam extends BeamEntity {
 		if(MovableEntity.testHit(x, y, damage)) {
 			kill();
 		}
-	}
-	
-	public int getX() {
-		return x;
-		
-	}
-	
-	public int getY() {
-		return y;
 	}
 	
 	public double getDamage() {

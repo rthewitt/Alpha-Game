@@ -17,6 +17,7 @@ import java.util.TimerTask;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import com.alpha.game.ships.ShipEntity;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements KeyListener, ActionListener {
@@ -38,15 +39,15 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		setSize(Frame.width, Frame.height);
 		setLayout(null);
 		
-		Statics.game = this;
-		Statics.star.setDraw(this);
+		GameState.game = this;
+		GameState.star.setDraw(this);
 		
-		new New().newShip();
+		Factory.newShip(GameState.ship);
 		
 		go = new Go();
 		timer = new Timer();
 		
-		Statics.updateShip();
+		GameState.updateShip();
 		
 		setVisible(true);
 		addKeyListener(this);
@@ -66,19 +67,19 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	 	  		}
 	 	  		
 	 	  		public void mouseExited(MouseEvent e) {
-	 	  			Statics.pause = true;
+	 	  			GameState.pause = true;
 	 	  		}
 	 	  		
 	 	  		public void mouseEntered(MouseEvent e) {
-	 	  			Statics.pause = false;
+	 	  			GameState.pause = false;
 	 	  		}
 			}
 		);
 		
-		if(Statics.useWantedLevel) {
-			new Levels(Statics.wantedLevel);
+		if(GameState.useWantedLevel) {
+			Factory.newLevel(GameState.wantedLevel);
 		}else {
-			new Levels(Statics.level);
+			Factory.newLevel(GameState.level);
 		}
 		setup();
 	}
@@ -131,11 +132,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		power4.setIcon(new ImageIcon(Resource.IMG_EXPLOSIVE_LASER));
 		power5.setIcon(new ImageIcon(Resource.IMG_LASER));
 		
-		if(Statics.ship <= 3) {
+		if(GameState.ship <= 3) {
 			power6.setIcon(new ImageIcon(Resource.IMG_WAVE_LASER));
-		} else if(Statics.ship <= 6) {
+		} else if(GameState.ship <= 6) {
 			power6.setIcon(new ImageIcon(Resource.IMG_SPREAD_LASER));
-		} else if(Statics.ship <= 9) {
+		} else if(GameState.ship <= 9) {
 			power6.setIcon(new ImageIcon(Resource.IMG_RAPID_LASER));
 		}
 	}
@@ -161,7 +162,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	private void setEnabled() {
 		power1.setEnabled(true);
 		
-		if(Statics.dualEnabled) {
+		if(GameState.dualEnabled) {
 			power2.setEnabled(true);
 			LF.setGreen(power2);
 		} else {
@@ -169,7 +170,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			LF.setBlack(power2);
 		}
 		
-		if(Statics.damageEnabled) {
+		if(GameState.damageEnabled) {
 			power3.setEnabled(true);
 			LF.setGreen(power3);
 		} else {
@@ -177,7 +178,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			LF.setBlack(power3);
 		}
 		
-		if(Statics.machGunEnabled) {
+		if(GameState.machGunEnabled) {
 			power4.setEnabled(true);
 			LF.setGreen(power4);
 		} else {
@@ -185,7 +186,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			LF.setBlack(power4);
 		}
 		
-		if(Statics.laserEnabled) {
+		if(GameState.laserEnabled) {
 			power5.setEnabled(true);
 			LF.setGreen(power5);
 		} else {
@@ -193,7 +194,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			LF.setBlack(power5);
 		}
 		
-		if(Statics.ship == 3 || Statics.ship == 6 || Statics.ship == 9 && Statics.lastGunEnabled) {
+		if(GameState.ship == 3 || GameState.ship == 6 || GameState.ship == 9 && GameState.lastGunEnabled) {
 			power6.setEnabled(true);
 			LF.setGreen(power6);
 		} else {
@@ -213,30 +214,30 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == power1) {
-			Statics.beamType = 0;
+			GameState.beamType = 0;
 		} else if(ae.getSource() == power2) {
-			Statics.beamType = 1;
+			GameState.beamType = 1;
 		} else if(ae.getSource() == power3) {
-			Statics.beamType = 2;
+			GameState.beamType = 2;
 		} else if(ae.getSource() == power4) {
-			Statics.beamType = 3;
+			GameState.beamType = 3;
 		} else if(ae.getSource() == power5) {
-			Statics.beamType = 4;
+			GameState.beamType = 4;
 		} else if(ae.getSource() == power6) {
-			Statics.beamType = 5;
+			GameState.beamType = 5;
 		}
 	}
 	
 	private class BeamTask extends TimerTask {
 		public void run() {
-			new New().newBeam();
+			ShipEntity.currentShip.fire();
 			cooldown = true;
-			Statics.shotsFired ++;
+			GameState.shotsFired ++;
 		}
 	}
 	
 	public void keyPressed(KeyEvent ke) {
-		if(Statics.pause == false)
+		if(GameState.pause == false)
 		switch(ke.getKeyCode()) {
 			case KeyEvent.VK_W: go.setUp(true); break;
 			
@@ -246,24 +247,24 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			
 			case KeyEvent.VK_D: go.setRight(true); break;
 			
-			case KeyEvent.VK_1: Statics.beamType = 0; break;
+			case KeyEvent.VK_1: GameState.beamType = 0; break;
         	
-        	case KeyEvent.VK_2: Statics.beamType = 1; break;
+        	case KeyEvent.VK_2: GameState.beamType = 1; break;
         	
-        	case KeyEvent.VK_3: Statics.beamType = 2; break;
+        	case KeyEvent.VK_3: GameState.beamType = 2; break;
         	
-        	case KeyEvent.VK_4: Statics.beamType = 3; break;
+        	case KeyEvent.VK_4: GameState.beamType = 3; break;
         	
-        	case KeyEvent.VK_5: Statics.beamType = 4; break;
+        	case KeyEvent.VK_5: GameState.beamType = 4; break;
 		}
 		
-		if(Statics.lastGunEnabled) {
-			if(Statics.ship == 3 && ke.getKeyCode() == KeyEvent.VK_6) {
-				Statics.beamType = 5;
-			} else if(Statics.ship == 6 && ke.getKeyCode() == KeyEvent.VK_7) {
-				Statics.beamType = 6;
-			} else if(Statics.ship == 9 && ke.getKeyCode() == KeyEvent.VK_8) {
-				Statics.beamType = 7;
+		if(GameState.lastGunEnabled) {
+			if(GameState.ship == 3 && ke.getKeyCode() == KeyEvent.VK_6) {
+				GameState.beamType = 5;
+			} else if(GameState.ship == 6 && ke.getKeyCode() == KeyEvent.VK_7) {
+				GameState.beamType = 6;
+			} else if(GameState.ship == 9 && ke.getKeyCode() == KeyEvent.VK_8) {
+				GameState.beamType = 7;
 			}
 		}
 	}
@@ -293,15 +294,15 @@ public class Game extends JPanel implements KeyListener, ActionListener {
      	g2d.setColor(Color.RED);
      	g2d.fillRoundRect(10, 673, 475, 10, 3, 3);
      	g2d.setColor(Color.GREEN);
-     	g2d.fillRoundRect(10, 673, (int)(Ship.percentLeft()/100 * 475), 10, 3, 3);
+     	g2d.fillRoundRect(10, 673, (int)(ShipEntity.currentShip.percentLeft()/100 * 475), 10, 3, 3);
      	
-     	Statics.g2d = g2d;
+     	GameState.g2d = g2d;
      	
      	EnemyRunner.draw();
      	BeamRunner.draw();
      	ShipRunner.draw();
      	
-     	Statics.star.draw(g2d);
+     	GameState.star.draw(g2d);
 		
 		requestFocus();
 	}

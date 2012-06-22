@@ -4,16 +4,15 @@ import java.awt.Graphics2D;
 
 import com.alpha.game.MovableEntity;
 import com.alpha.game.Resource;
-import com.alpha.game.Ship;
 
 public class PiercingBeam extends BeamEntity {
 	private int x, y;
 	private double damage = .3;
 	private double RELOAD = 1;
 	
-	public PiercingBeam() {
-		x = Ship.x;
-		y = Ship.y;
+	public PiercingBeam(int X, int Y) {
+		x = X;
+		y = Y;
 	}
 	
 	public void update() {
@@ -24,15 +23,6 @@ public class PiercingBeam extends BeamEntity {
 		}
 		
 		MovableEntity.testHit(x, y, damage);
-	}
-	
-	public int getX() {
-		return x;
-		
-	}
-	
-	public int getY() {
-		return y;
 	}
 	
 	public double getDamage() {

@@ -20,7 +20,7 @@ public class Frame extends JFrame {
 		setTitle("Alpha");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		Statics.frame = this;
+		GameState.frame = this;
 		startStars();
 		
 		new EnemyRunner();
@@ -32,7 +32,7 @@ public class Frame extends JFrame {
 	
 	void startStars() {
 		star = new Star(width, height);
-		Statics.star = star;
+		GameState.star = star;
 		star.setNumber(50);
 		star.start();
 	}

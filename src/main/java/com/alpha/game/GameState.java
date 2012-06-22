@@ -4,7 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
-public class Statics {
+import com.alpha.game.ships.ShipEntity;
+
+public class GameState {
 	static int level = 1;
 	static int wantedLevel;
 	static int ship = 0;
@@ -41,7 +43,7 @@ public class Statics {
 	static Game game;
 	static Star star;
 	
-	static BufferedImage currentShip;
+	public static BufferedImage currentShip;
 	static ImageIcon hullShip;
 	static ImageIcon nextShip;
 	
@@ -105,7 +107,6 @@ public class Statics {
 					hullShip = new ImageIcon(Resource.IMG_LARGE_BLUE_ARMOR); break;
 			}
 		}
-		
 		currentShip = img;
 	}
 	
@@ -115,7 +116,7 @@ public class Statics {
 				level ++;
 			wantedLevel = level - 1;
 			Game.timer.cancel();
-			Go.timer.cancel();
+			ShipEntity.currentShip.kill();
 			hitRatio = ((double)numHits/(double)shotsFired) * 100;
 			frame.RunUpgrade(2);
 		}

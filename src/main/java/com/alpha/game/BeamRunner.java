@@ -10,12 +10,12 @@ class BeamRunner extends Thread{
 	public void run() {
 		while(running) {
 			try {
-				Thread.sleep(Statics.bulletSpeed);
+				Thread.sleep(GameState.bulletSpeed);
 			}catch (InterruptedException e) {
 				System.out.println("Woke up prematurely");
 			}
 			
-			if(Statics.pause == false)
+			if(GameState.pause == false)
 			for(int i = 0; i < MovableEntity.beams.size(); i++) {
 				MovableEntity.beams.elementAt(i).update();
 			}
@@ -24,7 +24,7 @@ class BeamRunner extends Thread{
 	
 	static void draw() {
 		for(int i = 0; i < MovableEntity.beams.size(); i++) {
-			MovableEntity.beams.elementAt(i).draw(Statics.g2d);
+			MovableEntity.beams.elementAt(i).draw(GameState.g2d);
 		}
 	}
 }

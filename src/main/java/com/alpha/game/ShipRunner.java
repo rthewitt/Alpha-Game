@@ -7,13 +7,11 @@ class ShipRunner extends Thread{
 		
 	}
 	
-	public void run() {
-		
-	}
+	public void run() {}
 	
 	static void draw() {
 		for(int i = 0; i < MovableEntity.ships.size(); i++) {
-			MovableEntity.ships.elementAt(i).draw(Statics.g2d);
+			MovableEntity.ships.elementAt(i).draw(GameState.g2d);
 		}
 	}
 }
