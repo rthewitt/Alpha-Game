@@ -5,8 +5,7 @@ import java.awt.Graphics2D;
 import com.alpha.game.MovableEntity;
 
 public abstract class BeamEntity extends MovableEntity {
-	
-	abstract double getReload();
+	public abstract long getReload();
 	
 	abstract public void kill();
 	abstract public void update();

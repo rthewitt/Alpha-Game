@@ -8,7 +8,11 @@ import com.alpha.game.Resource;
 public class ExplodingBeam extends BeamEntity {
 	private int x, y;
 	private int damage = 20;
-	private final double RELOAD = 1;
+	private final long RELOAD = 1000;
+	
+	public ExplodingBeam() {
+		
+	}
 	
 	public ExplodingBeam(int X, int Y) {
 		x = X;
@@ -39,7 +43,7 @@ public class ExplodingBeam extends BeamEntity {
 		g2d.drawImage(Resource.IMG_EXPLODING, x - Resource.IMG_EXPLODING.getWidth(), y, null);
 	}
 
-	double getReload() {
+	public long getReload() {
 		return RELOAD;
 	}
 }

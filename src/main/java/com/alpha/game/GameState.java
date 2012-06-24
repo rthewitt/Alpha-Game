@@ -40,7 +40,6 @@ public class GameState {
 	static int bulletSpeed = 3;
 	
 	static Frame frame;
-	static Game game;
 	static Star star;
 	
 	public static BufferedImage currentShip;
@@ -115,7 +114,6 @@ public class GameState {
 			if(useWantedLevel == false)
 				level ++;
 			wantedLevel = level - 1;
-			Game.timer.cancel();
 			ShipEntity.currentShip.kill();
 			hitRatio = ((double)numHits/(double)shotsFired) * 100;
 			frame.RunUpgrade(2);

@@ -8,6 +8,8 @@ public class Go extends Thread {
 	private boolean left = false;
 	private boolean right = false;
 	
+	public static boolean mousePressed;
+	
 	public int leap = 1;
 	private ShipEntity currentShip;
 	boolean running = true;
@@ -52,6 +54,10 @@ public class Go extends Thread {
 			
 			if(right && x < Frame.width - GameState.currentShip.getWidth()) {
 				currentShip.setX(x + leap);
+			}
+			
+			if(mousePressed) {
+				FiringMechanism.tryToFire();
 			}
 			
 			try {

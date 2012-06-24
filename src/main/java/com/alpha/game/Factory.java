@@ -12,6 +12,7 @@ import com.alpha.game.ships.*;
 public class Factory {
 	
 	static MovableEntity r;
+	private static BeamEntity b;
 	
 	public static void newBeam(int x, int y) {
 		switch(GameState.beamType) {
@@ -32,6 +33,11 @@ public class Factory {
 		case 7: r = new MachgunBeam(x, y); break;
 		}
 		MovableEntity.beams.addElement(r);
+		b = (BeamEntity) r;
+	}
+	
+	static BeamEntity getCurrentBeam() {
+		return b;
 	}
 	
 	static void newEnemy(int type) {

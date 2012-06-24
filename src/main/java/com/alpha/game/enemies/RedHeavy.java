@@ -40,7 +40,6 @@ public class RedHeavy extends EnemyEntity {
 	}
 	
 	public void kill() {
-		GameState.enemiesKilled ++;
 		GameState.enemies --;
 		GameState.LevelOver();
 		enemies.remove(this);

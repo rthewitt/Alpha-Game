@@ -8,7 +8,11 @@ import com.alpha.game.Resource;
 public class PiercingBeam extends BeamEntity {
 	private int x, y;
 	private double damage = .3;
-	private double RELOAD = 1;
+	private final long RELOAD = 400;
+	
+	public PiercingBeam() {
+		
+	}
 	
 	public PiercingBeam(int X, int Y) {
 		x = X;
@@ -34,10 +38,10 @@ public class PiercingBeam extends BeamEntity {
 	}
 
 	public void draw(Graphics2D g2d) {
-		g2d.drawImage(Resource.IMG_PEN, x - Resource.IMG_PEN.getWidth(), y, null);
+		g2d.drawImage(Resource.IMG_PEN, x - Resource.IMG_PEN.getWidth()/2, y, null);
 	}
 
-	public double getReload() {
+	public long getReload() {
 		return RELOAD;
 	}
 }

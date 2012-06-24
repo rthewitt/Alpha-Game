@@ -8,7 +8,11 @@ import com.alpha.game.Resource;
 public class ShotgunBeam extends BeamEntity {
 	private int x, y;
 	private double damage = 7;
-	private final double RELOAD = 1;
+	private final long RELOAD = 700;
+	
+	public ShotgunBeam() {
+		
+	}
 	
 	public ShotgunBeam(int X, int Y) {
 		x = X;
@@ -39,7 +43,7 @@ public class ShotgunBeam extends BeamEntity {
 		g2d.drawImage(Resource.IMG_BOLT, x, y, null);
 	}
 
-	double getReload() {
+	public long getReload() {
 		return RELOAD;
 	}
 }

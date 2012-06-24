@@ -8,7 +8,11 @@ import com.alpha.game.Resource;
 public class WaveBeam extends BeamEntity {
 	private int x, y;
 	private double damage = .5;
-	private final double RELOAD = 1;
+	private final long RELOAD = 5000;
+	
+	public WaveBeam() {
+		
+	}
 	
 	public WaveBeam(int X, int Y) {
 		x = X;
@@ -39,7 +43,7 @@ public class WaveBeam extends BeamEntity {
 		g2d.drawImage(Resource.IMG_WAVE, x, y, null);
 	}
 
-	double getReload() {
+	public long getReload() {
 		return RELOAD;
 	}
 }

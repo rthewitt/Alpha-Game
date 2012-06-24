@@ -8,7 +8,11 @@ import com.alpha.game.Resource;
 public class MachgunBeam extends BeamEntity {
 	private int x, y;
 	private double damage = 3;
-	private final double RELOAD = 1;
+	private final long RELOAD = 100;
+	
+	public MachgunBeam() {
+		
+	}
 	
 	public MachgunBeam(int X, int Y) {
 		x = X;
@@ -39,7 +43,7 @@ public class MachgunBeam extends BeamEntity {
 		g2d.drawImage(Resource.IMG_BOLT, x + Resource.IMG_BOLT.getWidth(), y, null);
 	}
 
-	double getReload() {
+	public long getReload() {
 		return RELOAD;
 	}
 }

@@ -12,8 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -21,8 +19,6 @@ import com.alpha.game.ships.ShipEntity;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements KeyListener, ActionListener {
-	static boolean cooldown = true;
-	static Timer timer = new Timer();
 	BorderLayout buttonLayout = new BorderLayout();
 	
 	JButton power1 = new JButton();
@@ -39,13 +35,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		setSize(Frame.width, Frame.height);
 		setLayout(null);
 		
-		GameState.game = this;
 		GameState.star.setDraw(this);
 		
 		Factory.newShip(GameState.ship);
 		
 		go = new Go();
-		timer = new Timer();
 		
 		GameState.updateShip();
 		
@@ -56,14 +50,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		addMouseListener(
 			new MouseAdapter() {
 	 	  		public void mousePressed(MouseEvent e) {
-	 	  			if(cooldown)
-	 	  				timer.schedule(new BeamTask(), 0, 500);
-	 	  			cooldown = false;
+	 	  			Go.mousePressed = true;
 				}
 	 	  		
 	 	  		public void mouseReleased(MouseEvent e) {
-	 	  			timer.cancel();
-	 	  			timer = new Timer();
+	 	  			Go.mousePressed = false;
 	 	  		}
 	 	  		
 	 	  		public void mouseExited(MouseEvent e) {
@@ -225,14 +216,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			GameState.beamType = 4;
 		} else if(ae.getSource() == power6) {
 			GameState.beamType = 5;
-		}
-	}
-	
-	private class BeamTask extends TimerTask {
-		public void run() {
-			ShipEntity.currentShip.fire();
-			cooldown = true;
-			GameState.shotsFired ++;
 		}
 	}
 	

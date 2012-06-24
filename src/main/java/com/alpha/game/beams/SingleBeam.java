@@ -8,7 +8,11 @@ import com.alpha.game.Resource;
 public class SingleBeam extends BeamEntity {
 	private int x, y;
 	private final double damage = 5;
-	private final double RELOAD = 1;
+	private final long RELOAD = 300;
+	
+	public SingleBeam() {
+		
+	}
 	
 	public SingleBeam(int X, int Y) {
 		x = X; y = Y;
@@ -38,7 +42,7 @@ public class SingleBeam extends BeamEntity {
 		g2d.drawImage(Resource.IMG_BOLT, x - Resource.IMG_BOLT.getWidth()/2, y, null);
 	}
 
-	double getReload() {
+	public long getReload() {
 		return RELOAD;
 	}
 }

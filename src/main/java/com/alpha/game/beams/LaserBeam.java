@@ -8,7 +8,11 @@ import com.alpha.game.Resource;
 public class LaserBeam extends BeamEntity {
 	private int x, y;
 	private double damage = 3;
-	private final double RELOAD = 1;
+	private final long RELOAD = 1;
+	
+	public LaserBeam() {
+		
+	}
 	
 	public LaserBeam(int X, int Y) {
 		x = X;
@@ -39,7 +43,7 @@ public class LaserBeam extends BeamEntity {
 		g2d.drawImage(Resource.IMG_LASER, x + Resource.IMG_LASER.getWidth(), y, null);
 	}
 
-	double getReload() {
+	public long getReload() {
 		return RELOAD;
 	}
 }

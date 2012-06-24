@@ -26,6 +26,7 @@ public class Frame extends JFrame {
 		new EnemyRunner();
 		new BeamRunner();
 		new ShipRunner();
+		new FiringMechanism();
 		
 		RunMenu(0);
 	}

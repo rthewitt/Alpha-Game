@@ -6,10 +6,16 @@ import com.alpha.game.MovableEntity;
 
 public class DualBeam extends BeamEntity {
 	
+	private final long RELOAD = 400;
+	
+	public DualBeam() {
+		
+	}
+	
 	public DualBeam(int x, int y) {
-		MovableEntity m = new SingleBeam(x - 3, y);
+		MovableEntity m = new SingleBeam(x - 5, y);
 		beams.add(m);
-		m = new SingleBeam(x + 3, y);
+		m = new SingleBeam(x + 5, y);
 		beams.add(m);
 		kill();
 	}
@@ -28,7 +34,7 @@ public class DualBeam extends BeamEntity {
 	public void draw(Graphics2D g2d) {
 	}
 
-	double getReload() {
-		return 0;
+	public long getReload() {
+		return RELOAD;
 	}
 }
