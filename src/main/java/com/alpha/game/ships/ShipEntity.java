@@ -1,12 +1,21 @@
 package com.alpha.game.ships;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
+
 import com.alpha.game.MovableEntity;
 
 public abstract class ShipEntity extends MovableEntity {
 	
 	public static ShipEntity currentShip;
+	public static ImageIcon hullShip;
+	public static ImageIcon nextShip;
 	
+	public abstract int getWidth();
+	public abstract int getHeight();
+	public abstract BufferedImage getImage();
 	public abstract double percentLeft();
 	public abstract int getSpeed();
 	public abstract double getDamage();

@@ -28,20 +28,17 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	JButton power5 = new JButton();
 	JButton power6 = new JButton();
 	
-	Go go;
 	Panel draw;
 	
 	public Game() {
 		setSize(Frame.width, Frame.height);
 		setLayout(null);
 		
-		GameState.star.setDraw(this);
+		Refresher.setDraw(this);
 		
+		MovableEntity.ships.clear();
 		Factory.newShip(GameState.ship);
-		
-		go = new Go();
-		
-		GameState.updateShip();
+		new ShipControl();
 		
 		setVisible(true);
 		addKeyListener(this);
@@ -50,11 +47,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		addMouseListener(
 			new MouseAdapter() {
 	 	  		public void mousePressed(MouseEvent e) {
-	 	  			Go.mousePressed = true;
+	 	  			ShipControl.mousePressed = true;
 				}
 	 	  		
 	 	  		public void mouseReleased(MouseEvent e) {
-	 	  			Go.mousePressed = false;
+	 	  			ShipControl.mousePressed = false;
 	 	  		}
 	 	  		
 	 	  		public void mouseExited(MouseEvent e) {
@@ -222,13 +219,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	public void keyPressed(KeyEvent ke) {
 		if(GameState.pause == false)
 		switch(ke.getKeyCode()) {
-			case KeyEvent.VK_W: go.setUp(true); break;
+			case KeyEvent.VK_W: ShipControl.setUp(true); break;
 			
-			case KeyEvent.VK_S: go.setDown(true); break;
+			case KeyEvent.VK_S: ShipControl.setDown(true); break;
 			
-			case KeyEvent.VK_A: go.setLeft(true); break;
+			case KeyEvent.VK_A: ShipControl.setLeft(true); break;
 			
-			case KeyEvent.VK_D: go.setRight(true); break;
+			case KeyEvent.VK_D: ShipControl.setRight(true); break;
 			
 			case KeyEvent.VK_1: GameState.beamType = 0; break;
         	
@@ -254,13 +251,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 	
 	public void keyReleased(KeyEvent ke) {
 		switch(ke.getKeyCode()) {
-			case KeyEvent.VK_W: go.setUp(false); break;
+			case KeyEvent.VK_W: ShipControl.setUp(false); break;
 			
-			case KeyEvent.VK_S: go.setDown(false); break;
+			case KeyEvent.VK_S: ShipControl.setDown(false); break;
 			
-			case KeyEvent.VK_A: go.setLeft(false); break;
+			case KeyEvent.VK_A: ShipControl.setLeft(false); break;
 			
-			case KeyEvent.VK_D: go.setRight(false); break;
+			case KeyEvent.VK_D: ShipControl.setRight(false); break;
 		}
 	}
 	
@@ -285,7 +282,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
      	BeamRunner.draw();
      	ShipRunner.draw();
      	
-     	GameState.star.draw(g2d);
+     	Stars.draw(g2d);
 		
 		requestFocus();
 	}

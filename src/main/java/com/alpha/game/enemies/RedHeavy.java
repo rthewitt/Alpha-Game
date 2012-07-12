@@ -10,7 +10,7 @@ public class RedHeavy extends EnemyEntity {
 	
 	private BufferedImage using = Resource.IMG_RED_HEAVY;
 	int x, y = -30;
-	private int health = 40;
+	private int health = 50;
 	
 	public RedHeavy() {
 		

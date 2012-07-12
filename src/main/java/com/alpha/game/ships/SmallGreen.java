@@ -1,21 +1,32 @@
 package com.alpha.game.ships;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 import com.alpha.game.Factory;
+import com.alpha.game.GameState;
 import com.alpha.game.Resource;
 
 public class SmallGreen extends ShipEntity{
-	private int x;
-	private int y;
+	private int x, y;
 	private int speed = 2;
 	private int initialHealth = 100;
 	private int health = 40;
 	private double damage = 1;
+	private BufferedImage using;
 	
 	public SmallGreen(int X, int Y) {
 		x = X;
 		y = Y;
 		currentShip = this;
+		if(GameState.hullEnabled) {
+			using = Resource.IMG_SMALL_RED_ARMOR;
+			health += 20;
+		} else {
+			using = Resource.IMG_SMALL_RED;
+		}
+		nextShip = new ImageIcon(Resource.IMG_MED_RED);
+		hullShip = new ImageIcon(Resource.IMG_SMALL_RED_ARMOR);
 	}
 	
 	public void setX(int X) {
@@ -35,7 +46,7 @@ public class SmallGreen extends ShipEntity{
 	}
 	
 	public void fire() {
-		Factory.newBeam(x + Resource.IMG_SMALL_GREEN.getWidth()/2, y);
+		Factory.newBeam(x + getWidth()/2, y);
 	}
 	
 	public int getSpeed() {
@@ -53,7 +64,7 @@ public class SmallGreen extends ShipEntity{
 	public void update() {}
 
 	public void	draw(Graphics2D g2d) {
-		g2d.drawImage(Resource.IMG_SMALL_GREEN, x, y, null);
+		g2d.drawImage(using, x, y, null);
 	}
 	
 	public double getDamage() {
@@ -62,5 +73,17 @@ public class SmallGreen extends ShipEntity{
 
 	public int getHealth() {
 		return health;
+	}
+	
+	public int getWidth() {
+		return using.getWidth();
+	}
+
+	public int getHeight() {
+		return using.getHeight();
+	}
+
+	public BufferedImage getImage() {
+		return using;
 	}
 }

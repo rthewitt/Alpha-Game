@@ -10,7 +10,7 @@ public class MedYellow extends EnemyEntity {
 	
 	private BufferedImage using = Resource.IMG_MED_YELLOW;
 	int x, y = -30;
-	private int health = 10;
+	private int health = 70;
 	
 	public MedYellow() {
 		x = (int)(10 + Math.random() * (Frame.width - 30));

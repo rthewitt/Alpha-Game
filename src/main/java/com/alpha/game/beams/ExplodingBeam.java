@@ -1,7 +1,6 @@
 package com.alpha.game.beams;
 
 import java.awt.Graphics2D;
-
 import com.alpha.game.MovableEntity;
 import com.alpha.game.Resource;
 

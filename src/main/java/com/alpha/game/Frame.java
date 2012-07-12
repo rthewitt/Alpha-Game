@@ -10,7 +10,7 @@ public class Frame extends JFrame {
 	private UpgradeMenu Up;
 	public static int width = 500;
 	public static int height = 800;
-	Star star;
+	Stars star;
 	
 	Frame() {
 		
@@ -21,6 +21,7 @@ public class Frame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		GameState.frame = this;
+		new Refresher();
 		startStars();
 		
 		new EnemyRunner();
@@ -32,10 +33,8 @@ public class Frame extends JFrame {
 	}
 	
 	void startStars() {
-		star = new Star(width, height);
-		GameState.star = star;
+		star = new Stars(width, height);
 		star.setNumber(50);
-		star.start();
 	}
 	
 	void RunMenu(int con) {

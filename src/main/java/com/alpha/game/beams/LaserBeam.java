@@ -7,7 +7,7 @@ import com.alpha.game.Resource;
 
 public class LaserBeam extends BeamEntity {
 	private int x, y;
-	private double damage = 3;
+	private double damage = .3;
 	private final long RELOAD = 1;
 	
 	public LaserBeam() {
@@ -20,7 +20,7 @@ public class LaserBeam extends BeamEntity {
 	}
 	
 	public void update() {
-		y --;
+		y -= 3;
 		
 		if(y < 0) {
 			kill();

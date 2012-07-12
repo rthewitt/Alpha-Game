@@ -10,7 +10,7 @@ public class BossOne extends EnemyEntity {
 	
 	private BufferedImage using = Resource.IMG_BOSS_ONE;
 	int x, y = -30;
-	private int health = 10;
+	private int health = 1000;
 	
 	public BossOne() {
 		

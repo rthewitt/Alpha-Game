@@ -38,8 +38,7 @@ public class Menu extends JPanel implements ActionListener {
 		frame = GameState.frame;
 		setSize(Frame.width, Frame.height);
 		
-		GameState.star.setDraw(this);
-			
+		Refresher.setDraw(this);
 		this.setLayout(null);
 		
 		buttonSetup();
@@ -170,7 +169,7 @@ public class Menu extends JPanel implements ActionListener {
 		super.paintComponent(g);
 		Graphics2D g2d	= (Graphics2D)	g;
 		
-        GameState.star.draw(g2d);
+		Stars.draw(g2d);
         
         if(drawInstructions) {
         	g2d.setColor(Color.GREEN);

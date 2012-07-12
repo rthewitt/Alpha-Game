@@ -84,19 +84,38 @@ public class Factory {
 	}
 	
 	private static Timer timer;
-	private static int i = 0;
 	private static int i2 = 0;
-	static File level;
 	static Scanner scan;
 	static int length;
 	static int[][] work = new int[100][2];
 	
+	//Example of what I have in mind for level options
+	static void newSlowModeLevel(int lvl) {
+		//speedModifier = 2
+		newLevel(lvl);
+	}
+	
+	static void newHardModeLevel(int lvl) {
+		//EnemieDamageModifier += 1.5
+		//EnemieSpeedModifier += 1
+		//EnemieHealthModifier = 2
+		newLevel(lvl);
+	}
+	
+	static void newImpossibleLevel(int lvl) {
+		//EnemieDamageModifier += 2
+		//EnemieSpeedModifier += 2
+		//EnemieHealthModifier = 4
+		newLevel(lvl);
+	}
+	
 	static void newLevel(int lvl) {
-		getData(level = new File(Resource.levelsPath + "lvl" + lvl + ".txt"));
+		getData(new File(Resource.levelsPath + "lvl" + lvl + ".txt"));
 		
 		GameState.enemies = length;
+		i2 = 0;
 		
-		for(;i < length; i++) {
+		for(int i = 0; i < length; i++) {
 			timer = new Timer();
 			timer.schedule(new Task(), work[i][0]*1000);
 		}

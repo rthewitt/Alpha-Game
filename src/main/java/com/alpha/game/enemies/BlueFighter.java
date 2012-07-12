@@ -10,7 +10,7 @@ public class BlueFighter extends EnemyEntity {
 	
 	private BufferedImage using = Resource.IMG_BLUE_FIGHTER;
 	int x, y = -30;
-	private int health = 10;
+	private int health = 20;
 	
 	public BlueFighter() {
 		x = (int)(10 + Math.random() * (Frame.width - 30));

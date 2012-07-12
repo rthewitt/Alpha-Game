@@ -3,9 +3,7 @@ package com.alpha.game;
 class ShipRunner extends Thread{
 	boolean running = true;
 	
-	ShipRunner() {
-		
-	}
+	ShipRunner() {}
 	
 	public void run() {}
 	

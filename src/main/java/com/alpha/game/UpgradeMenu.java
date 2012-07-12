@@ -71,8 +71,9 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		panelHeight = Frame.height - 31;
 		setVisible(true);
 		
+		Refresher.setDraw(this);
+		
 		setBackground(Color.BLACK);
-		GameState.star.setDraw(this);
 		LF.TabbedPane(Bar);
 		
 		setLayout(null);
@@ -134,7 +135,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		minus.setBounds(panelWidth/2 + 100, panelHeight - 70, 50, 30);
 		plus.setBounds(panelWidth - 50, panelHeight - 70, 50, 30);
 		replay.setBounds(panelWidth/2, panelHeight - 70, 100, 30);
-		label.setBounds(50 - GameState.currentShip.getWidth()/2, 50 - GameState.currentShip.getHeight()/2, GameState.currentShip.getWidth(), GameState.currentShip.getHeight());
+		label.setBounds(50 - ShipEntity.currentShip.getWidth()/2, 50 - ShipEntity.currentShip.getHeight()/2, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
 	}
 	
 	private void setIcon() {
@@ -147,9 +148,13 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		damage.setIcon(new ImageIcon(Resource.IMG_DAMAGE));
 		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
 		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
-		hull.setIcon(GameState.hullShip);
-		shipUp.setIcon(GameState.nextShip);
-		label.setIcon(new ImageIcon(GameState.currentShip));
+		if(GameState.hullEnabled == false) {
+			hull.setIcon(ShipEntity.hullShip);
+		} else {
+			hull.setIcon(null);
+		}
+		shipUp.setIcon(ShipEntity.nextShip);
+		label.setIcon(new ImageIcon(ShipEntity.currentShip.getImage()));
 	}
 	
 	private void setLandF() {
@@ -292,13 +297,13 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		}else if(ae.getSource() == speed) {	
 		}else if(ae.getSource() == hull) {
 			GameState.hullEnabled = true;
-			GameState.updateShip();
-			label.setBounds(0, 0, GameState.currentShip.getWidth(), GameState.currentShip.getHeight());
+			Factory.newShip(GameState.ship);
+			label.setBounds(0, 0, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
 		}else if(ae.getSource() == shipUp) {
 			GameState.ship ++;
-			GameState.updateShip();
 			GameState.hullEnabled = false;
-			label.setBounds(0, 0, GameState.currentShip.getWidth(), GameState.currentShip.getHeight());
+			Factory.newShip(GameState.ship);
+			label.setBounds(0, 0, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
 		}else if(ae.getSource() == minus) {
 			GameState.wantedLevel --;
 		}else if(ae.getSource() == plus) {
@@ -319,7 +324,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		
 		String s = Integer.toString(GameState.wantedLevel);
 		
-        GameState.star.draw(g2d);
+		Stars.draw(g2d);
         
         g2d.setFont(new Font("TimesNewRoman", Font.PLAIN, 20));
         g2d.setColor(Color.GREEN);

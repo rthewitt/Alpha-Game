@@ -8,7 +8,7 @@ import com.alpha.game.GameState;
 public class BlueHeavy extends EnemyEntity {
 	private BufferedImage using;
 	int x, y = -30;
-	private int health = 10;
+	private int health = 100;
 	
 	public BlueHeavy() {
 		x = (int)(10 + Math.random() * (Frame.width - 30));
