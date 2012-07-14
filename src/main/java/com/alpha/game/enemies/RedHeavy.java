@@ -11,6 +11,7 @@ public class RedHeavy extends EnemyEntity {
 	private BufferedImage using = Resource.IMG_RED_HEAVY;
 	int x, y = -30;
 	private int health = 50;
+	private final int YIN = 3;
 	
 	public RedHeavy() {
 		
@@ -31,6 +32,7 @@ public class RedHeavy extends EnemyEntity {
 				
 				if(health <1) {
 					GameState.enemiesKilled ++;
+					GameState.yin += YIN;
 					kill();
 				}
 				return true;

@@ -11,6 +11,7 @@ public class MedYellow extends EnemyEntity {
 	private BufferedImage using = Resource.IMG_MED_YELLOW;
 	int x, y = -30;
 	private int health = 70;
+	private final int YIN = 7;
 	
 	public MedYellow() {
 		x = (int)(10 + Math.random() * (Frame.width - 30));
@@ -30,6 +31,7 @@ public class MedYellow extends EnemyEntity {
 				
 				if(health <1) {
 					GameState.enemiesKilled ++;
+					GameState.yin += YIN;
 					kill();
 				}
 				return true;

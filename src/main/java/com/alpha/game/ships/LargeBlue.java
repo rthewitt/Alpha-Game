@@ -2,7 +2,6 @@ package com.alpha.game.ships;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
 import com.alpha.game.Factory;
 import com.alpha.game.GameState;
 import com.alpha.game.Resource;
@@ -10,8 +9,8 @@ import com.alpha.game.Resource;
 public class LargeBlue extends ShipEntity{
 	private int x, y;
 	private int speed = 3;
-	private int initialHealth = 100;
-	private int health = 40;
+	private int totalHealth = 45;
+	private int health = totalHealth;
 	private double damage = 1;
 	private BufferedImage using;
 	
@@ -26,7 +25,7 @@ public class LargeBlue extends ShipEntity{
 			using = Resource.IMG_LARGE_BLUE;
 		}
 		nextShip = null;
-		hullShip = new ImageIcon(Resource.IMG_LARGE_BLUE_ARMOR);
+		hullShip = Resource.IMG_LARGE_BLUE_ARMOR;
 	}
 	
 	public void setX(int X) {
@@ -56,7 +55,7 @@ public class LargeBlue extends ShipEntity{
 	}
 	
 	public double percentLeft() {
-		return health%initialHealth;
+		return health/totalHealth;
 	}
 	
 	public void kill() {

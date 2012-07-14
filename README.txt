@@ -1,30 +1,22 @@
-PATCH NOTES - Update 2.0
+PATCH NOTES - Update 2.1
 
-So many improvements to go over... so here is the list of major changes
+Upgrade Menu Update!
 
-- Ships package:
-  * Added getWidth, getHeight and getImage methods.
-  * Added the buffered Image variable using to lessen the amount of code where the classes image is accessed
-  * Added hullShip and nextShip to ShipEntity to simplify the process of updating the upgradeMenu.
+1. New Classes:
+ - MenuItem
+ - UpgradeMenuAnimation
 
-- Enemies package:
-  * Fixed the health stat of each ship
+2. Major changes to Upgrade Menu:
+ - Created Menu Item to be all purchase able items on the Upgrade Menu
+ - Upgrade Menu now has animation for when an item is first selected
+ - All Items now have descriptions and prices
+ - Changed the way all Items are added to the screen.
+   - Menu Items are now passed all parameters needed to operate, effectivly reducing the size of UpgradeMenu
 
-- Stars class
-  * Renamed Star to Stars to reflect it's purpose
-  * Removed all the repainting features
-  * Added the private inner class Star(This is a really good example of how an inner class should work)
-  * Generally reworked how the Stars class run, it is now less expensive and runs with less glitches.
+3. The health bar in Game is now fully operational
 
-- ShipControl
-  * Renamed Go to ShipControl to reflect it current purpose
+4. Removed tooltips from main Menu
 
-- Factory
-  * Added Methods for future game mode options.
+5. Fixed Health of all enemies and added Yin(in game currency) bonus for a kill
 
-- New class Refresher - Thread
-  * Refresher simply repaints the screen, it does a much better job than the Stars class did.
-
-- GameState
-  * Removed UpdateShip because it is no longer needed.
-  * I am very happy with this because it makes the image updating very clean.
+- 

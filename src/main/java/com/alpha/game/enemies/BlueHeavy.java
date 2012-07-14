@@ -9,6 +9,7 @@ public class BlueHeavy extends EnemyEntity {
 	private BufferedImage using;
 	int x, y = -30;
 	private int health = 100;
+	private final int YIN = 4;
 	
 	public BlueHeavy() {
 		x = (int)(10 + Math.random() * (Frame.width - 30));
@@ -28,6 +29,7 @@ public class BlueHeavy extends EnemyEntity {
 				
 				if(health <1) {
 					GameState.enemiesKilled ++;
+					GameState.yin += YIN;
 					kill();
 				}
 				return true;

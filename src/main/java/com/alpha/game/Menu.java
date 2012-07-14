@@ -23,10 +23,6 @@ public class Menu extends JPanel implements ActionListener {
 	
 	private Frame frame;
 	
-	String ship1Tip = "<html>Green<br>Speed = 2<br>Power = 2<br>Defense = 2</html>";
-	String ship2Tip = "<html>Red<br>Speed = 1<br>Power = 3<br>Defense = 2</html>";
-	String ship3Tip = "<html>Blue<br>Speed = 3<br>Power = 2<br>Defense = 1</html>";
-	
 	String stringIntstruct = "This will be instructions";
 	String stringCredits = " Producer: Brennan Zuber\n Programmer: Brennan Zuber\n Structural design and lots more: Ryan Hewitt\n Graphics: Elyse Zuber\n Music: David Torres\n\n" +
 			"Testers: Greg Wright - Willaim Wright - Dean Mellas - Trevor Davenport\n Various students, staff and teachers of Cerritos College";
@@ -84,10 +80,6 @@ public class Menu extends JPanel implements ActionListener {
 		ship1.setIcon(Resource.ICON_SMALL_GREEN_ICON);
 		ship2.setIcon(Resource.ICON_SMALL_RED_ICON);
 		ship3.setIcon(Resource.ICON_SMALL_BLUE_ICON);
-		
-		ship1.setToolTipText(ship1Tip);
-		ship2.setToolTipText(ship2Tip);
-		ship3.setToolTipText(ship3Tip);
 		
 		add(go);
 		add(instruct);

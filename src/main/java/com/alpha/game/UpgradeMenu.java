@@ -2,7 +2,6 @@ package com.alpha.game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,13 +15,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-
 import com.alpha.game.ships.ShipEntity;
 
 @SuppressWarnings("serial")
 public class UpgradeMenu extends JPanel implements ActionListener {
 	private Frame frame;
-	private int panelWidth = 0, panelHeight = 0; 
+	static int panelWidth, panelHeight; 
+	MenuItem currentItem;
 	
 	private GridLayout panelLayout = new GridLayout(0,1);
 	BorderLayout buttonLayout = new BorderLayout();
@@ -33,27 +32,6 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	private JTabbedPane Bar = new JTabbedPane();
 	
 	JButton done = new JButton("Next Level");
-	
-	//Ship Upgrades
-	JButton damage = new JButton("+1 DAMAGE");
-	JButton life = new JButton("LIFE UP");
-	JButton speed = new JButton("SPEED UP");
-	JButton hull = new JButton("HULL UP");
-	JButton shipUp = new JButton("UPGRADE SHIP");
-	JButton RofUp = new JButton("FIRING SPEED");
-	
-	//gun buttons
-	JButton dual = new JButton("DUAL GUN");
-	JButton machgun = new JButton("MACH GUN");
-	JButton pierce = new JButton("PIERCE GUN");
-	JButton explosive = new JButton("EXPLOSIVE GUN");
-	JButton laser = new JButton("LASER GUN");
-	JButton wave = new JButton("WAVE GUN");
-	JButton shotgun = new JButton("SHOT-GUN");
-	
-	//Bonus Buttons
-	JButton bulletSpeed = new JButton("BULLET SPEED");
-	
 	JButton replay = new JButton("REPLAY");
 	JButton minus = new JButton("-");
 	JButton plus = new JButton("+");
@@ -65,10 +43,30 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	JScrollPane scroll2 = new JScrollPane(np2);
 	JScrollPane scroll3 = new JScrollPane(np3);
 	
+	MenuItem damage = new MenuItem(np1, this, "+1 DAMAGE", Resource.IMG_DAMAGE, 5, "Increases all damage by 10%");
+	MenuItem life = new MenuItem(np1, this, "LIFE UP", Resource.IMG_HEALTH, 5, "Increase Ships max health by 10");
+	MenuItem speed = new MenuItem(np1, this, "SPEED UP", Resource.IMG_SPEED, 15, "Increase Ships speed");
+	MenuItem hull = new MenuItem(np1, this, "HULL UP", ShipEntity.hullShip, 30, "New Look and Increase Health");
+	MenuItem shipUp = new MenuItem(np1, this, "UPGRADE SHIP", ShipEntity.nextShip, 60, "You get a new Ship! + 1 weapons emplacements");
+	MenuItem RofUp = new MenuItem(np3, this, "FIRING SPEED", null, 30, "Decrease time between bullets");
+	MenuItem dual = new MenuItem(np2, this, "DUAL GUN", Resource.IMG_DUAL_LASER, 10, "Fire two bolts for the price of one");
+	MenuItem machgun = new MenuItem(np2, this, "MACH GUN", Resource.IMG_RAPID_LASER, 80, "Rapid fire bolts!");
+	MenuItem pierce = new MenuItem(np2, this, "PIERCE GUN", Resource.IMG_PIERCE_LASER, 20, "Tiny damage but goes through ships while damaging them");
+	MenuItem explosive = new MenuItem(np2, this, "EXPLOSIVE GUN", Resource.IMG_EXPLOSIVE_LASER, 30, "High damage but slow reload");
+	MenuItem laser = new MenuItem(np2, this, "LASER GUN", Resource.IMG_LASER, 40, "Low Damage but its a Laser!");
+	MenuItem wave = new MenuItem(np2, this, "WAVE GUN", Resource.IMG_WAVE_LASER, 60, "The entire field of view is at least damages");
+	MenuItem shotgun = new MenuItem(np2, this, "SHOT-GUN", Resource.IMG_SPREAD_LASER, 40, "How many bullets do you need?");
+	MenuItem bulletSpeed = new MenuItem(np3, this, "BULLET SPEED", null, 15, "Increases the speed of all beams");
+	
+	static int rectSize = 0;
+	static boolean animationDone = false;
+	static int row1, row2, rowHeight;
+	
 	UpgradeMenu() {
 		frame = GameState.frame;
 		panelWidth = Frame.width - 7;
 		panelHeight = Frame.height - 31;
+		row1 = 50; row2 = 300; rowHeight = 350;
 		setVisible(true);
 		
 		Refresher.setDraw(this);
@@ -82,50 +80,20 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 
 	public void setup() {
 		setLayout();
-		setSize();
 		setBounds();
-		setIcon();
 		setLandF();
 		setListener();
 		setEnabled();
+		label.setIcon(new ImageIcon(ShipEntity.currentShip.getImage()));
 		add();
 		scroll.setWheelScrollingEnabled(true);
 	}
 	
 	private void setLayout() {
 		panelLayout.setVgap(1);
-		dual.setLayout(buttonLayout);
-		machgun.setLayout(buttonLayout);
-		pierce.setLayout(buttonLayout);
-		explosive.setLayout(buttonLayout);
-		shotgun.setLayout(buttonLayout);
-		wave.setLayout(buttonLayout);
-		damage.setLayout(buttonLayout);
-		life.setLayout(buttonLayout);
-		laser.setLayout(buttonLayout);
-		speed.setLayout(buttonLayout);
-		hull.setLayout(buttonLayout);
-		shipUp.setLayout(buttonLayout);
-		bulletSpeed.setLayout(buttonLayout);
 		np1.setLayout(panelLayout);
 		np2.setLayout(panelLayout);
 		np3.setLayout(panelLayout);
-	}
-	
-	private void setSize() {
-		dual.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
-		pierce.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
-		explosive.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
-		shotgun.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
-		wave.setPreferredSize(new Dimension(panelWidth - 20, 50)); dual.setMinimumSize(dual.getPreferredSize());
-		damage.setPreferredSize(new Dimension(panelWidth - 20, 50)); damage.setMinimumSize(damage.getPreferredSize());
-		laser.setPreferredSize(new Dimension(panelWidth - 20, 50)); laser.setMinimumSize(laser.getPreferredSize());
-		machgun.setPreferredSize(new Dimension(panelWidth - 20, 50)); machgun.setMinimumSize(machgun.getPreferredSize());
-		life.setPreferredSize(new Dimension(panelWidth - 20, 50)); life.setMinimumSize(life.getPreferredSize());
-		speed.setPreferredSize(new Dimension(panelWidth - 20, 50)); speed.setMinimumSize(speed.getPreferredSize());
-		hull.setPreferredSize(new Dimension(panelWidth - 20, 50)); hull.setMinimumSize(hull.getPreferredSize());
-		shipUp.setPreferredSize(new Dimension(panelWidth - 20, 50)); shipUp.setMinimumSize(shipUp.getPreferredSize());
-		bulletSpeed.setPreferredSize(new Dimension(panelWidth - 20, 50)); bulletSpeed.setMinimumSize(bulletSpeed.getPreferredSize());
 	}
 	
 	private void setBounds() {
@@ -138,64 +106,19 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		label.setBounds(50 - ShipEntity.currentShip.getWidth()/2, 50 - ShipEntity.currentShip.getHeight()/2, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
 	}
 	
-	private void setIcon() {
-		dual.setIcon(new ImageIcon(Resource.IMG_DUAL_LASER));
-		pierce.setIcon(new ImageIcon(Resource.IMG_PIERCE_LASER));
-		explosive.setIcon(new ImageIcon(Resource.IMG_EXPLOSIVE_LASER));
-		machgun.setIcon(new ImageIcon(Resource.IMG_RAPID_LASER));
-		shotgun.setIcon(new ImageIcon(Resource.IMG_SPREAD_LASER));
-		wave.setIcon(new ImageIcon(Resource.IMG_WAVE_LASER));
-		damage.setIcon(new ImageIcon(Resource.IMG_DAMAGE));
-		life.setIcon(new ImageIcon(Resource.IMG_HEALTH));
-		speed.setIcon(new ImageIcon(Resource.IMG_SPEED));
-		if(GameState.hullEnabled == false) {
-			hull.setIcon(ShipEntity.hullShip);
-		} else {
-			hull.setIcon(null);
-		}
-		shipUp.setIcon(ShipEntity.nextShip);
-		label.setIcon(new ImageIcon(ShipEntity.currentShip.getImage()));
-	}
-	
 	private void setLandF() {
 		LF.Button(replay);
 		LF.Button(plus);
 		LF.Button(minus);
 		LF.Button(done);
-		LF.Button(dual);
-		LF.Button(pierce);
-		LF.Button(explosive);
-		LF.Button(laser);
-		LF.Button(machgun);
-		LF.Button(shotgun);
-		LF.Button(wave);
-		LF.Button(damage);
-		LF.Button(life);
-		LF.Button(speed);
-		LF.Button(hull);
-		LF.Button(shipUp);
-		LF.Button(bulletSpeed);
 		LF.Scroll(scroll);
 	}
 	
 	private void setListener() {
 		done.addActionListener(this);
-		dual.addActionListener(this);
-		pierce.addActionListener(this);
-		explosive.addActionListener(this);
-		shotgun.addActionListener(this);
-		wave.addActionListener(this);
-		damage.addActionListener(this);
-		machgun.addActionListener(this);
-		life.addActionListener(this);
-		laser.addActionListener(this);
-		speed.addActionListener(this);
-		hull.addActionListener(this);
-		shipUp.addActionListener(this);
 		minus.addActionListener(this);
 		plus.addActionListener(this);
 		replay.addActionListener(this);
-		bulletSpeed.addActionListener(this);
 	}
 	
 	private void setEnabled() {
@@ -260,19 +183,6 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		Bar.addTab("SHIP", scroll);
 		Bar.addTab("WEAPONS", scroll2);
 		Bar.addTab("SPECIAL", scroll3);
-		np1.add(life);
-		np1.add(speed);
-		np1.add(damage);
-		np1.add(hull);
-		np1.add(shipUp);
-		np2.add(dual);
-		np2.add(machgun);
-		np2.add(laser);
-		np2.add(explosive);
-		np2.add(pierce);
-		np2.add(wave);
-		np2.add(shotgun);
-		np3.add(bulletSpeed);
 		add(label);
 		add(Bar);
 		add(done);
@@ -313,8 +223,17 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			frame.RunGame(3);
 		}
 		
+		try {
+			currentItem = (MenuItem) ae.getSource();
+		} catch(ClassCastException e) {}
+		
+		try {
+			hull.setIcon(new ImageIcon(ShipEntity.hullShip));
+			shipUp.setIcon(new ImageIcon(ShipEntity.nextShip));
+		} catch(NullPointerException e) {}
+		
 		setEnabled();
-		setIcon();
+		label.setIcon(new ImageIcon(ShipEntity.currentShip.getImage()));
 		setBounds();
 	}
 	
@@ -336,14 +255,28 @@ public class UpgradeMenu extends JPanel implements ActionListener {
         g2d.drawString("Speed: " + ShipEntity.currentShip.getSpeed(), 150, 30);
         g2d.drawString("Health: " + ShipEntity.currentShip.getHealth(), 270, 30);
         g2d.drawString("Damage: " + ShipEntity.currentShip.getDamage(), 150, 70);
+        g2d.drawString("Yin: " + GameState.yin, 270, 70);
         
-        g2d.drawString("Enemies Killed: " + GameState.enemiesKilled, 50, 350);
-        g2d.drawString("Number of Deaths: " + GameState.numDeaths, 50, 390);
-        g2d.drawString("Shots Fired: " + GameState.shotsFired, 50, 430);
-        g2d.drawString("Number of Hits: " + GameState.numHits, 50, 470);
-        g2d.drawString("Hit Ratio: " + df.format(GameState.hitRatio) + "%", 300, 350);
-        g2d.drawString("Time Played: " + GameState.timePlayed, 300, 390);
-        g2d.drawString("Times Played: " + GameState.timesPlayed, 300, 430);
-        g2d.drawString("Achievments: " + GameState.achievmentsEarned, 300, 470);
+        if(currentItem != null) {
+        	new UpgradeMenuAnimation().go();
+        	g2d.drawRoundRect(3, 330, panelWidth - 7, rectSize, 30, 30);
+        	if(animationDone) {
+            	g2d.setFont(new Font("TimesNewRoman", Font.PLAIN, 40));
+            	g2d.drawString(currentItem.getName(), 7, 370);
+            	g2d.setFont(new Font("TimesNewRoman", Font.PLAIN, 20));
+            	g2d.drawString("Description:", 5, 420);
+            	g2d.drawString(currentItem.getDesc(), 5, 440);
+            	g2d.drawString("Cost: " + currentItem.getCost(), panelWidth - 80, 355);
+        	}
+        }
+        
+        g2d.drawString("Enemies Killed: " + GameState.enemiesKilled, row1, rowHeight);
+        g2d.drawString("Number of Deaths: " + GameState.numDeaths, row1, rowHeight + 35);
+        g2d.drawString("Shots Fired: " + GameState.shotsFired, row1, rowHeight + 70);
+        g2d.drawString("Number of Hits: " + GameState.numHits, row1, rowHeight + 105);
+        g2d.drawString("Hit Ratio: " + df.format(GameState.hitRatio) + "%", row2, rowHeight);
+        g2d.drawString("Time Played: " + GameState.timePlayed, row2, rowHeight + 35);
+        g2d.drawString("Times Played: " + GameState.timesPlayed, row2, rowHeight + 70);
+        g2d.drawString("Achievments: " + GameState.achievmentsEarned, row2, rowHeight + 105);
 	}
 }

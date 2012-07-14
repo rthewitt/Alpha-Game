@@ -274,7 +274,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
      	g2d.setColor(Color.RED);
      	g2d.fillRoundRect(10, 673, 475, 10, 3, 3);
      	g2d.setColor(Color.GREEN);
-     	g2d.fillRoundRect(10, 673, (int)(ShipEntity.currentShip.percentLeft()/100 * 475), 10, 3, 3);
+     	g2d.fillRoundRect(10, 673, (int)(ShipEntity.currentShip.percentLeft() * 475), 10, 3, 3);
      	
      	GameState.g2d = g2d;
      	

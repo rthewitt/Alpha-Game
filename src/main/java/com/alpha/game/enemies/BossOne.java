@@ -11,6 +11,7 @@ public class BossOne extends EnemyEntity {
 	private BufferedImage using = Resource.IMG_BOSS_ONE;
 	int x, y = -30;
 	private int health = 1000;
+	private final int YIN = 50;
 	
 	public BossOne() {
 		
@@ -31,6 +32,7 @@ public class BossOne extends EnemyEntity {
 				
 				if(health <1) {
 					GameState.enemiesKilled ++;
+					GameState.yin += YIN;
 					kill();
 				}
 				return true;

@@ -11,6 +11,7 @@ public class BlueFighter extends EnemyEntity {
 	private BufferedImage using = Resource.IMG_BLUE_FIGHTER;
 	int x, y = -30;
 	private int health = 20;
+	private final int YIN = 2;
 	
 	public BlueFighter() {
 		x = (int)(10 + Math.random() * (Frame.width - 30));
@@ -30,6 +31,7 @@ public class BlueFighter extends EnemyEntity {
 				
 				if(health <1) {
 					GameState.enemiesKilled ++;
+					GameState.yin += YIN;
 					kill();
 				}
 				return true;

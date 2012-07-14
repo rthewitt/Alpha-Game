@@ -10,6 +10,7 @@ public class GameState {
 	public static int enemies;
 	static int beamType = 0;
 	static boolean pause = false;
+	public static int yin;
 	
 	//Stats
 	public static int enemiesKilled = 0;
