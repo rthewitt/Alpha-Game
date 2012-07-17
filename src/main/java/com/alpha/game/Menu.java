@@ -99,7 +99,7 @@ public class Menu extends JPanel implements ActionListener {
 		ship1 = null;
 		ship2 = null;
 		ship3 = null;
-		frame.RunGame(1);
+		frame.NewPanel(new Game());
 	}
 	
 	public void enable(boolean b) {

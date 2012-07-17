@@ -48,7 +48,7 @@ public class GameState {
 			ShipControl.mousePressed = false;
 			ShipEntity.currentShip.kill();
 			hitRatio = ((double)numHits/(double)shotsFired) * 100;
-			frame.RunUpgrade(2);
+			frame.NewPanel(new UpgradeMenu());
 		}
 	}
 }

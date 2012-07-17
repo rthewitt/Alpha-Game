@@ -1,10 +1,5 @@
 package com.alpha.game;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
 import com.alpha.game.beams.*;
 import com.alpha.game.enemies.*;
 import com.alpha.game.ships.*;
@@ -83,65 +78,27 @@ public class Factory {
 		MovableEntity.ships.addElement(r);
 	}
 	
-	private static Timer timer;
-	private static int i2 = 0;
-	static Scanner scan;
-	static int length;
-	static int[][] work = new int[100][2];
-	
 	//Example of what I have in mind for level options
+	static void newNormalLevel(int lvl) {
+		new BuildLevel().newLevel(lvl);
+	}
+	
 	static void newSlowModeLevel(int lvl) {
 		//speedModifier = 2
-		newLevel(lvl);
+		new BuildLevel().newLevel(lvl);
 	}
 	
 	static void newHardModeLevel(int lvl) {
 		//EnemieDamageModifier += 1.5
 		//EnemieSpeedModifier += 1
 		//EnemieHealthModifier = 2
-		newLevel(lvl);
+		new BuildLevel().newLevel(lvl);
 	}
 	
 	static void newImpossibleLevel(int lvl) {
 		//EnemieDamageModifier += 2
 		//EnemieSpeedModifier += 2
 		//EnemieHealthModifier = 4
-		newLevel(lvl);
-	}
-	
-	static void newLevel(int lvl) {
-		getData(new File(Resource.levelsPath + "lvl" + lvl + ".txt"));
-		
-		GameState.enemies = length;
-		i2 = 0;
-		
-		for(int i = 0; i < length; i++) {
-			timer = new Timer();
-			timer.schedule(new Task(), work[i][0]*1000);
-		}
-	}
-	
-	private static void getData(File f) {
-		try {
-			scan = new Scanner(f);
-			for(int i = 0; scan.hasNext(); i++) {
-				work[i][0] = scan.nextInt();
-				work[i][1] = scan.nextInt();
-				length = i + 1;
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static void build() {
-		Factory.newEnemy(work[i2][1]);
-		i2 ++;
-	}
-	
-	private static class Task extends TimerTask {
-		public void run() {
-			build();
-		}
+		new BuildLevel().newLevel(lvl);
 	}
 }

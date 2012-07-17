@@ -65,9 +65,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		);
 		
 		if(GameState.useWantedLevel) {
-			Factory.newLevel(GameState.wantedLevel);
+			Factory.newNormalLevel(GameState.wantedLevel);
 		}else {
-			Factory.newLevel(GameState.level);
+			Factory.newNormalLevel(GameState.level);
 		}
 		setup();
 	}
@@ -277,11 +277,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
      	g2d.fillRoundRect(10, 673, (int)(ShipEntity.currentShip.percentLeft() * 475), 10, 3, 3);
      	
      	GameState.g2d = g2d;
-     	
      	EnemyRunner.draw();
      	BeamRunner.draw();
      	ShipRunner.draw();
-     	
      	Stars.draw(g2d);
 		
 		requestFocus();

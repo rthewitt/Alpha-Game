@@ -19,13 +19,13 @@ public class SmallGreen extends ShipEntity{
 		y = Y;
 		currentShip = this;
 		if(GameState.hullEnabled) {
-			using = Resource.IMG_SMALL_RED_ARMOR;
+			using = Resource.IMG_SMALL_GREEN_ARMOR;
 			health += 20;
 		} else {
-			using = Resource.IMG_SMALL_RED;
+			using = Resource.IMG_SMALL_GREEN;
 		}
-		nextShip = Resource.IMG_MED_RED;
-		hullShip = Resource.IMG_SMALL_RED_ARMOR;
+		nextShip = Resource.IMG_MED_GREEN;
+		hullShip = Resource.IMG_SMALL_GREEN_ARMOR;
 	}
 	
 	public void setX(int X) {

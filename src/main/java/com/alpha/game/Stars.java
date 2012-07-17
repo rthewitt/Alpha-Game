@@ -7,13 +7,14 @@ import java.util.Vector;
 public class Stars extends Thread {
 	private static Vector<Star> stars = new Vector<Star>();
 	static Star s;
-	
 	private int width, height;
 	private int arraySize;
 	
-	public Stars(int w, int h) {
+	public Stars(int w, int h, int number) {
 		width = w;
 		height = h;
+		arraySize = number;
+		init();
 		start();
 	}
 	
@@ -21,11 +22,6 @@ public class Stars extends Thread {
 		int x, y;
 		int size;
 		int dir;
-	}
-	
-	public void setNumber(int s) {
-		arraySize = s;
-		init();
 	}
 	
 	void init() {

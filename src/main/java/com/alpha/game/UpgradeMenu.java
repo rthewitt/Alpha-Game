@@ -58,15 +58,15 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	MenuItem shotgun = new MenuItem(np2, this, "SHOT-GUN", Resource.IMG_SPREAD_LASER, 40, "How many bullets do you need?");
 	MenuItem bulletSpeed = new MenuItem(np3, this, "BULLET SPEED", null, 15, "Increases the speed of all beams");
 	
-	static int rectSize = 0;
-	static boolean animationDone = false;
+	static int rectSize;
+	static boolean animationDone;
 	static int row1, row2, rowHeight;
 	
 	UpgradeMenu() {
 		frame = GameState.frame;
 		panelWidth = Frame.width - 7;
 		panelHeight = Frame.height - 31;
-		row1 = 50; row2 = 300; rowHeight = 350;
+		row1 = 50; row2 = 300; rowHeight = 350; rectSize = 0; animationDone = false;
 		setVisible(true);
 		
 		Refresher.setDraw(this);
@@ -194,7 +194,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == done) {
 			GameState.useWantedLevel = false;
-			frame.RunGame(3);
+			frame.NewPanel(new Game());
 		}else if(ae.getSource() == dual) {
 			GameState.dualEnabled = true;
 			dual.setBackground(Color.BLACK);
@@ -220,7 +220,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			GameState.wantedLevel ++;
 		}else if(ae.getSource() == replay) {
 			GameState.useWantedLevel = true;
-			frame.RunGame(3);
+			frame.NewPanel(new Game());
 		}
 		
 		try {
