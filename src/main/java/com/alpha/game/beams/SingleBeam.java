@@ -1,12 +1,13 @@
 package com.alpha.game.beams;
 
 import java.awt.Graphics2D;
-
+import com.alpha.game.Frame;
 import com.alpha.game.MovableEntity;
 import com.alpha.game.Resource;
 
 public class SingleBeam extends BeamEntity {
 	private int x, y;
+	private boolean down;
 	private final double damage = 5;
 	private final long RELOAD = 300;
 	
@@ -14,19 +15,26 @@ public class SingleBeam extends BeamEntity {
 		
 	}
 	
-	public SingleBeam(int X, int Y) {
-		x = X; y = Y;
+	public SingleBeam(int X, int Y, boolean b) {
+		x = X;
+		y = Y;
+		down = b;
 	}
 
 	public void update() {
-		y --;
-		
-		if(y < 0) {
-			kill();
-		}
-		
-		if(MovableEntity.testHit(x, y, damage)) {
-			kill();
+		if(down) {
+			y --;
+			
+			if(y < 0)
+				kill();
+			if(MovableEntity.testHit(x, y, damage)) {
+				kill();
+			}
+		} else {
+			y ++;
+			
+			if(y > Frame.height)
+				kill();
 		}
 	}
 	

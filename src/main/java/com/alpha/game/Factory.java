@@ -9,26 +9,36 @@ public class Factory {
 	static MovableEntity r;
 	private static BeamEntity b;
 	
-	public static void newBeam(int x, int y) {
-		switch(GameState.beamType) {
-		case 0: r = new SingleBeam(x, y); break;
+	private static void newBeam(int x, int y, int type, boolean yourBeam) {
+		switch(type) {
+		case 0: r = new SingleBeam(x, y, yourBeam); break;
 		
-		case 1: r = new DualBeam(x, y); break;
+		case 1: r = new DualBeam(x, y, yourBeam); break;
 
-		case 2: r = new PiercingBeam(x, y); break;
+		case 2: r = new PiercingBeam(x, y, yourBeam); break;
 		
-		case 3: r = new ExplodingBeam(x, y); break;
+		case 3: r = new ExplodingBeam(x, y, yourBeam); break;
 		
-		case 4: r = new LaserBeam(x, y); break;
+		case 4: r = new LaserBeam(x, y, yourBeam); break;
 		
-		case 5: r = new WaveBeam(x, y); break;
+		case 5: r = new WaveBeam(x, y, yourBeam); break;
 		
-		case 6: r = new ShotgunBeam(x, y); break;
+		case 6: r = new ShotgunBeam(x, y, yourBeam); break;
 
-		case 7: r = new MachgunBeam(x, y); break;
+		case 7: r = new MachgunBeam(x, y, yourBeam); break;
 		}
+		
 		MovableEntity.beams.addElement(r);
-		b = (BeamEntity) r;
+		if(yourBeam)
+			b = (BeamEntity) r;
+	}
+	
+	public static void newEnemyBeam(int x, int y, int type){
+		newBeam(x, y, type, false);
+	}
+	
+	public static void newShipBeam(int x, int y, int type) {
+		newBeam(x, y, type, true);
 	}
 	
 	static BeamEntity getCurrentBeam() {

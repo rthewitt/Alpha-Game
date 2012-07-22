@@ -2,8 +2,6 @@ package com.alpha.game.beams;
 
 import java.awt.Graphics2D;
 
-import com.alpha.game.MovableEntity;
-
 public class DualBeam extends BeamEntity {
 	
 	private final long RELOAD = 400;
@@ -12,11 +10,9 @@ public class DualBeam extends BeamEntity {
 		
 	}
 	
-	public DualBeam(int x, int y) {
-		MovableEntity m = new SingleBeam(x - 5, y);
-		beams.add(m);
-		m = new SingleBeam(x + 5, y);
-		beams.add(m);
+	public DualBeam(int x, int y, boolean b) {
+		beams.add(new SingleBeam(x - 5, y, b));
+		beams.add(new SingleBeam(x + 5, y, b));
 		kill();
 	}
 	

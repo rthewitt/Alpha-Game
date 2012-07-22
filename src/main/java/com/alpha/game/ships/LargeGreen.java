@@ -45,9 +45,9 @@ public class LargeGreen extends ShipEntity{
 	}
 	
 	public void fire() {
-		Factory.newBeam(x, y - 5);
-		Factory.newBeam(x + getWidth()/2, y);
-		Factory.newBeam(x + getWidth(), y - 5);
+		Factory.newShipBeam(x, y - 5, GameState.beamType);
+		Factory.newShipBeam(x + getWidth()/2, y, GameState.beamType);
+		Factory.newShipBeam(x + getWidth(), y - 5, GameState.beamType);
 	}
 	
 	public int getSpeed() {

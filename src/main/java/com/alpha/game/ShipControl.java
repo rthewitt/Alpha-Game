@@ -7,16 +7,16 @@ public class ShipControl extends Thread {
 	private static boolean down = false;
 	private static boolean left = false;
 	private static boolean right = false;
-	
 	public static boolean mousePressed;
 	
-	public int leap = 1;
+	public int leap;
 	private ShipEntity currentShip;
 	boolean running = true;
 	
 	ShipControl() {
 		currentShip = ShipEntity.currentShip;
 		leap = currentShip.getSpeed();
+		up = false; down = false; left = false; right = false;
 		this.start();
 	}
 

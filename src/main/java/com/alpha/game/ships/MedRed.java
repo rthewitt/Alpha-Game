@@ -45,9 +45,9 @@ public class MedRed extends ShipEntity{
 	}
 	
 	public void fire() {
-		Factory.newBeam(x, y);
-		Factory.newBeam(x + getWidth()/2, y);
-		Factory.newBeam(x + getWidth(), y);
+		Factory.newShipBeam(x, y, GameState.beamType);
+		Factory.newShipBeam(x + getWidth()/2, y, GameState.beamType);
+		Factory.newShipBeam(x + getWidth(), y, GameState.beamType);
 	}
 	
 	public int getSpeed() {

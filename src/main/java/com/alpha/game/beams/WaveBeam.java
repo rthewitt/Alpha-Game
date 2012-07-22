@@ -1,12 +1,13 @@
 package com.alpha.game.beams;
 
 import java.awt.Graphics2D;
-
+import com.alpha.game.Frame;
 import com.alpha.game.MovableEntity;
 import com.alpha.game.Resource;
 
 public class WaveBeam extends BeamEntity {
 	private int x, y;
+	private boolean down;
 	private double damage = .5;
 	private final long RELOAD = 5000;
 	
@@ -14,16 +15,23 @@ public class WaveBeam extends BeamEntity {
 		
 	}
 	
-	public WaveBeam(int X, int Y) {
+	public WaveBeam(int X, int Y, boolean b) {
 		x = X;
 		y = Y;
+		down = b;
 	}
 	
 	public void update() {
-		y --;
-		
-		if(y < 0) {
-			kill();
+		if(down) {
+			y --;
+			
+			if(y < 0)
+				kill();
+		} else {
+			y --;
+			
+			if(y > Frame.height)
+				kill();
 		}
 		
 		if(MovableEntity.testHit(x, y, damage)) {

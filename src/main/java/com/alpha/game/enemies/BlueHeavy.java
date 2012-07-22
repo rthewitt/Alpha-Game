@@ -2,6 +2,8 @@ package com.alpha.game.enemies;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
+import com.alpha.game.Factory;
 import com.alpha.game.Frame;
 import com.alpha.game.GameState;
 
@@ -54,5 +56,9 @@ public class BlueHeavy extends EnemyEntity {
 	
 	public void	draw(Graphics2D g2d) {
 		g2d.drawImage(using, x, y, null);
+	}
+	
+	protected void fire() {
+		Factory.newEnemyBeam(x, y, 1);
 	}
 }

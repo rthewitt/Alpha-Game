@@ -32,6 +32,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	private JTabbedPane Bar = new JTabbedPane();
 	
 	JButton done = new JButton("Next Level");
+	JButton buy = new JButton("Buy");
 	JButton replay = new JButton("REPLAY");
 	JButton minus = new JButton("-");
 	JButton plus = new JButton("+");
@@ -61,6 +62,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	static int rectSize;
 	static boolean animationDone;
 	static int row1, row2, rowHeight;
+	private Color infoColor = Color.GREEN;
 	
 	UpgradeMenu() {
 		frame = GameState.frame;
@@ -100,6 +102,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		setBounds(0, 0, panelWidth, panelHeight);
 		Bar.setBounds(0, 120, 495, 200);
 		done.setBounds(panelWidth/2, panelHeight - 40, panelWidth/2, 30);
+		buy.setBounds(panelWidth - 80, 475, 60, 30);
 		minus.setBounds(panelWidth/2 + 100, panelHeight - 70, 50, 30);
 		plus.setBounds(panelWidth - 50, panelHeight - 70, 50, 30);
 		replay.setBounds(panelWidth/2, panelHeight - 70, 100, 30);
@@ -111,11 +114,13 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		LF.Button(plus);
 		LF.Button(minus);
 		LF.Button(done);
+		LF.Button(buy);
 		LF.Scroll(scroll);
 	}
 	
 	private void setListener() {
 		done.addActionListener(this);
+		buy.addActionListener(this);
 		minus.addActionListener(this);
 		plus.addActionListener(this);
 		replay.addActionListener(this);
@@ -192,28 +197,20 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent ae) {
+		try {
+			currentItem = (MenuItem) ae.getSource();
+		} catch(ClassCastException e) {}
+		
+		if(currentItem.getCost() > GameState.yin)
+			infoColor = Color.RED;
+		else
+			infoColor = Color.GREEN;
+		
 		if(ae.getSource() == done) {
 			GameState.useWantedLevel = false;
 			frame.NewPanel(new Game());
-		}else if(ae.getSource() == dual) {
-			GameState.dualEnabled = true;
-			dual.setBackground(Color.BLACK);
-		}else if(ae.getSource() == damage) {
-		}else if(ae.getSource() == laser) {
-			GameState.laserEnabled = true;
-		}else if(ae.getSource() == machgun) {
-			GameState.machGunEnabled = true;
-		}else if(ae.getSource() == life) {
-		}else if(ae.getSource() == speed) {	
-		}else if(ae.getSource() == hull) {
-			GameState.hullEnabled = true;
-			Factory.newShip(GameState.ship);
-			label.setBounds(0, 0, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
-		}else if(ae.getSource() == shipUp) {
-			GameState.ship ++;
-			GameState.hullEnabled = false;
-			Factory.newShip(GameState.ship);
-			label.setBounds(0, 0, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
+		} else if(ae.getSource() == buy) {
+			buyItem(currentItem);
 		}else if(ae.getSource() == minus) {
 			GameState.wantedLevel --;
 		}else if(ae.getSource() == plus) {
@@ -224,10 +221,6 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		}
 		
 		try {
-			currentItem = (MenuItem) ae.getSource();
-		} catch(ClassCastException e) {}
-		
-		try {
 			hull.setIcon(new ImageIcon(ShipEntity.hullShip));
 			shipUp.setIcon(new ImageIcon(ShipEntity.nextShip));
 		} catch(NullPointerException e) {}
@@ -235,6 +228,29 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		setEnabled();
 		label.setIcon(new ImageIcon(ShipEntity.currentShip.getImage()));
 		setBounds();
+	}
+	
+	private void buyItem(MenuItem i) {
+		if(i.getCost() <= GameState.yin) {
+			GameState.yin -= i.getCost();
+			
+			if(i == dual) {
+				GameState.dualEnabled = true;
+			} else if(i == laser) {
+				GameState.laserEnabled = true;
+			} else if(i == machgun) {
+				GameState.machGunEnabled = true;
+			} else if(i == hull) {
+				GameState.hullEnabled = true;
+				Factory.newShip(GameState.ship);
+				label.setBounds(0, 0, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
+			} else if(i == shipUp) {
+				GameState.ship ++;
+				GameState.hullEnabled = false;
+				Factory.newShip(GameState.ship);
+				label.setBounds(0, 0, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
+			}
+		}
 	}
 	
 	public void	paintComponent(Graphics g) {
@@ -255,10 +271,12 @@ public class UpgradeMenu extends JPanel implements ActionListener {
         g2d.drawString("Speed: " + ShipEntity.currentShip.getSpeed(), 150, 30);
         g2d.drawString("Health: " + ShipEntity.currentShip.getHealth(), 270, 30);
         g2d.drawString("Damage: " + ShipEntity.currentShip.getDamage(), 150, 70);
-        g2d.drawString("Yin: " + GameState.yin, 270, 70);
+        g2d.drawString("" + GameState.yin, panelWidth - 36, 27);
+        g2d.drawImage(Resource.IMG_YIN, panelWidth - 70, 5, null);
         
         if(currentItem != null) {
         	new UpgradeMenuAnimation().go();
+        	g2d.setColor(infoColor);
         	g2d.drawRoundRect(3, 330, panelWidth - 7, rectSize, 30, 30);
         	if(animationDone) {
             	g2d.setFont(new Font("TimesNewRoman", Font.PLAIN, 40));
@@ -267,7 +285,10 @@ public class UpgradeMenu extends JPanel implements ActionListener {
             	g2d.drawString("Description:", 5, 420);
             	g2d.drawString(currentItem.getDesc(), 5, 440);
             	g2d.drawString("Cost: " + currentItem.getCost(), panelWidth - 80, 355);
+            	add(buy);
+            	buy.setForeground(infoColor);
         	}
+        	g2d.setColor(Color.green);
         }
         
         g2d.drawString("Enemies Killed: " + GameState.enemiesKilled, row1, rowHeight);

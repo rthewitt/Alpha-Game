@@ -6,9 +6,10 @@ import com.alpha.game.ships.ShipEntity;
 public class GameState {
 	static int level = 1;
 	static int wantedLevel;
+	static boolean useWantedLevel = false;
 	static int ship = 0;
 	public static int enemies;
-	static int beamType = 0;
+	public static int beamType = 0;
 	static boolean pause = false;
 	public static int yin;
 	
@@ -21,8 +22,6 @@ public class GameState {
 	public static int timePlayed = 0;
 	public static int timesPlayed = 0;
 	public static int achievmentsEarned = 0;
-	
-	static boolean useWantedLevel = false;
 	
 	//UpgradeMenu
 	static boolean damageEnabled = false;

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -77,9 +78,9 @@ public class Menu extends JPanel implements ActionListener {
 		LF.Panel(instructions);
 		LF.Panel(credits);
 		
-		ship1.setIcon(Resource.ICON_SMALL_GREEN_ICON);
-		ship2.setIcon(Resource.ICON_SMALL_RED_ICON);
-		ship3.setIcon(Resource.ICON_SMALL_BLUE_ICON);
+		ship1.setIcon(new ImageIcon(Resource.IMG_SMALL_GREEN));
+		ship2.setIcon(new ImageIcon(Resource.IMG_SMALL_RED));
+		ship3.setIcon(new ImageIcon(Resource.IMG_SMALL_BLUE));
 		
 		add(go);
 		add(instruct);

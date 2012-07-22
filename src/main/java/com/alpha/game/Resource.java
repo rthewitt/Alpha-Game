@@ -4,10 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import org.apache.log4j.Logger;
 import com.alpha.error.AlphaResourceException;
 
@@ -17,27 +15,18 @@ public class Resource extends Thread {
 	public static final String SEPARATOR;
 	public static final ClassLoader classLoader;
 	public static final URL resourceURL;
-//	public static final String root;
-//	public static final String rootPath;
 	public static final String imagesPath;
-//	public static final String fullImagesPath;
-//	public static final String codePath;
-	
 	public static String levelsPath;
 	
 	static {
 		SEPARATOR = System.getProperty("file.separator");
 		classLoader = Resource.class.getClassLoader();
 		resourceURL = Resource.class.getResource(".");
-//		root = Resource.class.getResource("/").toString();
-//		rootPath = Resource.class.getResource("/").getPath(); // is this OS agnostic?
 		imagesPath = "images" + SEPARATOR;
-//		fullImagesPath = rootPath + imagesPath;
-		
-//		codePath = Resource.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	}
 	
-	// TODO talk to me about a better way to get the your ships' current image
+	public static BufferedImage IMG_YIN;
+	
 	//User Ship Choices
 	public static BufferedImage IMG_SMALL_GREEN;
 	public static BufferedImage IMG_SMALL_GREEN_ARMOR;
@@ -65,6 +54,7 @@ public class Resource extends Thread {
 	public static BufferedImage IMG_BLUE_HEAVY;
 	public static BufferedImage IMG_MED_YELLOW;
 	public static BufferedImage IMG_BIG_YELLOW;
+	public static BufferedImage IMG_PINK_CORVETTE;
 	public static BufferedImage IMG_BOSS_ONE;
 	
 	//Beam Options
@@ -89,15 +79,6 @@ public class Resource extends Thread {
 	public static BufferedImage IMG_SPEED;
 	public static BufferedImage IMG_DAMAGE;
 	
-	//Menu Icons
-	public static ImageIcon ICON_SMALL_GREEN_ICON;
-	public static ImageIcon ICON_SMALL_RED_ICON;
-	public static ImageIcon ICON_SMALL_BLUE_ICON;
-	
-	//Icon
-	public static ImageIcon ICON_DUAL_LASER;
-	
-	// TODO boolean values will allow you to handle things gracefully
 	public static void init() throws AlphaResourceException {
 		initializeShips();
 		initializeLevels();
@@ -105,6 +86,8 @@ public class Resource extends Thread {
 	
 	public static void initializeShips() throws AlphaResourceException {
 		try {
+			IMG_YIN = getImage("yin.png");
+			
 			IMG_SMALL_GREEN = getImage("smallGreen.png");
 			IMG_SMALL_GREEN_ARMOR = getImage("smallGreenArmor.png");
 			IMG_MED_GREEN= getImage("medGreen.png");
@@ -130,6 +113,7 @@ public class Resource extends Thread {
 			IMG_BLUE_HEAVY = getImage("blueHeavy.png");
 			IMG_MED_YELLOW = getImage("medYellow.png");
 			IMG_BIG_YELLOW = getImage("bigYellow.png");
+			IMG_PINK_CORVETTE = getImage("pinkCorvette.png");
 			IMG_BOSS_ONE = getImage("bossOne.png");
 			
 			IMG_BOLT = getImage("dropBolt.png");
@@ -148,18 +132,10 @@ public class Resource extends Thread {
 			IMG_HEALTH = getImage("health.png");
 			IMG_SPEED = getImage("speed.png");
 			IMG_DAMAGE = getImage("damage.png");
-
-	        // Making these conform to API call
-	        ICON_SMALL_GREEN_ICON = new ImageIcon( getImage("smallGreen.png"));
-	        ICON_SMALL_RED_ICON = new ImageIcon( getImage("smallRed.png"));
-	        ICON_SMALL_BLUE_ICON = new ImageIcon( getImage("smallBlue.png"));
-
-		}
-		catch(IOException ioe) {
+		} catch(IOException ioe) {
 			alphaLog.error("Problem encountered while loading ship images", ioe);
 			throw new AlphaResourceException(ioe);
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			throw new AlphaResourceException(e);
 		}
 	}
@@ -184,39 +160,23 @@ public class Resource extends Thread {
 		.append(String.format("\nSystem Separator URL: %s", SEPARATOR))
 		.append(String.format("\nResource Classloader: %s", classLoader))
 		.append(String.format("\nResource URL: %s", resourceURL))
-//		.append(String.format("\nroot: %s", root))
-//		.append(String.format("\nroot path: %s", rootPath))
 		.append(String.format("\nimages path: %s", imagesPath))
-//		.append(String.format("\ncode path: %s", codePath))
 		.toString();
 	}
 	
 	
-	// to swap out strategies more easily
 	private static BufferedImage getImage(String name) throws IOException {
-		
 		return (BufferedImage)(ImageIO.read( getImageStream(name) ));
-//		return (BufferedImage)(ImageIO.read(Resource.class.getResource("images" + SEPARATOR + name)));
-//		return (BufferedImage) (ImageIO.read(Resource.class.getResource(codePath + "images" + SEPARATOR + name)));
-	}
-	
-	@SuppressWarnings("unused")
-	private static URL getImageURL(String name) throws MalformedURLException {
-		return null;
-//		return new URL("file://" + imagesPath + name);
-//		return new URL("file://" + codePath + "images" + SEPARATOR + name);
-//		return Resource.class.getResource("../../../" + imagesPath + SEPARATOR + name); // works unzipped
 	}
 	
 	private static InputStream getImageStream(String name) {
 		return Thread.currentThread().getContextClassLoader().getResourceAsStream(imagesPath+name);
-//		return Resource.class.getResourceAsStream(SEPARATOR+imagesPath+name);
 	}
 	
 	// used for testing different classloaders during different build phases
 	@SuppressWarnings("static-access")
 	public static BufferedImage getImageFromSystemPath(String imgName) throws IOException {
 		return (BufferedImage)( ImageIO.read(
-				classLoader.getSystemResourceAsStream("images" + SEPARATOR + imgName)) );
-	}	
+				classLoader.getSystemResourceAsStream("images" + SEPARATOR + imgName)));
+	}
 }

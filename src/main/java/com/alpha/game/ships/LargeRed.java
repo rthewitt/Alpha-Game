@@ -45,10 +45,10 @@ public class LargeRed extends ShipEntity{
 	}
 	
 	public void fire() {
-		Factory.newBeam(x, y);
-		Factory.newBeam(x + getWidth()/2 - 5, y - 3);
-		Factory.newBeam(x + getWidth()/2 + 5, y - 3);
-		Factory.newBeam(x + getWidth(), y);
+		Factory.newShipBeam(x, y, GameState.beamType);
+		Factory.newShipBeam(x + getWidth()/2 - 5, y - 3, GameState.beamType);
+		Factory.newShipBeam(x + getWidth()/2 + 5, y - 3, GameState.beamType);
+		Factory.newShipBeam(x + getWidth(), y, GameState.beamType);
 	}
 	
 	public int getSpeed() {

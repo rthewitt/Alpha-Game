@@ -1,12 +1,13 @@
 package com.alpha.game.beams;
 
 import java.awt.Graphics2D;
-
+import com.alpha.game.Frame;
 import com.alpha.game.MovableEntity;
 import com.alpha.game.Resource;
 
 public class ShotgunBeam extends BeamEntity {
 	private int x, y;
+	private boolean down;
 	private double damage = 7;
 	private final long RELOAD = 700;
 	
@@ -14,16 +15,23 @@ public class ShotgunBeam extends BeamEntity {
 		
 	}
 	
-	public ShotgunBeam(int X, int Y) {
+	public ShotgunBeam(int X, int Y, boolean b) {
 		x = X;
 		y = Y;
+		down = b;
 	}
 	
 	public void update() {
-		y --;
-		
-		if(y < 0) {
-			kill();
+		if(down) {
+			y --;
+			
+			if(y < 0)
+				kill();
+		} else {
+			y --;
+			
+			if(y > Frame.height)
+				kill();
 		}
 		
 		if(MovableEntity.testHit(x, y, damage)) {
