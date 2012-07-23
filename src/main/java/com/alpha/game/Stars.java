@@ -9,6 +9,7 @@ public class Stars extends Thread {
 	static Star s;
 	private int width, height;
 	private int arraySize;
+	private Star[] starArray;
 	
 	public Stars(int w, int h, int number) {
 		width = w;
@@ -25,6 +26,15 @@ public class Stars extends Thread {
 	}
 	
 	void init() {
+		starArray = new Star[arraySize];
+		/* arrays
+		
+		for(Star s : starArray) {
+			s = new Star();
+			starArray[5]
+		} */
+		
+		
 		Star s;
 		for(int i = 0; i < arraySize; i++) {
 			s = new Star();
@@ -55,6 +65,7 @@ public class Stars extends Thread {
 			
 			for(int i = 0; i < stars.size(); i++) {
 				s = stars.elementAt(i);
+				// starArray[i]
 				s.y += s.dir;
 				
 				if (s.y > height) {
