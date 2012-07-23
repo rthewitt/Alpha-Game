@@ -23,6 +23,7 @@ public class Resource extends Thread {
 		classLoader = Resource.class.getClassLoader();
 		resourceURL = Resource.class.getResource(".");
 		imagesPath = "images" + SEPARATOR;
+		levelsPath = "levels" + SEPARATOR;
 	}
 	
 	public static BufferedImage IMG_YIN;
@@ -81,7 +82,6 @@ public class Resource extends Thread {
 	
 	public static void init() throws AlphaResourceException {
 		initializeShips();
-		initializeLevels();
 	}
 	
 	public static void initializeShips() throws AlphaResourceException {
@@ -137,19 +137,6 @@ public class Resource extends Thread {
 			throw new AlphaResourceException(ioe);
 		} catch(Exception e) {
 			throw new AlphaResourceException(e);
-		}
-	}
-	
-	public static void initializeLevels() {
-		File file = new File(".");  
-		File[] files = file.listFiles();  
-		 
-		for (int fileInList = 0; fileInList < files.length; fileInList++)  {
-			levelsPath = files[fileInList].toString() + SEPARATOR + "main" + SEPARATOR + "resources" + SEPARATOR + "levels" + SEPARATOR;
-			
-			if(levelsPath.contains(SEPARATOR + "src" + SEPARATOR + "main" + SEPARATOR + "resources" + SEPARATOR + "levels" + SEPARATOR)) {
-				break;
-			}
 		}
 	}
 	

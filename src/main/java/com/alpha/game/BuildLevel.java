@@ -2,6 +2,7 @@ package com.alpha.game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -13,21 +14,20 @@ public class BuildLevel extends Thread{
 	int Counter;
 	
 	public void newLevel(int lvl) {
-		getData(new File(Resource.levelsPath + "lvl" + lvl + ".txt"));
+		InputStream inFile = Thread.currentThread().getContextClassLoader().getResourceAsStream(Resource.levelsPath + "lvl" + lvl + ".txt");
+		getData(inFile);
 	}
 	
-	private void getData(File f) {
-		try {
-			scan = new Scanner(f);
-			while(scan.hasNext()) {
-				times.add(scan.nextInt());
-				// verify that there's another, else throw exception
-				types.add(scan.nextInt());
-			}
-			GameState.enemies = times.size();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+	private void getData(InputStream iff) {
+		
+		scan = new Scanner(iff);
+		while(scan.hasNext()) {
+			times.add(scan.nextInt());
+			// verify that there's another, else throw exception
+			types.add(scan.nextInt());
 		}
+		GameState.enemies = times.size();
+		
 		start();
 	}
 	
