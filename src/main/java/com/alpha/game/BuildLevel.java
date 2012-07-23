@@ -21,6 +21,7 @@ public class BuildLevel extends Thread{
 			scan = new Scanner(f);
 			while(scan.hasNext()) {
 				times.add(scan.nextInt());
+				// verify that there's another, else throw exception
 				types.add(scan.nextInt());
 			}
 			GameState.enemies = times.size();

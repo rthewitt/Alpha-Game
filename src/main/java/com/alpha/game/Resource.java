@@ -166,7 +166,11 @@ public class Resource extends Thread {
 	
 	
 	private static BufferedImage getImage(String name) throws IOException {
-		return (BufferedImage)(ImageIO.read( getImageStream(name) ));
+		try {
+			return (BufferedImage)(ImageIO.read( getImageStream(name) ));
+		} catch(Exception e) {
+			throw new IOException("Problem loading ship " + name, e);
+		}
 	}
 	
 	private static InputStream getImageStream(String name) {
