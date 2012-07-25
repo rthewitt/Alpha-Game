@@ -8,6 +8,7 @@ public class Alpha {
 		try {
 			Resource.init();
 			new Frame();
+			new GameLoop();
 		}
 		catch(AlphaResourceException are) {
 			throw new AlphaException(are);

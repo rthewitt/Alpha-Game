@@ -2,23 +2,17 @@ package com.alpha.game;
 
 import javax.swing.JPanel;
 
-public class Refresher extends Thread {
+public class Refresher{
 	
 	private static JPanel panel;
-	
-	Refresher() {
-		start();
-	}
 	
 	static void setDraw(JPanel p) {
 		panel = p;
 	}
 	
-	public void run() {
-		while(true) {
-			try {
-				panel.repaint();
-			} catch(NullPointerException e) {}
-		}
+	public static void run() {
+		try {
+			panel.repaint();
+		} catch(NullPointerException e) {}
 	}
 }

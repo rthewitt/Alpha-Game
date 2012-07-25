@@ -1,7 +1,6 @@
 package com.alpha.game;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -164,7 +163,7 @@ public class Resource extends Thread {
 		return Thread.currentThread().getContextClassLoader().getResourceAsStream(imagesPath+name);
 	}
 	
-	// used for testing different classloaders during different build phases
+	// used for testing different class loaders during different build phases
 	@SuppressWarnings("static-access")
 	public static BufferedImage getImageFromSystemPath(String imgName) throws IOException {
 		return (BufferedImage)( ImageIO.read(

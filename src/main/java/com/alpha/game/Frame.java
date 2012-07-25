@@ -16,16 +16,12 @@ public class Frame extends JFrame {
 		setResizable(false);
 		setTitle("Alpha");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		GameState.frame = this;
-		new Refresher();
+		
 		startStars();
-		
-		new EnemyRunner();
-		new BeamRunner();
-		new ShipRunner();
+		new Refresher();
+		new Runner();
 		new FiringMechanism();
-		
 		NewPanel(new Menu());
 	}
 	

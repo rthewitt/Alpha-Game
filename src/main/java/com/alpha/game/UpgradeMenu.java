@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import com.alpha.game.ships.ShipEntity;
 
 @SuppressWarnings("serial")
 public class UpgradeMenu extends JPanel implements ActionListener {
@@ -47,8 +46,8 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	MenuItem damage = new MenuItem(np1, this, "+1 DAMAGE", Resource.IMG_DAMAGE, 5, "Increases all damage by 10%");
 	MenuItem life = new MenuItem(np1, this, "LIFE UP", Resource.IMG_HEALTH, 5, "Increase Ships max health by 10");
 	MenuItem speed = new MenuItem(np1, this, "SPEED UP", Resource.IMG_SPEED, 15, "Increase Ships speed");
-	MenuItem hull = new MenuItem(np1, this, "HULL UP", ShipEntity.hullShip, 30, "New Look and Increase Health");
-	MenuItem shipUp = new MenuItem(np1, this, "UPGRADE SHIP", ShipEntity.nextShip, 60, "You get a new Ship! + 1 weapons emplacements");
+	MenuItem hull = new MenuItem(np1, this, "HULL UP", Ship.hullShip, 30, "New Look and Increase Health");
+	MenuItem shipUp = new MenuItem(np1, this, "UPGRADE SHIP", Ship.nextShip, 60, "You get a new Ship! + 1 weapons emplacements");
 	MenuItem RofUp = new MenuItem(np3, this, "FIRING SPEED", null, 30, "Decrease time between bullets");
 	MenuItem dual = new MenuItem(np2, this, "DUAL GUN", Resource.IMG_DUAL_LASER, 10, "Fire two bolts for the price of one");
 	MenuItem machgun = new MenuItem(np2, this, "MACH GUN", Resource.IMG_RAPID_LASER, 80, "Rapid fire bolts!");
@@ -86,7 +85,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		setLandF();
 		setListener();
 		setEnabled();
-		label.setIcon(new ImageIcon(ShipEntity.currentShip.getImage()));
+		label.setIcon(new ImageIcon(Ship.getImage()));
 		add();
 		scroll.setWheelScrollingEnabled(true);
 	}
@@ -106,7 +105,7 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		minus.setBounds(panelWidth/2 + 100, panelHeight - 70, 50, 30);
 		plus.setBounds(panelWidth - 50, panelHeight - 70, 50, 30);
 		replay.setBounds(panelWidth/2, panelHeight - 70, 100, 30);
-		label.setBounds(50 - ShipEntity.currentShip.getWidth()/2, 50 - ShipEntity.currentShip.getHeight()/2, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
+		label.setBounds(50 - Ship.getWidth()/2, 50 - Ship.getHeight()/2, Ship.getWidth(), Ship.getHeight());
 	}
 	
 	private void setLandF() {
@@ -199,12 +198,12 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		try {
 			currentItem = (MenuItem) ae.getSource();
+			
+			if(currentItem.getCost() > GameState.yin)
+				infoColor = Color.RED;
+			else
+				infoColor = Color.GREEN;
 		} catch(ClassCastException e) {}
-		
-		if(currentItem.getCost() > GameState.yin)
-			infoColor = Color.RED;
-		else
-			infoColor = Color.GREEN;
 		
 		if(ae.getSource() == done) {
 			GameState.useWantedLevel = false;
@@ -221,12 +220,12 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 		}
 		
 		try {
-			hull.setIcon(new ImageIcon(ShipEntity.hullShip));
-			shipUp.setIcon(new ImageIcon(ShipEntity.nextShip));
+			hull.setIcon(new ImageIcon(Ship.hullShip));
+			shipUp.setIcon(new ImageIcon(Ship.nextShip));
 		} catch(NullPointerException e) {}
 		
 		setEnabled();
-		label.setIcon(new ImageIcon(ShipEntity.currentShip.getImage()));
+		label.setIcon(new ImageIcon(Ship.getImage()));
 		setBounds();
 	}
 	
@@ -243,12 +242,12 @@ public class UpgradeMenu extends JPanel implements ActionListener {
 			} else if(i == hull) {
 				GameState.hullEnabled = true;
 				Factory.newShip(GameState.ship);
-				label.setBounds(0, 0, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
+				label.setBounds(0, 0, Ship.getWidth(), Ship.getHeight());
 			} else if(i == shipUp) {
 				GameState.ship ++;
 				GameState.hullEnabled = false;
 				Factory.newShip(GameState.ship);
-				label.setBounds(0, 0, ShipEntity.currentShip.getWidth(), ShipEntity.currentShip.getHeight());
+				label.setBounds(0, 0, Ship.getWidth(), Ship.getHeight());
 			}
 		}
 	}
@@ -268,9 +267,9 @@ public class UpgradeMenu extends JPanel implements ActionListener {
         
         g2d.drawRoundRect(1, 1, 100, 100, 15, 15);
         
-        g2d.drawString("Speed: " + ShipEntity.currentShip.getSpeed(), 150, 30);
-        g2d.drawString("Health: " + ShipEntity.currentShip.getHealth(), 270, 30);
-        g2d.drawString("Damage: " + ShipEntity.currentShip.getDamage(), 150, 70);
+        g2d.drawString("Speed: " + Ship.getSpeed(), 150, 30);
+        g2d.drawString("Health: " + Ship.getHealth(), 270, 30);
+        g2d.drawString("Damage: " + Ship.getDamage(), 150, 70);
         g2d.drawString("" + GameState.yin, panelWidth - 36, 27);
         g2d.drawImage(Resource.IMG_YIN, panelWidth - 70, 5, null);
         

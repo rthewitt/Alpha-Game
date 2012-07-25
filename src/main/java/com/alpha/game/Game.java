@@ -15,7 +15,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import com.alpha.game.ships.ShipEntity;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements KeyListener, ActionListener {
@@ -35,8 +34,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		setLayout(null);
 		
 		Refresher.setDraw(this);
-		
-		MovableEntity.ships.clear();
 		Factory.newShip(GameState.ship);
 		new ShipControl();
 		
@@ -274,13 +271,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
      	g2d.setColor(Color.RED);
      	g2d.fillRoundRect(10, 673, 475, 10, 3, 3);
      	g2d.setColor(Color.GREEN);
-     	g2d.fillRoundRect(10, 673, (int)(ShipEntity.currentShip.percentLeft() * 475), 10, 3, 3);
+     	g2d.fillRoundRect(10, 673, (int)(Ship.percentLeft() * 475), 10, 3, 3);
      	
      	GameState.g2d = g2d;
-     	EnemyRunner.draw();
-     	BeamRunner.draw();
-     	ShipRunner.draw();
      	Stars.draw(g2d);
+     	Beams.draw(g2d);
+     	Ship.draw(g2d);
+     	Enemies.draw(g2d);
 		
 		requestFocus();
 	}

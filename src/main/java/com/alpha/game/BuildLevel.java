@@ -1,16 +1,17 @@
 package com.alpha.game;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.Vector;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class BuildLevel extends Thread{
-	
+public class BuildLevel {
+	Timer timer = new Timer();
 	Scanner scan;
-	Vector<Integer> times = new Vector<Integer>();
-	Vector<Integer> types = new Vector<Integer>();
+	List<Integer> times = new ArrayList<Integer>();
+	List<Integer> types = new ArrayList<Integer>();
 	int Counter;
 	
 	public void newLevel(int lvl) {
@@ -23,40 +24,32 @@ public class BuildLevel extends Thread{
 		scan = new Scanner(iff);
 		while(scan.hasNext()) {
 			times.add(scan.nextInt());
-			// verify that there's another, else throw exception
 			types.add(scan.nextInt());
 		}
 		GameState.enemies = times.size();
 		
-		start();
+		timer.schedule(new Task(), 1, 1000);
 	}
 	
-	public void run() {
-		while(true) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			if(GameState.pause == false) {
-				Counter += 1;
-				for(int i = 0; i < times.size(); i ++)
-					if(Counter >= times.elementAt(i)) {
-						Factory.newEnemy(types.elementAt(i));
-						times.remove(i);
-						types.remove(i);
-						
-						if(times.isEmpty()) {
-							kill();
-						}
+	class Task extends TimerTask {
+		public void run() {
+			update();
+		}
+	}
+	
+	public void update() {
+		if(GameState.pause == false) {
+			Counter += 1;
+			for(int i = 0; i < times.size(); i ++)
+				if(Counter >= times.get(i)) {
+					Factory.newEnemy(types.get(i));
+					times.remove(i);
+					types.remove(i);
+					
+					if(times.isEmpty()) {
+						timer.cancel();
 					}
-			}
-		}	
-	}
-	
-	@SuppressWarnings("deprecation")
-	private void kill() {
-		stop();
+				}
+		}
 	}
 }

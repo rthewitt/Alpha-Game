@@ -1,7 +1,5 @@
 package com.alpha.game;
 
-import com.alpha.game.ships.ShipEntity;
-
 public class FiringMechanism extends Thread {
 	static boolean running = true;
 	static boolean reloaded;
@@ -19,9 +17,9 @@ public class FiringMechanism extends Thread {
 	}
 	
 	private static void setBeam() {
-		ShipEntity.currentShip.fire();
+		Ship.fire();
 		GameState.shotsFired ++;
-		setTimer(Factory.getCurrentBeam().getReload());
+		setTimer(Beams.getReload());
 	}
 	
 	private static void setTimer(long time) {
@@ -38,9 +36,7 @@ public class FiringMechanism extends Thread {
 				}
 				timer = 0;
 				reloaded = true;
-			} catch (InterruptedException e) {
-				System.out.println("Interrupted");
-			}
+			} catch (InterruptedException e) {}
 		}
 	}
 }

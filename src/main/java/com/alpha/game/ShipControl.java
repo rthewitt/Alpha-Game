@@ -1,23 +1,18 @@
 package com.alpha.game;
 
-import com.alpha.game.ships.ShipEntity;
-
-public class ShipControl extends Thread {
+public class ShipControl {
 	private static boolean up = false;
 	private static boolean down = false;
 	private static boolean left = false;
 	private static boolean right = false;
 	public static boolean mousePressed;
 	
-	public int leap;
-	private ShipEntity currentShip;
+	public static double leap;
 	boolean running = true;
 	
 	ShipControl() {
-		currentShip = ShipEntity.currentShip;
-		leap = currentShip.getSpeed();
+		leap = Ship.getSpeed();
 		up = false; down = false; left = false; right = false;
-		this.start();
 	}
 
 	static void setUp(boolean b) {
@@ -36,35 +31,27 @@ public class ShipControl extends Thread {
 		right = b;
 	}
 	
-	public void run() {
-		while(running) {
-			int x = currentShip.getX() , y = currentShip.getY();
-			
-			if(up && y > 0) {
-				currentShip.setY(y - leap);
-			}
-			
-			if(down && y < Frame.height - ShipEntity.currentShip.getHeight()) {
-				currentShip.setY(y + leap);
-			}
-			
-			if(left && x > 0) {
-				currentShip.setX(x - leap);
-			}
-			
-			if(right && x < Frame.width - ShipEntity.currentShip.getWidth()) {
-				currentShip.setX(x + leap);
-			}
-			
-			if(mousePressed) {
-				FiringMechanism.tryToFire();
-			}
-			
-			try {
-				Thread.sleep(14);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+	public static void run() {
+		double x = Ship.getX() , y = Ship.getY();
+		
+		if(up && y > 0) {
+			Ship.setY(y - leap);
+		}
+		
+		if(down && y < Frame.height - Ship.getHeight()) {
+			Ship.setY(y + leap);
+		}
+		
+		if(left && x > 0) {
+			Ship.setX(x - leap);
+		}
+		
+		if(right && x < Frame.width - Ship.getWidth()) {
+			Ship.setX(x + leap);
+		}
+		
+		if(mousePressed) {
+			FiringMechanism.tryToFire();
 		}
 	}
 }

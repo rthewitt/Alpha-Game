@@ -1,7 +1,6 @@
 package com.alpha.game;
 
 import java.awt.Graphics2D;
-import com.alpha.game.ships.ShipEntity;
 
 public class GameState {
 	static int level = 1;
@@ -45,7 +44,6 @@ public class GameState {
 				level ++;
 			wantedLevel = level - 1;
 			ShipControl.mousePressed = false;
-			ShipEntity.currentShip.kill();
 			hitRatio = ((double)numHits/(double)shotsFired) * 100;
 			frame.NewPanel(new UpgradeMenu());
 		}
