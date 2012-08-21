@@ -6,26 +6,20 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Game extends JPanel implements KeyListener, ActionListener {
+public class Game extends JPanel {
 	BorderLayout buttonLayout = new BorderLayout();
 	
-	JButton power1 = new JButton();
-	JButton power2 = new JButton();
-	JButton power3 = new JButton();
-	JButton power4 = new JButton();
-	JButton power5 = new JButton();
-	JButton power6 = new JButton();
+	static JButton power1 = new JButton();
+	static JButton power2 = new JButton();
+	static JButton power3 = new JButton();
+	static JButton power4 = new JButton();
+	static JButton power5 = new JButton();
+	static JButton power6 = new JButton();
 	
 	Panel draw;
 	
@@ -35,37 +29,15 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		
 		Refresher.setDraw(this);
 		Factory.newShip(GameState.ship);
-		new ShipControl();
+		new ShipControl(this);
 		
 		setVisible(true);
-		addKeyListener(this);
 		setBackground(Color.BLACK);
 		
-		addMouseListener(
-			new MouseAdapter() {
-	 	  		public void mousePressed(MouseEvent e) {
-	 	  			ShipControl.mousePressed = true;
-				}
-	 	  		
-	 	  		public void mouseReleased(MouseEvent e) {
-	 	  			ShipControl.mousePressed = false;
-	 	  		}
-	 	  		
-	 	  		public void mouseExited(MouseEvent e) {
-	 	  			GameState.pause = true;
-	 	  		}
-	 	  		
-	 	  		public void mouseEntered(MouseEvent e) {
-	 	  			GameState.pause = false;
-	 	  		}
-			}
-		);
-		
-		if(GameState.useWantedLevel) {
+		if(GameState.useWantedLevel)
 			Factory.newNormalLevel(GameState.wantedLevel);
-		}else {
+		else
 			Factory.newNormalLevel(GameState.level);
-		}
 		setup();
 	}
 
@@ -75,7 +47,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		setBounds();
 		setIcon();
 		setLandF();
-		setListener();
 		setEnabled();
 		add();
 	}
@@ -135,15 +106,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		LF.Button(power6);
 	}
 	
-	private void setListener() {
-		power1.addActionListener(this);
-		power2.addActionListener(this);
-		power3.addActionListener(this);
-		power4.addActionListener(this);
-		power5.addActionListener(this);
-		power6.addActionListener(this);
-	}
-	
 	private void setEnabled() {
 		power1.setEnabled(true);
 		
@@ -197,69 +159,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 		add(power6);
 	}
 	
-	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource() == power1) {
-			GameState.beamType = 0;
-		} else if(ae.getSource() == power2) {
-			GameState.beamType = 1;
-		} else if(ae.getSource() == power3) {
-			GameState.beamType = 2;
-		} else if(ae.getSource() == power4) {
-			GameState.beamType = 3;
-		} else if(ae.getSource() == power5) {
-			GameState.beamType = 4;
-		} else if(ae.getSource() == power6) {
-			GameState.beamType = 5;
-		}
-	}
-	
-	public void keyPressed(KeyEvent ke) {
-		if(GameState.pause == false)
-		switch(ke.getKeyCode()) {
-			case KeyEvent.VK_W: ShipControl.setUp(true); break;
-			
-			case KeyEvent.VK_S: ShipControl.setDown(true); break;
-			
-			case KeyEvent.VK_A: ShipControl.setLeft(true); break;
-			
-			case KeyEvent.VK_D: ShipControl.setRight(true); break;
-			
-			case KeyEvent.VK_1: GameState.beamType = 0; break;
-        	
-        	case KeyEvent.VK_2: GameState.beamType = 1; break;
-        	
-        	case KeyEvent.VK_3: GameState.beamType = 2; break;
-        	
-        	case KeyEvent.VK_4: GameState.beamType = 3; break;
-        	
-        	case KeyEvent.VK_5: GameState.beamType = 4; break;
-		}
-		
-		if(GameState.lastGunEnabled) {
-			if(GameState.ship == 3 && ke.getKeyCode() == KeyEvent.VK_6) {
-				GameState.beamType = 5;
-			} else if(GameState.ship == 6 && ke.getKeyCode() == KeyEvent.VK_7) {
-				GameState.beamType = 6;
-			} else if(GameState.ship == 9 && ke.getKeyCode() == KeyEvent.VK_8) {
-				GameState.beamType = 7;
-			}
-		}
-	}
-	
-	public void keyReleased(KeyEvent ke) {
-		switch(ke.getKeyCode()) {
-			case KeyEvent.VK_W: ShipControl.setUp(false); break;
-			
-			case KeyEvent.VK_S: ShipControl.setDown(false); break;
-			
-			case KeyEvent.VK_A: ShipControl.setLeft(false); break;
-			
-			case KeyEvent.VK_D: ShipControl.setRight(false); break;
-		}
-	}
-	
-	public void keyTyped(KeyEvent e) { }
-	
 	public Dimension getPreferredSize() {
       return new Dimension(Frame.width, Frame.height);
 	}
@@ -278,7 +177,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
      	Beams.draw(g2d);
      	Ship.draw(g2d);
      	Enemies.draw(g2d);
-		
-		requestFocus();
+     	
+     	requestFocus();
 	}
 }

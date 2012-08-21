@@ -13,7 +13,7 @@ public class GameLoop {
 	class Task extends TimerTask {
 		public void run() {
 			Runner.run();
-			ShipControl.run();
+			ShipControl.update();
 			Refresher.run();
 		}
 	}
